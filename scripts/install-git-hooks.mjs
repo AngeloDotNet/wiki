@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Imposta la cartella degli hook versionati (.githooks) per questo clone. Vedi PIANO.md.
+// Imposta la cartella degli hook versionati (.githooks) per questo clone.
 // Non fa nulla fuori da un repository Git (es. nel build Docker, dove .git è escluso).
 import {execFileSync} from 'node:child_process';
 import {existsSync} from 'node:fs';
