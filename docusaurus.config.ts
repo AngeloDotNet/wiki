@@ -1,18 +1,37 @@
-import {readFileSync} from 'node:fs';
+// Loads the global typings of the classic theme (@theme/Layout props, theme config). They were
+// loaded through the preset before; without this reference tsc uses the generic declaration.
+/// <reference types="@docusaurus/theme-classic" />
+import {existsSync, readFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
-import type * as Preset from '@docusaurus/preset-classic';
+import {wikis} from './src/data/wikis';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 // Versione x.y.z aggiornata dopo ogni commit da scripts/bump-version.mjs (vedi PIANO.md).
 const appVersion = readFileSync(resolve(process.cwd(), 'VERSION'), 'utf8').trim();
 
+// La data di ultimo aggiornamento usa la cronologia git. Il build Docker esclude .git (.dockerignore):
+// senza git Docusaurus userebbe la data del build, quindi la data si mostra solo se .git esiste.
+const gitAvailable = existsSync(resolve(process.cwd(), '.git'));
+
 const config: Config = {
   title: 'Documentazione',
   tagline: 'Claude Code Kit e Sagre & Eventi',
   favicon: 'img/favicon.svg',
+
+  // Metadati di default per motori di ricerca e condivisioni. Ogni pagina può sovrascriverli
+  // con la propria `description` nel front matter.
+  headTags: [
+    {
+      tagName: 'meta',
+      attributes: {
+        name: 'description',
+        content: 'Wiki di Claude Code Kit e Sagre & Eventi: regole, plugin, API e deployment.',
+      },
+    },
+  ],
 
   // Future flags, see https://docusaurus.io/docs/api/docusaurus-config#future
   // Docusaurus v4 compatibility flags, with "faster" disabled: @docusaurus/faster pulls in
@@ -44,40 +63,52 @@ const config: Config = {
     locales: ['it'],
   },
 
-  // Each wiki is a docs instance with its own id, folder, route prefix and sidebar.
-  // The preset does not create docs: the instances below are the only docs.
-  presets: [
+  // Theme and plugins are declared one by one (no preset). The classic theme provides the
+  // layout, navbar, footer and styles; the codeblock theme adds GitHub code references.
+  themes: [
     [
-      'classic',
+      '@docusaurus/theme-classic',
       {
-        docs: false,
-        blog: false,
-        theme: {
-          customCss: './src/css/custom.css',
-        },
-      } satisfies Preset.Options,
+        customCss: ['./src/css/custom.css'],
+      },
+    ],
+    'docusaurus-theme-github-codeblock',
+    // Ricerca locale: indice generato al build, nessuna richiesta a servizi esterni.
+    // Indicizza i Markdown di tutte le wiki (cartelle e route da src/data/wikis.ts).
+    [
+      '@easyops-cn/docusaurus-search-local',
+      {
+        hashed: true,
+        language: ['it'],
+        docsDir: wikis.map((wiki) => wiki.folder),
+        docsRouteBasePath: wikis.map((wiki) => wiki.routeBasePath),
+        // Usato fuori dalle pagine docs (per esempio il 404). Non ci sono versioni, quindi non cambia nulla.
+        docsPluginIdForPreferredVersion: wikis[0].id,
+        indexBlog: false,
+        indexPages: false,
+      },
     ],
   ],
 
+  // Each wiki is a docs instance with its own id, folder, route prefix and sidebar.
+  // The instances below are the only docs; there is no blog.
   plugins: [
-    [
+    '@docusaurus/plugin-content-pages',
+    '@docusaurus/plugin-sitemap',
+    '@docusaurus/plugin-css-cascade-layers',
+    ...wikis.map((wiki) => [
       '@docusaurus/plugin-content-docs',
       {
-        id: 'claude-config',
-        path: 'docs/claude-config',
-        routeBasePath: 'claude-config',
-        sidebarPath: './sidebars/claude-config.ts',
+        id: wiki.id,
+        path: wiki.folder,
+        routeBasePath: wiki.routeBasePath,
+        sidebarPath: wiki.sidebarPath,
+        // Link "Modifica questa pagina": apre il file nel repository, sul branch di lavoro develop.
+        editUrl: 'https://github.com/AngeloDotNet/wiki/edit/develop/',
+        // Data di ultimo aggiornamento, solo quando la cronologia git è disponibile (vedi gitAvailable).
+        showLastUpdateTime: gitAvailable,
       },
-    ],
-    [
-      '@docusaurus/plugin-content-docs',
-      {
-        id: 'sagreeventi',
-        path: 'docs/sagreeventi',
-        routeBasePath: 'sagreeventi',
-        sidebarPath: './sidebars/sagreeventi.ts',
-      },
-    ],
+    ]),
   ],
 
   themeConfig: {
@@ -86,32 +117,29 @@ const config: Config = {
     },
     navbar: {
       title: 'Documentazione',
-      items: [
-        {
-          type: 'docSidebar',
-          sidebarId: 'claudeConfigSidebar',
-          docsPluginId: 'claude-config',
-          position: 'left',
-          label: 'Claude Code Kit',
-        },
-        {
-          type: 'docSidebar',
-          sidebarId: 'sagreeventiSidebar',
-          docsPluginId: 'sagreeventi',
-          position: 'left',
-          label: 'Sagre & Eventi',
-        },
-      ],
+      items: wikis.map((wiki) => ({
+        type: 'docSidebar' as const,
+        sidebarId: wiki.sidebarId,
+        docsPluginId: wiki.id,
+        position: 'left' as const,
+        label: wiki.title,
+      })),
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} Angelo Pirola. Realizzato con Docusaurus. Versione ${appVersion}.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Angelo Pirola.<br />Realizzato con Docusaurus. Versione ${appVersion}.`,
     },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
     },
-  } satisfies Preset.ThemeConfig,
+    // Options of docusaurus-theme-github-codeblock. Runme is an external tool: off by default here.
+    codeblock: {
+      showGithubLink: true,
+      githubLinkLabel: 'Vedi su GitHub',
+      showRunmeLink: false,
+    },
+  },
 };
 
 export default config;
