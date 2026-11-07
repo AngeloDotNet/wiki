@@ -10,6 +10,5 @@ screenshots
 Dockerfile
 .dockerignore
 docker-compose*.yml
-PIANO*.md
 piano-commit.md
 STATO-LAVORO.md
