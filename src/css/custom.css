@@ -1,30 +1,87 @@
 /**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
+ * Stile "enciclopedia": sfondo chiaro, titoli serif, blu scuro come accento.
+ * Solo variabili Infima e regole CSS: nessun componente del tema è copiato (vedi PIANO.md).
+ * I font sono quelli di sistema: la CSP consente solo font locali (font-src 'self').
  */
 
 /* You can override the default Infima variables here. */
 :root {
-  --ifm-color-primary: #2e8555;
-  --ifm-color-primary-dark: #29784c;
-  --ifm-color-primary-darker: #277148;
-  --ifm-color-primary-darkest: #205d3b;
-  --ifm-color-primary-light: #33925d;
-  --ifm-color-primary-lighter: #359962;
-  --ifm-color-primary-lightest: #3cad6e;
+  --ifm-color-primary: #1f3a5f;
+  --ifm-color-primary-dark: #1b3354;
+  --ifm-color-primary-darker: #192f4e;
+  --ifm-color-primary-darkest: #142640;
+  --ifm-color-primary-light: #2a4d7a;
+  --ifm-color-primary-lighter: #315a8e;
+  --ifm-color-primary-lightest: #3d6aa3;
+  --ifm-font-family-base: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --ifm-heading-font-family: Georgia, 'Times New Roman', serif;
+  --ifm-heading-font-weight: 700;
   --ifm-code-font-size: 95%;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+  --ifm-footer-background-color: #1f3a5f;
+  --ifm-footer-color: #f5f1e6;
+  --enc-heading-rule: #a2a9b1;
+  --enc-card-border: #c8ccd1;
+  --enc-card-shadow: rgba(0, 0, 0, 0.06);
+}
+
+/* Titoli di pagina con il filetto sotto, come nelle voci di enciclopedia. */
+.markdown h1:first-child,
+h1 {
+  border-bottom: 1px solid var(--enc-heading-rule);
+  padding-bottom: 0.2em;
+}
+
+/* Homepage: due card della stessa altezza, icona sopra il titolo, pulsante in fondo. */
+.home-col {
+  display: flex;
+}
+
+.home-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--enc-card-border);
+  box-shadow: 0 2px 6px var(--enc-card-shadow);
+}
+
+.home-card .card__header h2 {
+  margin: 0;
+}
+
+.home-card .card__body {
+  flex: 1;
+}
+
+/* Copertina in cima alla card: larghezza piena, proporzioni 3:1 mantenute. */
+.home-card__media {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 0;
+}
+
+/* Pagina 404: illustrazione centrata sopra il titolo, larghezza massima 240 px, proporzioni mantenute. */
+.notfound-image {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  margin: 0 auto 1.5rem;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #25c2a0;
-  --ifm-color-primary-dark: #21af90;
-  --ifm-color-primary-darker: #1fa588;
-  --ifm-color-primary-darkest: #1a8870;
-  --ifm-color-primary-light: #29d5b0;
-  --ifm-color-primary-lighter: #32d8b4;
-  --ifm-color-primary-lightest: #4fddbf;
+  --ifm-color-primary: #9fb3c8;
+  --ifm-color-primary-dark: #8ca3bb;
+  --ifm-color-primary-darker: #8197b0;
+  --ifm-color-primary-darkest: #6c839c;
+  --ifm-color-primary-light: #b5c6d8;
+  --ifm-color-primary-lighter: #c2d1e0;
+  --ifm-color-primary-lightest: #d4e0ec;
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+  --enc-card-border: #3a4a5e;
+  --enc-card-shadow: rgba(0, 0, 0, 0.4);
+  --ifm-footer-background-color: #0f1d30;
+  --ifm-footer-color: #f5f1e6;
 }

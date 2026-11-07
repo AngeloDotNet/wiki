@@ -6,4 +6,7 @@ build/
 
 # Local environment and logs
 .env
+# Credenziali del login di test: mai nel repository
+htpasswd
+.htpasswd
 npm-debug.log*
