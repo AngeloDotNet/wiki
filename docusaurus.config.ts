@@ -23,7 +23,7 @@ const config: Config = {
   },
 
   // TODO: placeholder, the production URL is still to be decided (one hostname, see PIANO.md).
-  url: 'https://docs.example.com',
+  url: 'http://wiki.aepserver.it',
   baseUrl: '/',
 
   onBrokenLinks: 'throw',
