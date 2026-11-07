@@ -126,6 +126,7 @@ Il workflow `.github/workflows/build-push.yml` si attiva su push e pull request 
 - Il repository e il sito sono pubblici: il link "Modifica questa pagina" è stato tolto, la data di ultimo aggiornamento resta.
 - Gli asset con hash nel nome sono serviti con cache di un anno; le pagine HTML con `no-cache`, così una nuova release è visibile subito.
 - Lo stile richiede `'unsafe-inline'` nella CSP, perché React imposta attributi `style`; gli script inline sono invece ammessi solo tramite hash.
+- I blocchi di codice con `reference` scaricano il codice da `raw.githubusercontent.com` nel browser del visitatore: la CSP consente solo quell'host in `connect-src`. Chi visita il sito contatta quindi GitHub quando apre una pagina con questi blocchi.
 
 ## Licenza
 
