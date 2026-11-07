@@ -2,12 +2,6 @@
 
 ## Aperti (da confermare o decidere)
 
-- [ ] **Data di ultimo aggiornamento nel container.** Implementata: il workflow scrive le date nel front matter (`scripts/inject-last-update.mjs`, `fetch-depth: 0`). Verificato in un worktree senza `.git`: la data compare. Da verificare dopo il merge: la pagina online deve mostrare la data.
-
-- [ ] **Colore fuori palette nelle copertine.** La copertina Sagre usa il dorato `#d9a441` per le luci. Decidere se tenerlo come token del sito o sostituirlo con un colore della palette.
-
-- [ ] **Plugin codeblock non mantenuto.** Ultima modifica nel gennaio 2024, nessuna peer dependency dichiarata. Funziona nel browser (verificato), ma valutare alternative o fork.
-
 - [ ] **Da riportare nella documentazione:** i visitatori contattano `raw.githubusercontent.com` quando vedono un blocco `reference`.
 
 - [ ] **Tipizzazione del config ridotta.** Dopo la rimozione del preset, `themeConfig` è tipizzato solo dal `Config` generico di `@docusaurus/types`. Accettare o correggere.
@@ -15,6 +9,9 @@
 ## Risolti
 
 - [x] Card della homepage (copertine, titolo, testo, pulsante): verificate nel browser dall'utente.
+- [x] Data di ultimo aggiornamento nel container: il workflow scrive le date nel front matter (`scripts/inject-last-update.mjs`). Verificata online dall'utente con la data giusta.
+- [x] Plugin codeblock non mantenuto (ultima modifica 2024): tenuto, funziona nel browser; si riapre se smette di funzionare. Scelta dell'utente.
+- [x] Dorato `#d9a441` nelle luci della copertina Sagre: tenuto come accento, scelta dell'utente.
 - [x] Stile enciclopedia (palette, titoli serif, footer): verificato nel browser dall'utente.
 - [x] Pagina 404 con immagine sopra il titolo: verificata nel browser dall'utente.
 - [x] Ricerca nel sito: verificata nel browser dall'utente.
