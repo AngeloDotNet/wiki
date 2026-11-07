@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Aggiorna la versione x.y.z dopo un commit, leggendo il messaggio in Conventional Commits.
-// Chiamato dall'hook .githooks/post-commit. Vedi PIANO.md.
+// Chiamato dall'hook .githooks/post-commit.
 //
 // Uso:
 //   node scripts/bump-version.mjs                      legge il messaggio di HEAD
