@@ -10,7 +10,8 @@
     "swizzle": "docusaurus swizzle",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "postinstall": "node scripts/install-git-hooks.mjs || exit 0"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",

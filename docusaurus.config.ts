@@ -1,8 +1,13 @@
+import {readFileSync} from 'node:fs';
+import {resolve} from 'node:path';
 import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
+
+// Versione x.y.z aggiornata dopo ogni commit da scripts/bump-version.mjs (vedi PIANO.md).
+const appVersion = readFileSync(resolve(process.cwd(), 'VERSION'), 'utf8').trim();
 
 const config: Config = {
   title: 'Documentazione',
@@ -100,7 +105,7 @@ const config: Config = {
     },
     footer: {
       style: 'dark',
-      copyright: `Copyright © ${new Date().getFullYear()} Angelo Pirola. Realizzato con Docusaurus.`,
+      copyright: `Copyright © ${new Date().getFullYear()} Angelo Pirola. Realizzato con Docusaurus. Versione ${appVersion}.`,
     },
     prism: {
       theme: prismThemes.github,
