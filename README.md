@@ -88,53 +88,12 @@ Il `Dockerfile` esegue due stadi:
 
 ```bash
 docker build -t wiki-docs .
-docker run --rm -p 8080:8080 -v /percorso/htpasswd:/etc/nginx/auth/.htpasswd:ro wiki-docs
+docker run --rm -p 8080:8080 wiki-docs
 ```
-
-Dal login di test in poi il container richiede il file `htpasswd` montato (vedi sotto): senza, non parte.
 
 Il sito è poi disponibile su `http://localhost:8080`. HTTPS e HSTS non sono gestiti dal container: devono essere forniti dal reverse proxy che lo espone.
 
-### Login di test sul sito
-
-Nginx chiede username e password su tutto il sito (`auth_basic` in `nginx/default.conf`). Il file con le credenziali non è nell'immagine: va generato sul server e montato nel container. **Senza questo file il container non parte.**
-
-Il `.env` serve solo a generare il file `htpasswd`, una volta sul server. Non entra nell'immagine e non serve al `docker run`, né a un eventuale `docker-compose`.
-
-1. Sul server, nella cartella dove si fa il deploy, crea il `.env` a partire da `.env.example` e imposta `WIKI_USER` e `WIKI_PASSWORD`.
-2. Genera il file `htpasswd` fuori dal progetto, con permessi 600:
-
-   ```bash
-   scripts/make-htpasswd.sh .env /etc/wiki/htpasswd
-   ```
-
-3. Nel `docker-compose.yml` del server, aggiungi al servizio `wiki-projects` il montaggio del file in sola lettura:
-
-   ```yaml
-   services:
-     wiki-projects:
-       container_name: wiki
-       build: .
-       restart: always
-       ports:
-         - 127.0.0.1:8021:8080
-       volumes:
-         - /etc/wiki/htpasswd:/etc/nginx/auth/.htpasswd:ro
-       networks:
-         - lan-network
-   ```
-
-4. Costruisci e avvia:
-
-   ```bash
-   docker compose up -d --build
-   ```
-
-Il `.env` può restare nella cartella del progetto sul server: il compose lo legge solo per le variabili `${...}`, che qui non ci sono, e `.dockerignore` lo esclude dall'immagine.
-
-**Attenzione:** il servizio ha `restart: always`. Se `/etc/wiki/htpasswd` non esiste quando parte il container, nginx non si avvia e Docker lo riavvia in continuazione. Genera il file prima del `docker compose up`.
-
-Il file `htpasswd` contiene solo l'hash della password. Per cambiare credenziali, modifica il `.env`, rigenera `htpasswd` con lo script e riavvia con `docker compose up -d`.
+Sul server il container si avvia con l'immagine pubblicata su Docker Hub (`image:` nel `docker-compose.yml`), senza build locale.
 
 ## Versionamento
 
@@ -163,8 +122,8 @@ Il workflow `.github/workflows/build-push.yml` si attiva su push e pull request 
 
 ## Note di sicurezza
 
-- Il container non contiene segreti né file `.env`: entrambi sono esclusi da `.dockerignore`. Anche `htpasswd` è escluso e va montato dal server.
-- Il login di nginx protegge il sito servito, non il sorgente: il repository resta pubblico su GitHub.
+- Il container non contiene segreti né file `.env`: entrambi sono esclusi da `.dockerignore`.
+- Il repository e il sito sono pubblici: il link "Modifica questa pagina" è stato tolto, la data di ultimo aggiornamento resta.
 - Gli asset con hash nel nome sono serviti con cache di un anno; le pagine HTML con `no-cache`, così una nuova release è visibile subito.
 - Lo stile richiede `'unsafe-inline'` nella CSP, perché React imposta attributi `style`; gli script inline sono invece ammessi solo tramite hash.
 
