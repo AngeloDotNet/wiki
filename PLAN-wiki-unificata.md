@@ -1,6 +1,6 @@
 # Piano: wiki unificata
 
-> Stato: aperto. Ultimo aggiornamento: 2026-11-06.
+> Stato: aperto. Ultimo aggiornamento: 2026-11-07.
 > Ruolo di questo repository: **riferimento**. Qui si modifica la documentazione di SagreEventi e di claude-config.
 
 ## Contesto
@@ -20,7 +20,8 @@ Da ora la fonte è `docs-unificati`: le modifiche alla documentazione si fanno q
   - `CLAUDE.md` di SagreEventi, sezione «Documentazione»;
   - `docs/piani/PLAN-documentazione-sito.md` di SagreEventi;
   - `CLAUDE.md` di `claude-config-docs`.
-- [ ] 5. Decidere il dominio definitivo di `docs-unificati` (campo `url` in `docusaurus.config.ts`) e se la home è una pagina di ingresso con le due aree.
+- [x] 5. Decidere il dominio definitivo di `docs-unificati` (campo `url` in `docusaurus.config.ts`) e se la home è una pagina di ingresso con le due aree.
+  - Fatto: `url` impostato a `http://wiki.aepserver.it`; la home (`src/pages/index.tsx`) è già la pagina di ingresso con le due aree.
 - [ ] 6. Per `docs-unificati`:
   - `git init` e remote, a cura dell'utente;
   - `README.md` e `CHANGELOG.md`;
