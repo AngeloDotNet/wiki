@@ -163,6 +163,27 @@ Passi:
 
 Nota: il 500 segnalato dall'utente va diagnosticato con i log del container e del reverse proxy: potrebbe sparire con il ritorno, ma non è dimostrato.
 
+## Data di ultimo aggiornamento anche sul server (quattordicesimo piano)
+
+Decisione dell'utente: calcolare le date nel workflow GitHub Actions, senza mettere `.git` nell'immagine.
+
+Analisi:
+- Nel container `.git` è escluso, quindi Docusaurus non può leggere la data: la pagina non la mostra.
+- Docusaurus 3.10 accetta il front matter `last_update: { date: ... }`: con la data già scritta non chiama git (verificato in `@docusaurus/utils`, `readLastUpdateData`).
+- Il checkout del workflow è superficiale: serve `fetch-depth: 0` per avere la cronologia.
+- `.generated/` è escluso dal contesto Docker: il file di supporto va in una posizione che il contesto include.
+- Nessun segreto nella cronologia (verificato): nulla da proteggere.
+
+Passi:
+1. Script `scripts/inject-last-update.mjs`: per ogni `.md` in `docs/`, legge `git log -1 --format=%cI -- <file>` e scrive `last_update: { date: '<ISO>' }` nel front matter. Lavora sull'albero di lavoro del workflow, non viene committato. Accetta la cartella come argomento per il test.
+2. Scrive anche `last-update.json` alla radice, come segnale che le date sono pronte per il build.
+3. `docusaurus.config.ts`: `showLastUpdateTime` vale `true` se c'è `.git` oppure `last-update.json`.
+4. Workflow: `actions/checkout` con `fetch-depth: 0`; step di iniezione prima del build Docker.
+5. `.gitignore`: `last-update.json`. `.dockerignore`: nessuna esclusione del file.
+6. Verifica locale su una copia della cartella `docs/` nello scratchpad: front matter corretto, build con la data nel container simulato non eseguibile qui (Docker assente). Verifica finale sul workflow dopo merge.
+
+Nota: la data è quella dell'ultimo commit su `main` (il branch che costruisce l'immagine).
+
 ## Fuori dal piano
 
 - Nessun commit, push o PR senza richiesta esplicita.
