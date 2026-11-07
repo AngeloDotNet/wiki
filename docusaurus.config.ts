@@ -9,7 +9,7 @@ import {wikis} from './src/data/wikis';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// Versione x.y.z aggiornata dopo ogni commit da scripts/bump-version.mjs (vedi PIANO.md).
+// Versione x.y.z aggiornata dopo ogni commit da scripts/bump-version.mjs.
 const appVersion = readFileSync(resolve(process.cwd(), 'VERSION'), 'utf8').trim();
 
 // La data di ultimo aggiornamento si mostra quando è disponibile in uno dei due modi:
