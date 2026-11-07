@@ -3,10 +3,9 @@ node_modules/
 build/
 .docusaurus/
 .generated/
+# Segnale generato dal workflow per le date di ultimo aggiornamento
+last-update.json
 
 # Local environment and logs
 .env
-# Credenziali del login di test: mai nel repository
-htpasswd
-.htpasswd
 npm-debug.log*

@@ -24,6 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Cronologia completa: serve a calcolare le date di ultimo aggiornamento delle pagine.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
@@ -34,6 +37,11 @@ jobs:
         run: |
           npm ci
           npm run typecheck
+
+      # Scrive la data di ultimo aggiornamento di ogni pagina nel front matter: il container
+      # non ha .git. Modifica solo l'albero di lavoro del job, nulla viene committato.
+      - name: Inject last-update dates
+        run: node scripts/inject-last-update.mjs
 
       - uses: docker/setup-buildx-action@v3
 

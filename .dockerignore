@@ -7,8 +7,6 @@ build
 screenshots
 .env
 .env.*
-htpasswd
-.htpasswd
 Dockerfile
 .dockerignore
 docker-compose*.yml
