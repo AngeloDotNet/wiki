@@ -1,0 +1,15 @@
+node_modules
+build
+.docusaurus
+.generated
+.git
+.gitignore
+screenshots
+.env
+.env.*
+Dockerfile
+.dockerignore
+docker-compose*.yml
+PIANO*.md
+piano-commit.md
+STATO-LAVORO.md
