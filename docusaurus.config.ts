@@ -12,9 +12,12 @@ import {wikis} from './src/data/wikis';
 // Versione x.y.z aggiornata dopo ogni commit da scripts/bump-version.mjs (vedi PIANO.md).
 const appVersion = readFileSync(resolve(process.cwd(), 'VERSION'), 'utf8').trim();
 
-// La data di ultimo aggiornamento usa la cronologia git. Il build Docker esclude .git (.dockerignore):
-// senza git Docusaurus userebbe la data del build, quindi la data si mostra solo se .git esiste.
-const gitAvailable = existsSync(resolve(process.cwd(), '.git'));
+// La data di ultimo aggiornamento si mostra quando è disponibile in uno dei due modi:
+// - .git presente (build locale): Docusaurus legge la cronologia git;
+// - last-update.json presente (workflow): le date sono già nel front matter (scripts/inject-last-update.mjs).
+// Il container non ha .git: senza il file del workflow la data non viene mostrata.
+const lastUpdateAvailable =
+  existsSync(resolve(process.cwd(), '.git')) || existsSync(resolve(process.cwd(), 'last-update.json'));
 
 const config: Config = {
   title: 'Documentazione',
@@ -103,8 +106,8 @@ const config: Config = {
         path: wiki.folder,
         routeBasePath: wiki.routeBasePath,
         sidebarPath: wiki.sidebarPath,
-        // Data di ultimo aggiornamento, solo quando la cronologia git è disponibile (vedi gitAvailable).
-        showLastUpdateTime: gitAvailable,
+        // Data di ultimo aggiornamento, quando disponibile (vedi lastUpdateAvailable).
+        showLastUpdateTime: lastUpdateAvailable,
       },
     ]),
   ],
