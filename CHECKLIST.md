@@ -2,13 +2,12 @@
 
 ## Aperti (da confermare o decidere)
 
-- [ ] **Tipizzazione del config ridotta.** Dopo la rimozione del preset, `themeConfig` è tipizzato solo dal `Config` generico di `@docusaurus/types`. Accettare o correggere.
-
 ## Risolti
 
 - [x] Card della homepage (copertine, titolo, testo, pulsante): verificate nel browser dall'utente.
 - [x] Data di ultimo aggiornamento nel container: il workflow scrive le date nel front matter (`scripts/inject-last-update.mjs`). Verificata online dall'utente con la data giusta.
 - [x] Plugin codeblock non mantenuto (ultima modifica 2024): tenuto, funziona nel browser; si riapre se smette di funzionare. Scelta dell'utente.
+- [x] Tipizzazione del config ridotta (`themeConfig` tipizzato dal `Config` generico): accettata dall'utente. Il build segnala gli errori di configurazione.
 - [x] Nota nel README: i visitatori contattano `raw.githubusercontent.com` con i blocchi `reference` (PR #21).
 - [x] Dorato `#d9a441` nelle luci della copertina Sagre: tenuto come accento, scelta dell'utente.
 - [x] Stile enciclopedia (palette, titoli serif, footer): verificato nel browser dall'utente.
