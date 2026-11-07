@@ -22,7 +22,6 @@ const config: Config = {
     },
   },
 
-  // TODO: placeholder, the production URL is still to be decided (one hostname, see PIANO.md).
   url: 'http://wiki.aepserver.it',
   baseUrl: '/',
 
