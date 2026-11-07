@@ -16,6 +16,8 @@
 
 - [ ] **Test di login sul sito, da provare su una macchina con Docker.** `nginx/default.conf` ha `auth_basic` sull'intero sito. Rischio: senza il file `/etc/nginx/auth/.htpasswd` montato, nginx non parte. Non provato: qui non ci sono nginx né Docker. Il file `htpasswd` si genera sul server con `scripts/make-htpasswd.sh` (formato verificato, server non verificato). Per tornare alla versione attuale: vedi PIANO.md, sezione "Test: login".
 
+- [ ] **Compose sul server da aggiornare a mano.** Serve aggiungere `volumes: - /etc/wiki/htpasswd:/etc/nginx/auth/.htpasswd:ro` al servizio `wiki-projects`, come scritto nel README. Il compose sul server non è nel repository e non l'ho modificato. Prima del `docker compose up` va generato `htpasswd`, perché con `restart: always` il container entra in ciclo di riavvio.
+
 - [ ] **Colore fuori palette nelle copertine.** La copertina Sagre usa il dorato `#d9a441` per le luci. Decidere se tenerlo come token del sito o sostituirlo con un colore della palette.
 
 - [ ] **Componenti "Unsafe" non copiati.** Navbar, Layout, DocItem e DocBreadcrumbs restano del tema classico, per scelta dell'utente (vedi PIANO.md).
