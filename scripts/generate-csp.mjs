@@ -41,7 +41,9 @@ export function buildPolicy(scriptHashes) {
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data:",
     "font-src 'self'",
-    "connect-src 'self'",
+    // Deroga: docusaurus-theme-github-codeblock scarica nel browser il codice dei blocchi
+    // `reference` da raw.githubusercontent.com. Nessun altro host esterno è ammesso.
+    "connect-src 'self' https://raw.githubusercontent.com",
     "manifest-src 'self'",
     "object-src 'none'",
     "base-uri 'self'",
