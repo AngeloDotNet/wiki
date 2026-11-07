@@ -103,8 +103,6 @@ const config: Config = {
         path: wiki.folder,
         routeBasePath: wiki.routeBasePath,
         sidebarPath: wiki.sidebarPath,
-        // Link "Modifica questa pagina": apre il file nel repository, sul branch di lavoro develop.
-        editUrl: 'https://github.com/AngeloDotNet/wiki/edit/develop/',
         // Data di ultimo aggiornamento, solo quando la cronologia git è disponibile (vedi gitAvailable).
         showLastUpdateTime: gitAvailable,
       },

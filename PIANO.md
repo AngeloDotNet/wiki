@@ -147,6 +147,22 @@ Decisione presa: `scripts/make-htpasswd.sh <.env> <output>`, eseguito sul server
 
 Il file `htpasswd` va montato in `/etc/nginx/auth/.htpasswd`: senza, nginx non parte.
 
+## Ritorno: via login e link "Modifica" (tredicesimo piano)
+
+Decisione dell'utente: togliere il login su tutto il sito e il link "Modifica questa pagina"; resta la data di ultimo aggiornamento.
+
+Analisi: il login con `auth_basic` in `nginx/default.conf` bloccava tutto il sito; il link `editUrl` in `docusaurus.config.ts` è la voce da togliere. Un login che mostra solo il tasto non è stato scelto perché non protegge nulla (il sorgente è pubblico su GitHub).
+
+Passi:
+1. `nginx/default.conf`: tolte le direttive `auth_basic` e `auth_basic_user_file`.
+2. `docusaurus.config.ts`: tolta la riga `editUrl`; `showLastUpdateTime` resta.
+3. Restano invariati: script `make-htpasswd.sh`, `.env.example` e le esclusioni di `htpasswd` in `.gitignore` e `.dockerignore`. Non servono più al sito, ma non fanno danni. Da decidere se rimuoverli.
+4. Il volume `htpasswd` nel compose del server è ora inutile: il file è ignorato da nginx. Si può togliere.
+5. Verifica: typecheck, build, controllo che `build/` non contenga più il link `edit/`.
+6. Commit su un branch nuovo da develop, PR verso develop.
+
+Nota: il 500 segnalato dall'utente va diagnosticato con i log del container e del reverse proxy: potrebbe sparire con il ritorno, ma non è dimostrato.
+
 ## Fuori dal piano
 
 - Nessun commit, push o PR senza richiesta esplicita.
