@@ -22,5 +22,6 @@ La soluzione è composta da un'API ASP.NET Core (solo API, nessuna interfaccia o
 | [Sincronizzazione PWA](sincronizzazione-pwa.md) | Installazione, uso offline e aggiornamenti della PWA |
 | [Sviluppo](sviluppo.md) | Build, test e migrazioni del database |
 | [Deployment](deployment.md) | Avvio con Docker e reverse proxy |
+| [Informazioni](informazioni.md) | Pagina Informazioni: licenza, codice sorgente e versione dell'applicazione |
 
 Il codice sorgente è su [GitHub](https://github.com/AngeloDotNet/SagreEventi).
