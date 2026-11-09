@@ -15,7 +15,7 @@ I dodici controlli si dividono in tre famiglie:
 - **avvisi**: l'operazione passa; Claude e l'utente ricevono un avviso da correggere nel passo successivo;
 - **promemoria**: ricordano una regola a inizio o fine sessione, senza bloccare.
 
-Gli script sono sette. Tre raggruppano più controlli dello stesso evento:
+Gli script sono sette. Quattro raggruppano più controlli dello stesso evento; `guard-commands`, `limit-one-question` e `session-plan` ne fanno uno ciascuno:
 
 - `guard-write` esegue `guard-secrets` e `guard-patterns` prima di una scrittura;
 - `check-write` esegue `check-plan`, `check-quality` e `check-practice` dopo una scrittura;
