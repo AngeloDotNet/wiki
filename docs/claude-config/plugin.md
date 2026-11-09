@@ -186,6 +186,8 @@ Con la versione 1.9.0 arrivano anche i comandi `/kit:...`: dopo l'aggiornamento,
 
 Con la versione 1.10.0 i dodici controlli sono raggruppati in sei script (vedi [Cosa contiene](#cosa-contiene)). Il nome dei controlli non cambia. Dopo l'aggiornamento non servono azioni nei progetti.
 
+Con la versione 1.11.0 il plugin ha diciannove comandi (`claude plugin details kit@claude-config` li elenca nella riga «Skills») e tredici controlli. Il comando `/kit:code-review` è stato rinominato `/kit:review-regole`: chi lo usava deve adeguarsi. Arrivano `/kit:commit-passo`, `/kit:pr-develop` e `/kit:pr-main`, la domanda sulla wiki del progetto e il promemoria di aggiornamento del sito. Dopo l'aggiornamento, `/reload-plugins` o una nuova sessione; nei progetti conviene `/kit:aggiorna-regole` per portare `security.md` diviso in tre moduli e `git.md` 1.2.
+
 Il procedimento per chi mantiene il template è in [Manutenzione](manutenzione.md).
 
 ## Regole aggiornate: cosa controlla `rules-watch`
