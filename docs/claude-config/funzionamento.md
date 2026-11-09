@@ -22,6 +22,8 @@ sidebar_label: Come funziona
 
 - Ogni volta che c'è un dubbio, un requisito ambiguo, un refactoring ampio, una licenza copyleft o una best practice nuova;
 
+- Se il progetto non ha ancora la risposta sulla wiki dedicata (voce `sito` in `~/.claude/kit-progetti.json`): a ogni messaggio, finché non risponde, chiede se esiste una wiki o un sito di documentazione e, se sì, il percorso assoluto (`core.md` §5b). Un «no» non torna più a chiederlo;
+
 - Le scelte "chiesto, non presunto" del `CLAUDE.md` (architettura, libreria degli errori, database, sicurezza, cache, email, job in background, logging, lingua di `README.md` e `CHANGELOG.md`, ecc.), con le risposte registrate nel `CLAUDE.md` per non richiederle.
 
 **Fa da solo:**
@@ -31,7 +33,7 @@ sidebar_label: Come funziona
 
 - Dichiara nome, versione e motivo di ogni nuova dipendenza e segnala le richieste che violano le regole proponendo l'alternativa conforme;
 
-- Aggiorna `README.md` e `CHANGELOG.md` a ogni passo del piano.
+- Aggiorna `README.md` e `CHANGELOG.md` a ogni passo del piano e, se il progetto ha una wiki registrata, la aggiorna insieme a loro (`core.md` §5b).
 
 - Annota in `CHECKLIST.md` bug e miglioramenti che trova lavorando, senza interrompere il lavoro (`core.md` §6, punti 20-22).
 
