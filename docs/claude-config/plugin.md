@@ -5,22 +5,31 @@ sidebar_label: Plugin kit
 
 # Plugin `kit`
 
-Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: dodici hook personali che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Dalla versione 1.9.0 il plugin aggiunge anche sedici comandi `/kit:...` (sezione [Comandi](#comandi)).
+Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: dodici controlli personali, distribuiti in sette script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Dalla versione 1.9.0 il plugin aggiunge anche sedici comandi `/kit:...` (sezione [Comandi](#comandi)).
 
 ## Cosa contiene
 
-I dodici hook si dividono in tre famiglie:
+I dodici controlli si dividono in tre famiglie:
 
 - **blocchi**: fermano l'operazione; Claude riceve il motivo e deve correggere;
 - **avvisi**: l'operazione passa; Claude e l'utente ricevono un avviso da correggere nel passo successivo;
 - **promemoria**: ricordano una regola a inizio o fine sessione, senza bloccare.
+
+Gli script sono sette. Tre raggruppano più controlli dello stesso evento:
+
+- `guard-write` esegue `guard-secrets` e `guard-patterns` prima di una scrittura;
+- `check-write` esegue `check-plan`, `check-quality` e `check-practice` dopo una scrittura;
+- `session-close` esegue `plan-reminder` e `check-close` a fine sessione;
+- `prompt-start` esegue `ask-one-question` e `rules-watch` a ogni messaggio.
+
+Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qualità e pratica) dello stesso file escono in un unico messaggio; lo stesso vale per i promemoria di `session-close`.
 
 ### Blocchi
 
 | Hook | Evento | Cosa fa |
 |---|---|---|
 | `limit-one-question` | `PreToolUse` su `AskUserQuestion` | Blocca le chiamate con più di una domanda. |
-| `guard-commands` | `PreToolUse` su `Bash` e `PowerShell` | Blocca sempre `git init`, `git push --force` e varianti, la cancellazione di branch remoti, `reset --hard`, `clean -f`, `--no-verify`, `rm -rf`, e blocca `git push`, la creazione di tag, `gh pr create/merge` e `gh release` in scrittura finché il progetto non li approva (vedi [Integrazione GitHub](#integrazione-github)). Blocca anche i commit su `main`/`develop` (con l'istruzione di proporre un branch da `develop`), `git add -A`, `git add --all` e `git add .`, l'aggiunta di file sensibili (`.env` non `.env.example`, `secrets.json`, `*.pfx`, `*.p12`, `*.key`, `*.pem`, `*.jks`) e i commit con messaggio non conforme a Conventional Commits (oggetto di al massimo 72 caratteri, descrizione minuscola, senza punto finale). |
+| `guard-commands` | `PreToolUse` su `Bash` e `PowerShell` | Blocca sempre `git init`, `git push --force` e varianti, la cancellazione di branch remoti, `reset --hard`, `clean -f`, `--no-verify`, `rm -rf`. Blocca anche `gh pr create/merge` e `gh release` finché il `CLAUDE.md` del progetto non dichiara la GitHub CLI installata (vedi [Integrazione GitHub](#integrazione-github)). Blocca i commit su `main`/`develop` (con l'istruzione di proporre un branch da `develop`), `git add -A`, `git add --all` e `git add .`, l'aggiunta di file sensibili (`.env` non `.env.example`, `secrets.json`, `*.pfx`, `*.p12`, `*.key`, `*.pem`, `*.jks`) e i commit con messaggio non conforme a Conventional Commits (oggetto di al massimo 72 caratteri, descrizione minuscola, senza punto finale). Push, tag e `gh workflow run` non sono bloccati. |
 | `guard-secrets` | `PreToolUse` su `Write`, `Edit`, `MultiEdit` | Blocca la scrittura di segreti reali: valori in chiavi come `Password`, `Secret`, `Token`, `Key` o password in una stringa di connessione dentro `appsettings*.json`; password in chiaro in `docker-compose*.yml` e `Dockerfile`; chiavi private PEM, chiavi AWS e token JWT completi. Un segnaposto (`CHANGE-ME…`, `${VAR}`, `placeholder…`) passa solo se il valore intero ha quella forma: una parola come `example` dentro un valore non basta. I token JWT non si controllano nei file `.md`, dove la documentazione li usa come esempio. |
 | `guard-patterns` | `PreToolUse` su `Write`, `Edit`, `MultiEdit` | Blocca undici pattern vietati dalle regole: test saltati (`skip`, `Ignore`, `.only`), attese arbitrarie nei test (`Task.Delay`, `Thread.Sleep`), Angular legacy (NgModule, `*ngIf`, `*ngFor`), librerie vietate (MediatR, AutoMapper, Jest, Karma, Jasmine), EF Core InMemory, API insicure (`AllowAnyOrigin`, `BinaryFormatter`, MD5/SHA1, `eval`), SQL interpolato (`FromSqlRaw($"...")`), `npm install` o `npm ci` senza `--ignore-scripts` nel Dockerfile, TLS disattivato in `appsettings*.json`, `NoWarn` di progetto nei `.csproj` e `.props`, `catch` con blocco vuoto. Ammette le deroghe [`kit-allow`](#deroghe-kit-allow). |
 
@@ -28,7 +37,7 @@ I dodici hook si dividono in tre famiglie:
 
 | Hook | Evento | Cosa fa |
 |---|---|---|
-| `check-plan` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` (solo per `PIANO.md`) | Segnala un passo spuntato `[x]` che non riporta l'esito di build e di test (`core.md` §6.21). |
+| `check-plan` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` (solo per `PIANO.md`) | Segnala un passo spuntato `[x]` che non riporta l'esito di build e di test (`core.md` §6.21). È l'unico avviso che blocca: esce con 2 e il motivo su stderr. |
 | `check-quality` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` | Avvisa su Docker (immagini senza tag o con `latest`, porte host di database e broker esposte), su dipendenze (range di versione `*` e `latest` in `package.json`; `^` e `~` non si segnalano più; promemoria di `npm audit` o `dotnet list package --vulnerable` quando cambiano i pacchetti) e sul frontend (`any`, `innerHTML`, `bypassSecurityTrust*`, colori esadecimali hardcoded: nei `.ts` solo tra virgolette, nei `.html` solo dentro `style`). |
 | `check-practice` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` | Avvisa su scritture in blocco (`ExecuteUpdate`, `ExecuteDelete`), soppressioni di analyzer senza motivo, endpoint `AllowAnonymous`, `Regex` senza `matchTimeout`, `console.log` e `Console.Write` nel codice, membri pubblici C# senza commento `///`, file nuovo di servizio (`*Service`, `*Handler`, `*Validator`, `.service.ts`, `.component.ts`, `.pipe.ts`) senza test. Ammette le deroghe `kit-allow`. |
 
@@ -42,7 +51,7 @@ I dodici hook si dividono in tre famiglie:
 | `plan-reminder` | `Stop` | A fine sessione, se `PIANO.md` ha ancora passi con casella `[ ]` o `[~]`, lo segnala all'utente. |
 | `check-close` | `Stop` | A fine sessione, sulle modifiche non ancora committate, ricorda: codice modificato senza `CHANGELOG.md` aggiornato, modello EF cambiato senza una nuova migrazione, chiavi `it.json` ed `en.json` diverse. Usa `git status`. |
 
-Il blocco dei comandi vietati è assoluto: chi vuole un'eccezione esegue il comando a mano (prefisso `!` nel prompt) oppure disattiva il plugin. Le operazioni di integrazione (push, PR, tag, rilasci) si sbloccano invece con l'approvazione del progetto, descritta sotto.
+Il blocco dei comandi vietati è assoluto: chi vuole un'eccezione esegue il comando a mano (prefisso `!` nel prompt) oppure disattiva il plugin. Push e tag sono sempre consentiti; PR e rilasci passano con `gh` se la GitHub CLI è dichiarata installata (vedi sotto).
 
 `session-plan` e `rules-watch` salvano le impronte delle regole (`CLAUDE.md` e `.claude/rules/*.md`) in `~/.claude/session-rules-state.json` (una voce per cartella di progetto, più l'hash di `HEAD` e un marcatore di sessione). Gli script richiedono Node.js; il diff richiede anche `git`. Un hook non può obbligare Claude a rileggere i file: inserisce nel contesto l'ordine di farlo.
 
@@ -77,7 +86,7 @@ Due note pratiche:
 ## Attivazione
 
 - **In ogni progetto:** `guard-commands`, `guard-secrets`, `check-quality`, `check-plan`, `plan-reminder`, `session-plan`, `rules-watch`, `ask-one-question`, `limit-one-question`.
-- **Solo nei progetti con `.claude/rules/core.md`:** `guard-patterns`, `check-practice`, `check-close`. Il file è il segno che il progetto usa le regole del template; senza di esso questi tre hook non fanno nulla.
+- **Solo nei progetti con `.claude/rules/core.md`:** `guard-patterns`, `check-practice`, `check-close`. Il file è il segno che il progetto usa le regole del template; senza di esso questi tre controlli non fanno nulla.
 
 ## Deroghe `kit-allow`
 
@@ -96,17 +105,18 @@ Ogni deroga aggiunta in una pull request è elencata dal controllo CI `kit-allow
 
 ## Integrazione GitHub
 
-Push, PR, tag e rilasci passano solo se il progetto li ha approvati. L'approvazione è una riga fissa nel `CLAUDE.md` del progetto, nella sezione «Eccezioni alle regole globali»:
+Push e tag sono **sempre consentiti**: il hook non li blocca, e Claude li esegue su richiesta o con conferma. PR e rilasci usano la GitHub CLI (`gh`): passano solo se il `CLAUDE.md` del progetto dichiara la CLI installata, nella sezione «Eccezioni alle regole globali»:
 
 ```
-- **Integrazione GitHub approvata:** PR sì, push no, tag sì, rilasci no (2026-11-04)
+- **GitHub CLI (gh) installata:** sì (2026-11-08)
 ```
 
-- Ogni operazione è sbloccata separatamente. La data in fondo è facoltativa.
-- Senza la riga, o con una riga in un altro formato, nessuna operazione è sbloccata: il blocco resta.
+- La domanda si fa una sola volta per progetto, poi la risposta resta nel `CLAUDE.md`. Con `no`, o senza riga, `gh pr` e `gh release` restano bloccati.
+- La data in fondo è facoltativa.
 - La riga si legge dal `CLAUDE.md` della radice del repository, anche se il comando parte da una sottocartella. Fuori da un repository si legge quello della cartella del comando.
-- Anche con approvazione restano sempre bloccati `git push --force` (e varianti), la cancellazione di branch remoti, `reset --hard`, `clean -f`, `--no-verify` e `git init`.
-- Le domande a Claude (se la GitHub CLI è installata e autenticata, quali operazioni approvare) sono nella regola `git.md`, non nel hook.
+- Anche con la CLI installata restano sempre bloccati `git push --force` (e varianti), la cancellazione di branch remoti, `reset --hard`, `clean -f`, `--no-verify` e `git init`.
+- `gh workflow run` non è bloccato dal hook. La regola (`git.md`) impone una domanda esplicita di conferma prima di ogni esecuzione.
+- Le indicazioni a Claude su quando e come usare queste operazioni sono nella regola `git.md`, non nel hook.
 
 ## Limiti dei controlli
 
@@ -121,7 +131,7 @@ Push, PR, tag e rilasci passano solo se il progetto li ha approvati. L'approvazi
 node --test "plugins/kit/tests/*.test.mjs"
 ```
 
-I test usano cartelle temporanee e una home finta (non toccano `~/.claude`); i casi con git clonano questo repository, quindi vanno eseguiti al suo interno. I casi che clonano il repository (`rules-watch.test.mjs`) copiano le regole nel clone se non sono ancora committate, quindi passano anche prima del primo commit.
+I test usano cartelle temporanee e una home finta (non toccano `~/.claude`); i casi con git clonano questo repository, quindi vanno eseguiti al suo interno. I casi che clonano il repository (`rules-watch.test.mjs`) copiano le regole nel clone se non sono ancora committate, quindi passano anche prima del primo commit. I test di `rules-watch` tolgono dall'output il promemoria della regola inviolabile, che `prompt-start` aggiunge sempre.
 
 ## Installazione
 
@@ -149,13 +159,17 @@ claude plugin update kit@claude-config
 
 Con la versione 1.9.0 arrivano anche i comandi `/kit:...`: dopo l'aggiornamento, `/reload-plugins` (o una nuova sessione) li rende disponibili, e `claude plugin details kit@claude-config` ne elenca sedici nella riga «Skills».
 
+Con la versione 1.10.0 i dodici controlli sono raggruppati in sette script (vedi [Cosa contiene](#cosa-contiene)). Il nome dei controlli non cambia. Dopo l'aggiornamento non servono azioni nei progetti.
+
 Il procedimento per chi mantiene il template è in [Manutenzione](manutenzione.md).
 
 ## Regole aggiornate: cosa controlla `rules-watch`
 
+Il controllo `rules-watch` gira nello script `prompt-start`, insieme al promemoria della regola inviolabile.
+
 - **Regole cambiate nella sessione.** Se un file di regole cambia (o viene aggiunto o rimosso) tra un messaggio e l'altro, Claude riceve l'elenco e l'ordine di rileggerlo. Il promemoria compare una volta sola per modifica; se nulla è cambiato, nessun testo in più.
 - **Diff con git.** In un repository l'avviso include il `git diff` dei soli file cambiati, calcolato dall'hash di `HEAD` salvato (commit successivi e modifiche non committate). Il diff è troncato e, a inizio sessione, limitato in modo che l'output resti sotto i 10.000 caratteri. Senza git, o con un hash non valido, resta l'elenco dei file. I file nuovi non tracciati compaiono nell'elenco ma non nel diff.
-- **Regole del template più recenti.** Una volta per sessione e per progetto, `rules-watch` confronta la versione di `core.md` del progetto con quella del template. Se il template è più avanti, Claude riceve versioni e file diversi e deve proporti l'allineamento con una sola domanda: non copia nulla senza il tuo ok. Una differenza di contenuto a parità di versione non viene segnalata (potrebbe essere una deroga voluta, da annotare in `CLAUDE.md`).
+- **Regole del template più recenti.** Una volta per sessione e per progetto, `rules-watch` confronta la versione di ogni modulo di regole con intestazione di versione (per ora `core.md` e `frontend.md`) tra il progetto e il template, solo per i moduli che il progetto ha. Se un modulo del template è più avanti, Claude riceve i moduli con le versioni e i file diversi e deve proporti l'allineamento con una sola domanda: non copia nulla senza il tuo ok. Una differenza di contenuto a parità di versione non viene segnalata (potrebbe essere una deroga voluta, da annotare in `CLAUDE.md`).
 - **Cartella del template.** Si legge dalla variabile d'ambiente `KIT_CONFIG_TEMPLATE_DIR`, da impostare una volta per macchina con il percorso della cartella del template (per esempio nella sezione `env` di `~/.claude/settings.json`). Il plugin non ha un percorso di default: senza la variabile il confronto non parte e Claude riceve un avviso che chiede il percorso. Se la cartella non esiste o non contiene `.claude/rules`, Claude riceve un avviso (una volta per sessione) e ti chiede il percorso corretto. Il confronto è saltato nel template stesso e nei progetti senza file di regole.
 
 ## Spostare la cartella locale del marketplace
@@ -179,15 +193,18 @@ claude plugin disable kit@claude-config
 claude plugin uninstall kit@claude-config
 ```
 
-`disable` sospende **tutto** il plugin: insieme ai blocchi di `guard-commands`, `guard-secrets`, `guard-patterns` e `limit-one-question` si fermano anche gli avvisi e i promemoria. Non esiste un modo di sospendere un solo hook senza modificare il plugin.
+`disable` sospende **tutto** il plugin: insieme ai blocchi di `guard-commands`, `guard-write` (`guard-secrets` e `guard-patterns`) e `limit-one-question` si fermano anche gli avvisi e i promemoria. Non esiste un modo di sospendere un solo controllo senza modificare il plugin.
 
 ## Migrazione dagli hook copiati a mano
 
-Se i primi quattro hook (`rules-watch` è nato nel plugin e non ha copie manuali) erano stati copiati in `~/.claude/` e registrati in `~/.claude/settings.json`, vanno **tolti prima di installare il plugin**, altrimenti ogni hook gira due volte (e `session-plan` non segnala le regole cambiate):
+Se alcuni hook erano stati copiati in `~/.claude/` e registrati in `~/.claude/settings.json`, vanno **tolti prima di installare il plugin**, altrimenti ogni hook gira due volte (e `session-plan` non segnala le regole cambiate). Gli script da cercare sono di due tipi:
 
-1. rimuovere da `~/.claude/settings.json` le voci `hooks` dei quattro script;
+- **Script attuali del plugin** (versione 1.10.0): `guard-write.mjs`, `check-write.mjs`, `session-close.mjs`, `prompt-start.mjs`, `guard-commands.mjs`, `limit-one-question.mjs`, `session-plan.mjs`. Quelli copiati vanno rimossi dalle voci `hooks` anche se il loro nome è lo stesso.
+- **Script della versione 1.9.0**, sostituiti dalla 1.10.0 e non più presenti nel plugin: `ask-one-question.mjs`, `rules-watch.mjs`, `guard-secrets.mjs`, `guard-patterns.mjs`, `check-plan.mjs`, `check-quality.mjs`, `check-practice.mjs`, `plan-reminder.mjs`, `check-close.mjs`. Se erano copiati, le loro voci vanno tolte allo stesso modo.
+
+1. rimuovere da `~/.claude/settings.json` le voci `hooks` degli script copiati, dei due tipi sopra;
 2. installare il plugin (sopra);
-3. eliminare dalla cartella `~/.claude/` le copie dei quattro script (`ask-one-question.mjs`, `limit-one-question.mjs`, `guard-commands.mjs`, `session-plan.mjs`).
+3. eliminare dalla cartella `~/.claude/` le copie di quegli script.
 
 `session-rules-state.json` si conserva: il plugin continua a usarlo.
 
