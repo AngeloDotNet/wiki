@@ -60,7 +60,7 @@ Da qui il lavoro è di Claude, sia con la strada A sia con la B:
 
 5. **Per ogni differenza ti chiede una scelta, una alla volta:** annotarla come **deroga** nel `CLAUDE.md` (il progetto resta com'è) oppure **adeguare il progetto** con un refactoring pianificato in `PIANO.md`. Non riscrive la cronologia git né ristruttura il codice da solo.
 
-6. **Poi copia** in `.claude/rules/` del progetto solo i moduli scelti (se non lo ha già fatto il comando), crea il `CLAUDE.md` con ciò che ha rilevato e propone un commit locale `chore(rules)`, che crea solo dopo il tuo ok. Il `push` e la PR sono tuoi.
+6. **Poi copia** in `.claude/rules/` del progetto solo i moduli scelti (se non lo ha già fatto il comando), crea il `CLAUDE.md` con ciò che ha rilevato e propone un commit locale `chore(rules)`, che crea solo dopo il tuo ok. Il `push` e la PR restano a tua scelta: Claude li esegue solo se lo chiedi (vedi [Plugin](plugin.md#integrazione-github)).
 
 7. Controlla con `/context` che le regole risultino caricate.
 

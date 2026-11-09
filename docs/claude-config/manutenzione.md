@@ -28,14 +28,14 @@ sidebar_label: Manutenzione
 
 # Punti aperti
 
-- **Automazioni non configurate:** i divieti di `git push --force` e `--no-verify`, e il blocco di push, PR, tag e rilasci senza approvazione del progetto, sono tecnici solo con il [plugin `kit`](plugin.md) installato; senza, valgono come regole scritte (`git.md`). Restano fuori dal plugin: lint automatico dopo ogni modifica e `docker compose config` quando cambiano i file Docker. I segreti nei commit sono bloccati dal plugin (`guard-commands` e `guard-secrets`), ma non da uno scanner come `gitleaks`.
+- **Automazioni non configurate:** i divieti di `git push --force` e `--no-verify`, e il blocco di PR e rilasci senza la GitHub CLI dichiarata nel progetto, sono tecnici solo con il [plugin `kit`](plugin.md) installato; senza, valgono come regole scritte (`git.md`). Push e tag non sono bloccati. Restano fuori dal plugin: lint automatico dopo ogni modifica e `docker compose config` quando cambiano i file Docker. I segreti nei commit sono bloccati dal plugin (`guard-commands` e `guard-write`), ma non da uno scanner come `gitleaks`.
 - **Moduli mancanti:** non esistono regole per un frontend Blazor né per il mobile (MAUI, Ionic + Capacitor, Flutter, React Native; la PWA è solo un'opzione nel `CLAUDE.md`; per il mobile c'è solo la sezione minima «Mobile» di `security.md`, con rimando a OWASP MASVS), né una sezione dedicata a Dapper (solo la regola di scelta in `backend.md` §1). Si creano come moduli ad hoc solo quando un progetto li richiede.
 
 # Aggiornare il template
 
 Le regole si modificano nel template (`.claude/rules/`, `.claude/rules-optional/`, `CLAUDE.md`), non nelle copie dei progetti: vale per i progetti nuovi. I progetti già avviati hanno la loro copia e si riallineano su richiesta (*"Riallinea le regole"*) o con `/kit:aggiorna-regole`.
 
-- Ogni revisione di `core.md` aggiorna versione e data nell'intestazione e aggiunge una sottosezione a `CHANGELOG.md`, sotto il titolo del giorno (un titolo `## AAAA-MM-GG` per giorno, con una sottosezione per intervento).
+- Ogni revisione di `core.md` e di `frontend.md` aggiorna versione e data nell'intestazione e aggiunge una sottosezione a `CHANGELOG.md`, sotto il titolo del giorno (un titolo `## AAAA-MM-GG` per giorno, con una sottosezione per intervento). Il controllo `rules-watch` del plugin confronta la versione di ogni modulo di regole con intestazione (per ora `core.md` e `frontend.md`) con quella del template, solo per i moduli che il progetto ha.
 - Il template ha un repository su GitHub (`AngeloDotNet/claude-config`) con il flusso git flow: ogni modifica nasce da un branch `feature/` o `bugfix/` partito da `develop`, va in PR verso `develop` con squash, e `develop` va in `main` con una PR che usa un merge commit. Il plugin `kit` si aggiorna sulle macchine solo quando sale la sua versione (vedi [Plugin](plugin.md)).
 - Una regola che vale solo per un progetto va nel suo `CLAUDE.md`, non nei moduli.
 - Quando una libreria cambia (Angular, PrimeNG, `OperationResults`, FusionCache), rivedi le regole che la citano: Claude verifica la versione installata, ma le regole vanno tenute aggiornate.

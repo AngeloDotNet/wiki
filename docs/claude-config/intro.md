@@ -16,7 +16,7 @@ Le regole sono in italiano; codice, identificatori e messaggi di commit che ne d
 | Documento | Contenuto |
 |---|---|
 | [Come si usa, nei dettagli](uso.md) | Quale caso è il tuo (progetto nuovo, esistente senza regole, esistente con regole), il template come cartella a parte, `/kit:copia-regole` e `/kit:aggiorna-regole`, moduli da tenere per tipo di progetto |
-| [Plugin `kit`](plugin.md) | Dodici hook personali (blocchi, avvisi e promemoria su comandi, segreti, pattern vietati, piano, regole aggiornate) e sedici comandi `/kit:...`: installazione, aggiornamento, migrazione |
+| [Plugin `kit`](plugin.md) | Dodici controlli personali, in sette script (blocchi, avvisi e promemoria su comandi, segreti, pattern vietati, piano, regole aggiornate) e sedici comandi `/kit:...`: installazione, aggiornamento, migrazione |
 | [Cosa contiene](contenuto.md) | Struttura del repository, moduli delle regole, cartella `_template/` e plugin |
 | [Come funziona](funzionamento.md) | Caricamento delle regole, deroghe, cosa chiede Claude e cosa fa da solo |
 | [Manutenzione](manutenzione.md) | Verifiche periodiche, risoluzione dei problemi, punti aperti, aggiornamento del template |
@@ -45,7 +45,7 @@ Claude ti fa le domande **una alla volta**, scrive il piano in `PIANO.md` (per i
 
 Per i casi particolari vedi [Come si usa, nei dettagli](uso.md).
 
-Claude non fa mai `git init` e non fa push, PR, tag o rilasci se il progetto non li ha approvati (una riga nel `CLAUDE.md`, vedi [Integrazione GitHub](plugin.md#integrazione-github)): altrimenti fa solo commit locali, e solo dopo aver confermato branch e messaggio con te. Il [plugin `kit`](plugin.md) rende tecnici molti di questi divieti (comandi, segreti, pattern vietati) e la regola della domanda unica; le pratiche che richiedono giudizio arrivano come avvisi. Si installa una volta per macchina:
+Claude non fa mai `git init`. Push e tag sono consentiti sempre; PR e rilasci passano da `gh` solo se la GitHub CLI è dichiarata installata nel `CLAUDE.md` (vedi [Integrazione GitHub](plugin.md#integrazione-github)). Claude li esegue solo su tua richiesta o con tua conferma. Per i commit fa solo commit locali, e solo dopo aver confermato branch e messaggio con te. Il [plugin `kit`](plugin.md) rende tecnici molti di questi divieti (comandi, segreti, pattern vietati) e la regola della domanda unica; le pratiche che richiedono giudizio arrivano come avvisi. Si installa una volta per macchina:
 
 ```
 claude plugin marketplace add AngeloDotNet/claude-config

@@ -10,7 +10,7 @@ sidebar_label: Cosa contiene
   rules/            moduli caricati da Claude Code in automatico
   rules-optional/   moduli opzionali, NON caricati: si attivano su richiesta
 .claude-plugin/     marketplace `claude-config` (marketplace.json)
-plugins/kit/ plugin con i dodici hook personali e i comandi (vedi plugin.md)
+plugins/kit/ plugin con i dodici controlli personali (in sette script) e i comandi (vedi plugin.md)
 plugins/kit/skills/ un comando per cartella, richiamato come `/kit:<nome>` (un `SKILL.md` per comando)
 CLAUDE.md           modello del CLAUDE.md di progetto (campi [..] da compilare)
 CHANGELOG.md        modifiche alle regole del template (in un progetto nuovo va sostituito)
@@ -50,4 +50,4 @@ Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non s
 
 ## Plugin `kit`
 
-I dodici hook personali (blocchi di comandi, segreti e pattern vietati; avvisi di qualità e di pratica; promemoria su piano, chiusura e regole aggiornate) stanno nel plugin `plugins/kit/`, distribuito dal marketplace `.claude-plugin/marketplace.json`. Cosa fanno e come si installano: [plugin.md](plugin.md). Dalla versione 1.9.0 il plugin aggiunge anche sedici comandi `/kit:...`, uno per cartella in `plugins/kit/skills/`: vedi [Comandi](plugin.md#comandi).
+I dodici controlli personali, in sette script (blocchi di comandi, segreti e pattern vietati; avvisi di qualità e di pratica; promemoria su piano, chiusura e regole aggiornate) stanno nel plugin `plugins/kit/`, distribuito dal marketplace `.claude-plugin/marketplace.json`. Cosa fanno e come si installano: [plugin.md](plugin.md). Dalla versione 1.9.0 il plugin aggiunge anche sedici comandi `/kit:...`, uno per cartella in `plugins/kit/skills/`: vedi [Comandi](plugin.md#comandi).
