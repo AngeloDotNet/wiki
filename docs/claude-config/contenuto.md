@@ -29,10 +29,11 @@ In un progetto nuovo Claude elimina il materiale che appartiene al template e no
 |---|---|---|
 | `core.md` | `rules/` | all'avvio (sempre) |
 | `git.md` | `rules/` | all'avvio (sempre) |
+| `lavoro.md` | `rules/` | all'avvio (sempre; breve: contesto e token, indagine dei difetti, review, contenuti non fidati, imprevisti e rollback) |
 | `security.md` | `rules/` | all'avvio (principi sempre attivi: mappa ASVS 5.0, progettazione fail closed, crittografia, dati e segreti, supply chain, log e allerta, test di sicurezza; una sezione minima sul mobile) |
 | `security-backend.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (autenticazione, protezione dell'API, abuso di risorse, vulnerabilità applicative, upload) |
 | `security-frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss` (innerHTML, storage, CSP, Trusted Types, postMessage) |
-| `frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss` |
+| `frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss`, `angular.json` o `tsconfig*.json` |
 | `backend.md`, `backend-architecture.md`, `backend-app.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (i tre moduli backend si caricano insieme: stack e regole comuni; architettura e accesso ai dati; logica applicativa, errori e test) |
 | `docker.md` | `rules/` | quando si legge o modifica un Dockerfile, un file compose o `docker/**` |
 | `feature-workflow.md` | `rules-optional/` | solo fullstack e su conferma: flusso per entità, backend → frontend |
@@ -48,7 +49,9 @@ Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non s
 | File | Scopo |
 |---|---|
 | `avvio-progetto.md` | Procedura che Claude segue per avviare un progetto (nuovo o esistente): domande, ispezioni, scelta dei moduli, compilazione del `CLAUDE.md`. Non va aperta né citata a Claude: la legge da solo (vedi "Come si usa, in breve" nella [pagina iniziale](intro.md)). |
-| `ci/` | Esempio di workflow per il controllo CI delle deroghe `kit-allow` (`kit-allow.yml`) e lo script che genera il report (`kit-allow-report.mjs`, con i suoi test). Da adattare al progetto. |
+| `ci/` | Esempi di workflow da adattare al progetto: `ci.yml` (job backend e frontend con build, test, lint e audit a ogni pull request, action fissate allo SHA; non eseguito su GitHub, da verificare al primo uso) e il controllo CI delle deroghe `kit-allow` (`kit-allow.yml`) con lo script che genera il report (`kit-allow-report.mjs`, con i suoi test). |
+| `eslint.config.example.js` | Esempio di configurazione ESLint (flat config con `angular-eslint`) che applica le regole di `frontend.md` controllabili da un linter. I nomi delle regole non sono provati su un progetto reale: si verificano con `npm run lint`. |
+| `settings.example.json` | Esempio di permessi per `.claude/settings.json` (`deny` per `.env`, chiavi e `secrets/`, `allow` per i comandi di sola verifica). Non si copia da solo: la sintassi va verificata sulla versione di Claude Code installata. |
 
 ## Plugin `kit`
 
