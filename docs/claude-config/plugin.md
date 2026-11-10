@@ -38,7 +38,7 @@ Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qua
 | Hook | Evento | Cosa fa |
 |---|---|---|
 | `check-plan` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` (solo per `PIANO.md`) | Segnala un passo spuntato `[x]` che non riporta l'esito di build e di test (`core.md` §6.21). È l'unico avviso che blocca: esce con 2 e il motivo su stderr. |
-| `check-quality` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` | Avvisa su Docker (immagini senza tag o con `latest`, porte host di database e broker esposte), su dipendenze (range di versione `*` e `latest` in `package.json`; `^` e `~` non si segnalano più; promemoria di `npm audit` o `dotnet list package --vulnerable` quando cambiano i pacchetti) e sul frontend (`any`, `innerHTML`, `bypassSecurityTrust*`, colori esadecimali hardcoded: nei `.ts` solo tra virgolette, nei `.html` solo dentro `style`). |
+| `check-quality` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` | Avvisa su Docker (immagini senza tag o con `latest`, porte host di database e broker esposte), su dipendenze (range di versione `*` e `latest` in `package.json`; `^` e `~` non si segnalano più; promemoria di `npm audit` o `dotnet list package --vulnerable` quando cambiano i pacchetti) e sul frontend (`any`, `innerHTML`, `bypassSecurityTrust*`, colori esadecimali hardcoded: nei `.ts` solo tra virgolette, nei `.html` solo dentro `style`; decoratori `@Input`/`@Output`/`@ViewChild`/`@ContentChild`, `@HostBinding`/`@HostListener`, `template:` e `styles:` inline, `mutate()` su un signal, `waitForTimeout`, `ngClass`/`ngStyle`, `transition: all`). Sono avvisi non bloccanti. |
 | `check-practice` | `PostToolUse` su `Write`, `Edit`, `MultiEdit` | Avvisa su scritture in blocco (`ExecuteUpdate`, `ExecuteDelete`), soppressioni di analyzer senza motivo, endpoint `AllowAnonymous`, `Regex` senza `matchTimeout`, `console.log` e `Console.Write` nel codice, membri pubblici C# senza commento `///`, file nuovo di servizio (`*Service`, `*Handler`, `*Validator`, `.service.ts`, `.component.ts`, `.pipe.ts`) senza test. Ammette le deroghe `kit-allow`. |
 
 ### Promemoria
@@ -96,11 +96,11 @@ Due note pratiche:
 
 ```json
 {
-  "E:/Disco_E/Progetti/esempio-con-sito": {
-    "sito": { "esiste": true, "percorso": "E:/Disco_E/Progetti/wiki" },
+  "/percorso/del/progetto-con-sito": {
+    "sito": { "esiste": true, "percorso": "/percorso/della/wiki" },
     "priorita": false
   },
-  "E:/Disco_E/Progetti/esempio-senza-sito": {
+  "/percorso/del/progetto-senza-sito": {
     "sito": { "esiste": false, "chiesto": true }
   }
 }
@@ -185,6 +185,8 @@ claude plugin update kit@claude-config
 Con la versione 1.9.0 arrivano anche i comandi `/kit:...`: dopo l'aggiornamento, `/reload-plugins` (o una nuova sessione) li rende disponibili, e `claude plugin details kit@claude-config` ne elenca sedici nella riga «Skills».
 
 Con la versione 1.10.0 i dodici controlli sono raggruppati in sei script (vedi [Cosa contiene](#cosa-contiene)). Il nome dei controlli non cambia. Dopo l'aggiornamento non servono azioni nei progetti.
+
+Con la versione 1.11.0 il plugin ha diciannove comandi (`claude plugin details kit@claude-config` li elenca nella riga «Skills») e tredici controlli. Il comando `/kit:code-review` è stato rinominato `/kit:review-regole`: chi lo usava deve adeguarsi. Arrivano `/kit:commit-passo`, `/kit:pr-develop` e `/kit:pr-main`, la domanda sulla wiki del progetto e il promemoria di aggiornamento del sito. Dopo l'aggiornamento, `/reload-plugins` o una nuova sessione; nei progetti conviene `/kit:aggiorna-regole` per portare `security.md` diviso in tre moduli e `git.md` 1.2.
 
 Il procedimento per chi mantiene il template è in [Manutenzione](manutenzione.md).
 
