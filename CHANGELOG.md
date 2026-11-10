@@ -4,13 +4,28 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/` e `docs/sagr
 
 ## 2026-11-11
 
+### Chiusura dei punti aperti del piano
+
+**Perché:** restavano due passi in `PIANO.md`: la verifica di `mappa.md`, delle pagine sul frontend e della versione dal tag, e la scelta del `sidebar_position` di `mappa.md`.
+**Cosa:** verifica chiusa per decisione dell'utente sul codice non committato: nei worktree locali ci sono le cartelle per elemento di `core/`, `shared/` e `features/`, `build-info.generated.ts`, `APP_VERSION` in `build-push.yml` e `build-info.mjs`, e la mappa e `geocoding.service.ts` in `sagreeventi-gps`; su `develop` del repository applicativo ancora no. `sidebar_position: 12` di `mappa.md` confermato dall'utente.
+**Dove:** `PIANO.md`, `CHECKLIST.md` (poi eliminati, vedi sotto), `CHANGELOG.md`.
+**Verifica:** nessun file toccato in `docs/`: typecheck e build restano quelli del 2026-11-11, senza errori.
+**Note:** il controllo va ripetuto al merge nel repository applicativo: `mappa.md`, le pagine sul frontend (`architettura.md`, `informazioni.md`, `sviluppo.md`) e la versione dal tag (`APP_VERSION`). Con l'eliminazione di `CHECKLIST.md` il promemoria resta solo qui.
+
+### Eliminazione di `PIANO.md` e `CHECKLIST.md`
+
+**Perché:** il piano è concluso (nessun passo né decisione aperta) e l'utente ha chiesto di togliere i file di lavoro.
+**Cosa:** eliminati `PIANO.md` e `CHECKLIST.md`; `CLAUDE.md` continua a rimandare a `CHECKLIST.md` per le annotazioni future, che si ricrea al bisogno. Branch locali già ridotti a `develop` e `main`.
+**Dove:** `PIANO.md`, `CHECKLIST.md`, `CHANGELOG.md`.
+**Verifica:** nessun file di `docs/` toccato: typecheck e build restano quelli del 2026-11-11, senza errori.
+
 ### Pulizia dei branch e aggiornamento di PIANO e CHECKLIST
 
-**Perché:** le PR #40 e #42 sono unite in `develop`; i file di lavoro dovevano riflettere lo stato reale.
-**Cosa:** cancellati i branch locali `feature/sagreeventi-mappa-frontend` e `bugfix/claude-md-gh-cli`; `develop` e `main` portati in fast-forward a `origin`. Controllati i punti aperti nel repository applicativo: su `develop` non ci sono ancora mappa, refactoring P1–P4 né `APP_VERSION`, quindi `mappa.md` e le pagine sul frontend restano da verificare. `sidebar_position: 12` di `mappa.md` non ha conflitti.
+**Perché:** le PR #40, #42 e #44 sono unite in `develop` (la #44 è proprio l'aggiornamento di questi file); i file di lavoro dovevano riflettere lo stato reale.
+**Cosa:** cancellati i branch locali `feature/sagreeventi-mappa-frontend`, `bugfix/claude-md-gh-cli` e `bugfix/piano-checklist-aggiornamento`; `develop` e `main` portati in fast-forward a `origin`. Controllati i punti aperti nel repository applicativo: su `develop` non ci sono ancora mappa, refactoring P1–P4 né `APP_VERSION`, quindi `mappa.md` e le pagine sul frontend restano da verificare. `sidebar_position: 12` di `mappa.md` non ha conflitti.
 **Dove:** `PIANO.md`, `CHECKLIST.md`, `CHANGELOG.md`.
 **Verifica:** `git branch -vv` mostra `develop` e `main` allineati a `origin`; nessun file toccato in `docs/`, quindi typecheck e build restano quelli del 2026-11-11 senza errori.
-**Note:** il branch remoto `bugfix/claude-md-gh-cli` esiste ancora e va cancellato dall'utente.
+**Note:** i branch remoti `bugfix/claude-md-gh-cli` e `bugfix/piano-checklist-aggiornamento` sono stati poi cancellati dall'utente: su `origin` restano solo `develop` e `main`.
 
 ### Registrazione della GitHub CLI in `CLAUDE.md`
 
