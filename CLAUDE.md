@@ -4,6 +4,7 @@
 
 - **Sorgente unica:** le pagine di documentazione di SagreEventi vivono solo qui (decisione dell'utente del 2026-11-08). Il repository applicativo `AngeloDotNet/SagreEventi` non conserva copie di `docs/*.md` né degli screenshot: il README e il DEPLOY linkano le pagine di questa wiki (`http://wiki.aepserver.it/sagreeventi/<pagina>`).
 - **Lingua:** italiano per il testo delle pagine; nomi di file, identificatori ed endpoint restano nella forma originale.
+- **Percorsi:** in tutta la wiki (`docs/sagreeventi/` e `docs/claude-config/`) niente percorsi reali del PC in uso (unità, cartelle utente, cartelle dei progetti): solo segnaposto generici, per esempio `/percorso/del/progetto`. Prima di chiudere un intervento si cerca `Disco_E` e `C:\Users` con Grep (decisione dell'utente del 2026-11-10).
 - **Fonte di verità:** le pagine descrivono il comportamento del repository applicativo. Quando il codice cambia, la pagina cambia nello stesso intervento (o si annota in `CHECKLIST.md`).
 - **Front matter:** ogni pagina ha `title` e `sidebar_position`. Link tra pagine con percorsi relativi (`api.md`); link al repository con URL assoluto.
 - **Screenshot:** in `static/img/`, riferiti con percorso assoluto dal sito (`/img/<file>.png`).

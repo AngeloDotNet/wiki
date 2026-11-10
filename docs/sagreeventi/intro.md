@@ -15,6 +15,7 @@ La soluzione è composta da un'API ASP.NET Core (solo API, nessuna interfaccia o
 | --- | --- |
 | [Architettura](architettura.md) | Progetti della soluzione e motivazioni dello stack |
 | [Configurazione](configurazione.md) | Impostazioni dell'API e variabili d'ambiente |
+| [Mappa e posizione](mappa.md) | Posizione degli eventi, ricerca indirizzi e servizi esterni della mappa |
 | [API](api.md) | Endpoint, autenticazione e forma degli eventi |
 | [Protezione anti-bot](anti-bot.md) | Prova di lavoro sull'invio delle segnalazioni |
 | [Moderazione](moderazione.md) | Stati degli eventi e avviso via email ai moderatori |
