@@ -4,6 +4,13 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/` e `docs/sagr
 
 ## 2026-11-11
 
+### Registrazione della GitHub CLI in `CLAUDE.md`
+
+**Perché:** l'hook `guard-commands` blocca `gh pr create` finché il progetto non registra se `gh` è installata (`git.md`, «Integrazione GitHub»).
+**Cosa:** aggiunta la riga «GitHub CLI (gh) installata: sì (2026-11-11)» nella sezione «Eccezioni alle regole globali».
+**Dove:** `CLAUDE.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori; nessuna occorrenza di `Disco_E` e `C:\Users` in `docs/`.
+
 ### Allineamento dei branch locali e pulizia del branch di bugfix
 
 **Perché:** la PR #38 (squash) aveva già portato su `develop` il lavoro di `bugfix/claude-config-docs-allineamento`, e #39 aveva unito `develop` in `main`.
