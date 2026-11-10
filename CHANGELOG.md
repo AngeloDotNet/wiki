@@ -4,6 +4,14 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/` e `docs/sagr
 
 ## 2026-11-11
 
+### Pulizia dei branch e aggiornamento di PIANO e CHECKLIST
+
+**Perché:** le PR #40 e #42 sono unite in `develop`; i file di lavoro dovevano riflettere lo stato reale.
+**Cosa:** cancellati i branch locali `feature/sagreeventi-mappa-frontend` e `bugfix/claude-md-gh-cli`; `develop` e `main` portati in fast-forward a `origin`. Controllati i punti aperti nel repository applicativo: su `develop` non ci sono ancora mappa, refactoring P1–P4 né `APP_VERSION`, quindi `mappa.md` e le pagine sul frontend restano da verificare. `sidebar_position: 12` di `mappa.md` non ha conflitti.
+**Dove:** `PIANO.md`, `CHECKLIST.md`, `CHANGELOG.md`.
+**Verifica:** `git branch -vv` mostra `develop` e `main` allineati a `origin`; nessun file toccato in `docs/`, quindi typecheck e build restano quelli del 2026-11-11 senza errori.
+**Note:** il branch remoto `bugfix/claude-md-gh-cli` esiste ancora e va cancellato dall'utente.
+
 ### Registrazione della GitHub CLI in `CLAUDE.md`
 
 **Perché:** l'hook `guard-commands` blocca `gh pr create` finché il progetto non registra se `gh` è installata (`git.md`, «Integrazione GitHub»).
