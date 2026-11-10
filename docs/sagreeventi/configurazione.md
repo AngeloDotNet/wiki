@@ -27,5 +27,6 @@ Le impostazioni possono essere date anche come variabili d'ambiente, con `__` co
 | `ForwardedHeaders:KnownProxies`, `ForwardedHeaders:KnownNetworks` | Reverse proxy fidati per `X-Forwarded-For` e `X-Forwarded-Proto`. Senza di essi gli header sono ignorati |
 | `AllowedHosts` | Valori di `Host` accettati (in Docker, il nome host pubblico) |
 | `apiBaseUrl` (`public/config.json`) | URL di base dell'API per il client Angular. Vuoto significa stessa origine |
+| `mappa.tileUrl`, `mappa.nominatimUrl` (`public/config.json`) | Tile e ricerca indirizzi della mappa, solo `https://`; vedi [Mappa e posizione](mappa.md) |
 
 L'autenticazione usa token bearer (nessun cookie). Dietro un reverse proxy i limiti di frequenza per IP richiedono `ForwardedHeaders`, altrimenti tutti gli utenti condividono un solo limite.

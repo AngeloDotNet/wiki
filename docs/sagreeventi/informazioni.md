@@ -9,9 +9,9 @@ La pagina **Informazioni** (voce «Informazioni» del menu) descrive in breve l'
 
 ## Versione e data della build
 
-- **Versione:** il campo `version` di `src/SagreEventi.Web/package.json`, incrementato a mano per ogni rilascio.
+- **Versione:** quella del tag di rilascio `vX.Y.Z`, passata dalla CI come `APP_VERSION` al build dell'immagine Angular. Nelle build senza tag (push su `main`, sviluppo locale, test) è il campo `version` di `src/SagreEventi.Web/package.json` (oggi `1.0.0`). Un valore di `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato.
 - **Data:** la data (giorno, mese e anno, formato italiano) in cui è stata generata la build del client, calcolata nel fuso orario di Roma. Il testo della pagina la chiama «Data di rilascio», ma il valore è la data della build.
 
-Il valore è generato dallo script `src/SagreEventi.Web/scripts/build-info.mjs`, che scrive il file `src/app/core/build-info.generated.ts`. Lo script gira automaticamente prima di `npm run build`, `npm start`, `npm run watch` e dei test (script `pre*` di `package.json`), quindi non serve lanciarlo a mano. Il file generato non è versionato (è nel `.gitignore`) e non va modificato.
+Il valore è generato dallo script `src/SagreEventi.Web/scripts/build-info.mjs`, che scrive il file `src/app/core/build-info-generated/build-info.generated.ts`. Lo script gira automaticamente prima di `npm run build`, `npm start`, `npm run watch` e dei test (script `pre*` di `package.json`), quindi non serve lanciarlo a mano. Il file generato non è versionato (è nel `.gitignore`) e non va modificato.
 
-Nel client la pagina legge la versione e la data da quel file: per cambiarle basta aggiornare la versione in `package.json` e rifare la build.
+Nel client la pagina legge la versione e la data da quel file: per cambiare la versione di un rilascio basta creare e pubblicare il tag `vX.Y.Z` su `main` (la CI rifà la build con quella versione). In locale si può provare con `APP_VERSION=1.2.3 npm run build`.
