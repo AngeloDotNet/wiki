@@ -16,3 +16,4 @@
 ## Eccezioni alle regole globali
 
 - **Integrazione GitHub approvata:** PR sì, push sì, tag no, rilasci no (2026-11-07)
+- **GitHub CLI (gh) installata:** sì (2026-11-11)
