@@ -29,18 +29,18 @@ In un progetto nuovo Claude elimina il materiale che appartiene al template e no
 |---|---|---|
 | `core.md` | `rules/` | all'avvio (sempre) |
 | `git.md` | `rules/` | all'avvio (sempre) |
-| `lavoro.md` | `rules/` | all'avvio (sempre; breve: contesto e token, indagine dei difetti, review, contenuti non fidati, imprevisti e rollback) |
+| `lavoro.md` | `rules/` | all'avvio (sempre; breve: contesto e token, criterio `/clear` o `/compact`, indagine dei difetti, review, contenuti non fidati, imprevisti e rollback) |
 | `security.md` | `rules/` | all'avvio (principi sempre attivi: mappa ASVS 5.0, progettazione fail closed, crittografia, dati e segreti, supply chain, log e allerta, test di sicurezza; una sezione minima sul mobile) |
-| `security-backend.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (autenticazione, protezione dell'API, abuso di risorse, vulnerabilità applicative, upload) |
+| `security-backend.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (autenticazione, chiavi e password .NET, protezione dell'API, abuso di risorse, vulnerabilità applicative, upload) |
 | `security-frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss` (innerHTML, storage, CSP, Trusted Types, postMessage) |
 | `frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss`, `angular.json` o `tsconfig*.json` |
 | `backend.md`, `backend-architecture.md`, `backend-app.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (i tre moduli backend si caricano insieme: stack e regole comuni; architettura e accesso ai dati; logica applicativa, errori e test) |
-| `docker.md` | `rules/` | quando si legge o modifica un Dockerfile, un file compose o `docker/**` |
 | `feature-workflow.md` | `rules-optional/` | solo fullstack e su conferma: flusso per entità, backend → frontend |
 | `backend-email.md` | `rules-optional/` | quando serve l'invio di email |
 | `backend-infra.md` | `rules-optional/` | quando servono messaggistica, cache applicativa o eventi |
+| `docker.md` | `rules-optional/` | solo su richiesta esplicita (per esempio «crea un Dockerfile»); attivato, si carica quando si legge o modifica un Dockerfile, un file compose o `docker/**` |
 
-I moduli per area (`frontend`, `backend`, `docker`) usano l'intestazione `paths:` con glob per estensione, quindi sono identici in ogni progetto e non occupano contesto finché non si tocca un file corrispondente.
+I moduli per area (`frontend`, `backend` e, se attivato, `docker`) usano l'intestazione `paths:` con glob per estensione, quindi sono identici in ogni progetto e non occupano contesto finché non si tocca un file corrispondente.
 
 Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non siano regole.
 
@@ -48,7 +48,7 @@ Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non s
 
 | File | Scopo |
 |---|---|
-| `avvio-progetto.md` | Procedura che Claude segue per avviare un progetto (nuovo o esistente): domande, ispezioni, scelta dei moduli, compilazione del `CLAUDE.md`. Non va aperta né citata a Claude: la legge da solo (vedi "Come si usa, in breve" nella [pagina iniziale](intro.md)). |
+| `avvio-progetto.md` | Procedura che Claude segue per avviare un progetto (nuovo o esistente): domande, ispezioni, scelta dei moduli, compilazione del `CLAUDE.md`, tabella delle decisioni «chiesto, non presunto» con il campo del `CLAUDE.md` e la regola di ciascuna. Non va aperta né citata a Claude: la legge da solo (vedi "Come si usa, in breve" nella [pagina iniziale](intro.md)). |
 | `ci/` | Esempi di workflow da adattare al progetto: `ci.yml` (job backend e frontend con build, test, lint e audit a ogni pull request, action fissate allo SHA; non eseguito su GitHub, da verificare al primo uso) e il controllo CI delle deroghe `kit-allow` (`kit-allow.yml`) con lo script che genera il report (`kit-allow-report.mjs`, con i suoi test). |
 | `eslint.config.example.js` | Esempio di configurazione ESLint (flat config con `angular-eslint`) che applica le regole di `frontend.md` controllabili da un linter. I nomi delle regole non sono provati su un progetto reale: si verificano con `npm run lint`. |
 | `settings.example.json` | Esempio di permessi per `.claude/settings.json` (`deny` per `.env`, chiavi e `secrets/`, `allow` per i comandi di sola verifica). Non si copia da solo: la sintassi va verificata sulla versione di Claude Code installata. |

@@ -11,14 +11,14 @@ sidebar_label: Come funziona
 
 - Una deroga a un controllo automatico del plugin si scrive nel codice, sulla stessa riga o su quella sopra: `kit-allow: <id> — <motivo>` (`core.md` §6, punto 23).
 
-- Nei moduli, "sempre", "mai", "vietato", "obbligatorio" sono regole non negoziabili (si derogano solo con la tua approvazione); "preferisci", "preferita", "valuta" sono default modificabili con un motivo dichiarato.
+- Nei moduli, "sempre", "mai", "vietato", "obbligatorio" sono regole non negoziabili (si derogano solo con la tua approvazione); "preferisci", "preferita", "valuta" sono default modificabili con un motivo dichiarato. Nelle sezioni di `backend.md` e `frontend.md` ogni regola ha l'etichetta **Regola** (MUST, oppure PREFER solo se il testo dice «preferisci» o «valuta») e, dove il testo lo diceva già, le righe **Motivo** ed **Eccezione**.
 
 - Nei file del template non vanno mai scritti percorsi assoluti né nomi di altri progetti.
 
 # Cosa chiede Claude e cosa fa da solo
 
 **Chiede, sempre una domanda per volta** e attendendo la risposta (`core.md` §6.5):
-- All'avvio: tipo di progetto, sicurezza, Docker, stato (nuovo o esistente), tecnologia frontend e mobile, ORM, file .NET di root, flusso per entità;
+- All'avvio: tipo di progetto, sicurezza, stato (nuovo o esistente), tecnologia frontend e mobile, ORM, file .NET di root, flusso per entità;
 
 - Ogni volta che c'è un dubbio, un requisito ambiguo, un refactoring ampio, una licenza copyleft o una best practice nuova;
 
@@ -37,8 +37,8 @@ sidebar_label: Come funziona
 
 - Annota in `CHECKLIST.md` bug e miglioramenti che trova lavorando, senza interrompere il lavoro (`core.md` §6, punti 20-22).
 
-**Riprendere la giornata:** con il plugin, `/kit:buonasera` salva in `PIANO.md` lo stato dei lavori e in `CHECKLIST.md` i problemi nuovi, e stampa il comando da lanciare la volta dopo. `/kit:buongiorno` rilegge quei file, riassume dove si è arrivati e propone il primo passo, senza modificare nulla. Entrambi partono solo se li lanci tu.
+**Riprendere la giornata:** con il plugin, `/kit:buonasera` salva in `PIANO.md` lo stato dei lavori e in `CHECKLIST.md` i problemi nuovi, e stampa il comando da lanciare la volta dopo. `/kit:buongiorno` rilegge quei file, riassume dove si è arrivati e propone il primo passo, senza modificare nulla. `/kit:buonasera` aggiorna anche `README.md`, `CHANGELOG.md` e la wiki senza domande, elenca i file inutili (li cancella solo se confermi) e ricorda `/clear` o `/compact`; parte solo se lo lanci tu.
 
-**Git:** segue il git flow completo, con `develop` obbligatorio in ogni progetto (se manca, ti chiede se può crearlo da `main`), conferma il branch con te a ogni lavoro, non committa su `main` o `develop` senza una tua deroga, presenta il piano dei commit e ne crea **uno alla volta** con il tuo ok. Esegue solo commit locali: l'inizializzazione del repository resta a tuo carico. Push e tag li esegue su tua richiesta o con tua conferma; PR e rilasci con `gh` solo se la GitHub CLI è dichiarata installata nel `CLAUDE.md` (riga «GitHub CLI (gh) installata»). Una pipeline la avvia solo dopo una tua domanda di conferma per ogni esecuzione. Con il [plugin `kit`](plugin.md) installato questi divieti e la regola della domanda unica sono applicati anche tecnicamente, non solo scritti. Anche i segreti in configurazione, i pattern vietati nel codice e le pratiche di qualità sono controllati dal plugin: i blocchi fermano l'operazione, gli avvisi e i promemoria restano visibili a Claude e a te.
+**Git:** segue il git flow completo, con `develop` obbligatorio in ogni progetto (se manca, ti chiede se può crearlo da `main`), crea da solo il branch di lavoro senza chiederti conferma, non committa su `main` o `develop` senza una tua deroga e, fuori dalle skill, chiede il tuo ok prima di ogni commit; con `/kit:commit-passo` il lancio è il via libera e i commit del piano si creano in sequenza senza altre conferme. Esegue solo commit locali: l'inizializzazione del repository resta a tuo carico. Push e tag li esegue su tua richiesta o con tua conferma; PR e rilasci con `gh` solo se la GitHub CLI è dichiarata installata nel `CLAUDE.md` (riga «GitHub CLI (gh) installata»). Una pipeline la avvia solo dopo una tua domanda di conferma per ogni esecuzione. Con il [plugin `kit`](plugin.md) installato questi divieti e la regola della domanda unica sono applicati anche tecnicamente, non solo scritti. Anche i segreti in configurazione, i pattern vietati nel codice e le pratiche di qualità sono controllati dal plugin: i blocchi fermano l'operazione, gli avvisi e i promemoria restano visibili a Claude e a te.
 
-**Deploy:** sempre con `Dockerfile` e `docker-compose` (`docker.md`). Database (SQL Server o PostgreSQL) e nginx come reverse proxy sono già sul server: Claude non genera configurazioni per loro. I server li gestisci tu; Claude produce gli artefatti (file base, `override`, `prod`, `.env.example`) ma non configura host, rete o TLS.
+**Deploy:** Docker è opzionale: `docker.md` non si chiede all'avvio e si attiva solo su richiesta esplicita (per esempio «crea un Dockerfile»); attivato, il deploy è con `Dockerfile` e `docker-compose`. Database (SQL Server o PostgreSQL) e nginx come reverse proxy sono già sul server: Claude non genera configurazioni per loro. I server li gestisci tu; Claude produce gli artefatti (file base, `override`, `prod`, `.env.example`) ma non configura host, rete o TLS.
