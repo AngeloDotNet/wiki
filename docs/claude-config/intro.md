@@ -7,7 +7,7 @@ sidebar_label: Introduzione
 
 Repository di partenza per i nuovi progetti sviluppati con [Claude Code](https://claude.com/claude-code).
 
-Contiene le regole di sviluppo (stack .NET + Angular, git flow, sicurezza, Docker) già organizzate nel formato che Claude Code carica da solo, più un `CLAUDE.md` da compilare per il progetto.
+Contiene le regole di sviluppo (stack .NET + Angular, git flow, sicurezza, Docker come modulo opzionale) già organizzate nel formato che Claude Code carica da solo, più un `CLAUDE.md` da compilare per il progetto.
 
 Le regole sono in italiano; codice, identificatori e messaggi di commit che ne derivano sono in inglese.
 
@@ -45,7 +45,7 @@ Claude ti fa le domande **una alla volta**, scrive il piano in `PIANO.md` (per i
 
 Per i casi particolari vedi [Come si usa, nei dettagli](uso.md).
 
-Claude non fa mai `git init`. Push e tag sono consentiti sempre; PR e rilasci passano da `gh` solo se la GitHub CLI è dichiarata installata nel `CLAUDE.md` (vedi [Integrazione GitHub](plugin.md#integrazione-github)). Claude li esegue solo su tua richiesta o con tua conferma. Per i commit fa solo commit locali, e solo dopo aver confermato branch e messaggio con te. Il [plugin `kit`](plugin.md) rende tecnici molti di questi divieti (comandi, segreti, pattern vietati) e la regola della domanda unica; le pratiche che richiedono giudizio arrivano come avvisi. Si installa una volta per macchina:
+Claude non fa mai `git init`. Push e tag sono consentiti sempre; PR e rilasci passano da `gh` solo se la GitHub CLI è dichiarata installata nel `CLAUDE.md` (vedi [Integrazione GitHub](plugin.md#integrazione-github)). Claude li esegue solo su tua richiesta o con tua conferma. Per i commit fa solo commit locali, e, fuori dalle skill `/kit:commit-passo`, `/kit:pr-develop` e `/kit:pr-main` (il cui lancio è il via libera), solo dopo il tuo ok; il branch di lavoro lo crea da solo. Il [plugin `kit`](plugin.md) rende tecnici molti di questi divieti (comandi, segreti, pattern vietati) e la regola della domanda unica; le pratiche che richiedono giudizio arrivano come avvisi. Si installa una volta per macchina:
 
 ```
 claude plugin marketplace add AngeloDotNet/claude-config

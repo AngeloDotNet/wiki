@@ -22,7 +22,7 @@ sidebar_label: Manutenzione
 | Claude ignora una regola | Il modulo è in `.claude/rules/` ed è caricato? Verifica con `/context` (i moduli con `paths:` si caricano solo quando si tocca un file corrispondente). La regola è scritta con "sempre/mai" o con "preferisci"? Se la sessione è lunga, ripeti la regola o apri una sessione nuova. |
 | Claude usa una libreria vietata (MediatR, AutoMapper, Hangfire, Quartz.NET) | Ricordagli il divieto; controlla che `core.md` e `backend.md` siano in `.claude/rules/`. |
 | Conflitto tra un modulo e il progetto | Vale il `CLAUDE.md` di progetto. Se il conflitto non è chiaro, Claude deve chiedere. |
-| Un modulo non si carica | Verifica che sia in `.claude/rules/` (non in `rules-optional/`) e, per `frontend`, `backend` e `docker`, che si sia letto o modificato un file corrispondente a `paths:`. |
+| Un modulo non si carica | Verifica che sia in `.claude/rules/` (non in `rules-optional/`) e, per `frontend`, `backend` e, se attivato, `docker`, che si sia letto o modificato un file corrispondente a `paths:`. |
 | Le risposte non sono in italiano | La regola di lingua è in `core.md` §6 (codice in inglese, spiegazioni in italiano): controlla che `core.md` sia caricato. |
 | Un hook blocca una scrittura che ritieni corretta | Se il pattern è legittimo, dichiaralo con una deroga `kit-allow: <id> — <motivo>` sulla stessa riga o su quella sopra (vedi [Plugin](plugin.md)). Per sospendere tutto il plugin: `claude plugin disable kit@claude-config`. |
 
