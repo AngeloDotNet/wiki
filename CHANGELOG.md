@@ -2,6 +2,16 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-14
+
+### Lavori dell'11/11 portati su `main`
+
+**Perché:** i lavori dell'11/11 (wiki License Manager, bump della versione in CI, versione dal tag, home a quattro colonne) erano solo in locale; vanno su `main` per pubblicare il sito e avviare il bump in CI.
+**Cosa:** tre commit (`docs(sagreeventi)`, `docs(license-management)`, `feat(site)`) uniti su `develop` con squash (PR #50). `main` aveva sei commit di squash precedenti che `develop` non conteneva, quindi una PR diretta rischiava conflitti `add/add`: prima un merge commit di `main` in `develop` (PR #51, nessuna modifica ai file), poi `develop` su `main` con merge commit (PR #52). Il merge su `main` ha oggetto `merge: ...`, quindi il bump in CI non cambia la versione (resta 0.6.0). Nel `README.md` la frase «vale il titolo della PR» ora vale solo per lo squash su `develop`: su `main` conta l'oggetto del merge commit.
+**Dove:** `README.md` (sezione «Versionamento»), `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori prima dei commit (nessuno script di test); controllo visivo della home fatto dall'utente. Il workflow su `main` è concluso con esito positivo (riferito dall'utente); nessun commit `chore(version)`, come atteso con l'oggetto `merge: ...`. Il ramo con bump effettivo non è ancora provato.
+**Note:** voce aperta in `CHECKLIST.md`: decidere come far scattare il bump con i merge commit su `main` (oggetto scritto a mano o bump calcolato sui commit del merge).
+
 ## 2026-11-12
 
 ### SagreEventi: layout della scheda «Temi»
