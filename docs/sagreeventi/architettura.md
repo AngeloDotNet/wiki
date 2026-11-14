@@ -12,7 +12,7 @@ sidebar_position: 2
 | `tests/SagreEventi.Web.Server.Tests` | Test di integrazione dell'API (xUnit, SQLite in memoria) |
 | `src/SagreEventi.Web/src/app/**/*.spec.ts` | Unit test del client (Vitest, jsdom), ciascuno accanto al proprio sorgente |
 | `deploy/docker-compose.yml`, `deploy/docker-compose.*.yml`, `deploy/sites-available` | Due container (Angular e API) dietro il nginx dell'host, da un compose unico o da due separati, vedi [Deployment](deployment.md) e [DEPLOY.md](https://github.com/AngeloDotNet/SagreEventi/blob/main/DEPLOY.md) |
-| `.github/workflows/build-push.yml` | Compila e testa (API e client), poi pubblica le immagini API e Angular su Docker Hub (push su `main` o tag `vX.Y.Z`) |
+| `.github/workflows/build-push.yml` | Compila e testa (API e client), poi pubblica le immagini API e Angular su Docker Hub (push su `main` o tag `X.Y.Z`) |
 
 I componenti Angular tengono template, stili e classe in file separati (`x.component.ts`, `x.component.html` e `x.component.css` solo se il componente ha stili); ogni componente, servizio o altro file non di componente sta in una cartella con il proprio nome: `core/<nome>/`, `shared/<nome>/` e `features/<area>/<pagina>/`, anche quando la feature ha una sola pagina. I confini tra cartelle sono verificati dal lint: una feature non importa da un'altra feature, e `core/` e `shared/` non importano da `features/`.
 
