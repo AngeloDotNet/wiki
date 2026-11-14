@@ -9,8 +9,13 @@ import {wikis} from './src/data/wikis';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// Versione x.y.z aggiornata dopo ogni commit da scripts/bump-version.mjs.
-const appVersion = readFileSync(resolve(process.cwd(), 'VERSION'), 'utf8').trim();
+// Versione x.y.z mostrata nel footer. Se la CI passa APP_VERSION (tag di rilascio vX.Y.Z, senza la «v»)
+// vince quella; un valore che non sia esattamente X.Y.Z viene scartato. Altrimenti si usa VERSION,
+// aggiornato dopo ogni commit da scripts/bump-version.mjs.
+const tagVersion = (process.env.APP_VERSION ?? '').trim().replace(/^v/, '');
+const appVersion = /^\d+\.\d+\.\d+$/.test(tagVersion)
+  ? tagVersion
+  : readFileSync(resolve(process.cwd(), 'VERSION'), 'utf8').trim();
 
 // La data di ultimo aggiornamento si mostra quando è disponibile in uno dei due modi:
 // - .git presente (build locale): Docusaurus legge la cronologia git;
@@ -21,7 +26,7 @@ const lastUpdateAvailable =
 
 const config: Config = {
   title: 'Documentazione',
-  tagline: 'Claude Code Kit e Sagre & Eventi',
+  tagline: 'Claude Code Kit, Sagre & Eventi e License Manager',
   favicon: 'img/favicon.svg',
 
   // Metadati di default per motori di ricerca e condivisioni. Ogni pagina può sovrascriverli
@@ -31,7 +36,7 @@ const config: Config = {
       tagName: 'meta',
       attributes: {
         name: 'description',
-        content: 'Wiki di Claude Code Kit e Sagre & Eventi: regole, plugin, API e deployment.',
+        content: 'Wiki di Claude Code Kit, Sagre & Eventi e License Manager: regole, plugin, API e deployment.',
       },
     },
   ],

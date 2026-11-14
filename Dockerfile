@@ -6,6 +6,9 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
+# Versione del tag di rilascio (X.Y.Z), passata dalla CI; vuota nelle build senza tag.
+ARG APP_VERSION=""
+ENV APP_VERSION=${APP_VERSION}
 # Build the site, then compute the CSP hashes of its inline scripts.
 RUN npm run build && node scripts/generate-csp.mjs
 

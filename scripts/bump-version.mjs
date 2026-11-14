@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-// Aggiorna la versione x.y.z dopo un commit, leggendo il messaggio in Conventional Commits.
-// Chiamato dall'hook .githooks/post-commit.
+// Aggiorna la versione x.y.z leggendo il messaggio in Conventional Commits.
+// Chiamato dal workflow .github/workflows/build-push.yml a ogni push su main.
 //
 // Uso:
 //   node scripts/bump-version.mjs                      legge il messaggio di HEAD
 //   node scripts/bump-version.mjs --message "feat: x"  usa il messaggio passato (test)
 //   aggiungere --dry-run per calcolare senza scrivere né committare
+//   aggiungere --no-commit per scrivere i file senza creare il commit (lo fa la CI dopo il build)
 import {execFileSync} from 'node:child_process';
 import {readFileSync, writeFileSync, existsSync} from 'node:fs';
 import {dirname, join} from 'node:path';
@@ -14,6 +15,7 @@ import {fileURLToPath} from 'node:url';
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const dryRun = args.includes('--dry-run');
+const noCommit = args.includes('--no-commit');
 const messageIndex = args.indexOf('--message');
 
 function git(gitArgs) {
@@ -81,8 +83,13 @@ function main() {
     files.push('package-lock.json');
   }
 
+  if (noCommit) {
+    console.log(`bump-version: ${current} -> ${next} (file aggiornati, commit non creato)`);
+    return;
+  }
+
   // Commit separato, limitato ai file della versione. Il suo messaggio è «chore(version): …»,
-  // quindi il post-commit successivo non genera un altro commit.
+  // quindi un eventuale bump successivo non ne genera un altro.
   git(['add', '--', ...files]);
   git(['commit', '-m', `chore(version): ${next}`, '--', ...files]);
   console.log(`bump-version: ${current} -> ${next}`);

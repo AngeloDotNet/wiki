@@ -1,8 +1,67 @@
 # Changelog
 
-Registro delle modifiche alla wiki unificata (`docs/claude-config/` e `docs/sagreeventi/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+
+## 2026-11-12
+
+### SagreEventi: layout della scheda «Temi»
+
+**Perché:** nel repository applicativo la scheda Gestione → Temi affianca ora i periodi a due a due (fix `bugfix/temi-layout`, non ancora committato); la pagina descriveva una scheda per riga.
+**Cosa:** una frase nella sezione «Scheda "Temi"» sulla disposizione (due colonne da 768 px, una sul telefono; Inizio sopra Fine, Giorno e Mese sulla stessa riga).
+**Dove:** `docs/sagreeventi/temi.md`, `CHANGELOG.md`.
+**Verifica:** solo testo; `typecheck` e `build` della wiki non rieseguiti.
+
+### SagreEventi: pagina sui temi e periodi stagionali
+
+**Perché:** i periodi dei temi stagionali ora si leggono dal server e l'Admin li cambia da Gestione → Temi (PR #58 del repository applicativo); le pagine non parlavano dei temi.
+**Cosa:** nuova pagina «Temi» (temi disponibili, periodi iniziali, come si sceglie il tema, scheda Admin, endpoint e validazione, cache, rilascio); riga di `/api/temi/periodi` in `api.md`.
+**Dove:** `docs/sagreeventi/temi.md`, `docs/sagreeventi/api.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori (link validati con `onBrokenLinks: 'throw'`); l'unico avviso è la data di aggiornamento non inferibile per la pagina nuova, non ancora tracciata da git. Contenuto confrontato con `theme.service.ts`, `PeriodoTemaValidator` e `TemiEndpoints` del repository applicativo.
+
+### SagreEventi: il tag di rilascio è `X.Y.Z`, senza `v`
+
+**Perché:** `git.md` 1.5 vuole tag `X.Y.Z` senza prefisso; la CI di SagreEventi è stata allineata e le pagine parlavano ancora di `vX.Y.Z`.
+**Cosa / Dove:** `docs/sagreeventi/architettura.md`, `deployment.md`, `informazioni.md`.
+**Verifica:** solo testo Markdown, build del sito non eseguita.
+
+### Regole su tag e rilasci del plugin kit 1.12.0
+
+**Perché:** il plugin `kit` 1.12.0 blocca i tag con nome o branch sbagliati e `git.md` 1.5 definisce formato e momento del tag; la pagina del plugin parlava ancora di tag sempre consentiti.
+**Cosa:** in `plugin.md` la frase sul blocco dei comandi e la sezione «Integrazione GitHub» descrivono la regola (tag `X.Y.Z` senza `v`, solo da `main`, via dell'utente come regola scritta); aggiunta la nota di aggiornamento alla 1.12.0.
+**Dove:** `docs/claude-config/plugin.md`, `CHANGELOG.md`.
+**Verifica:** build del sito non eseguita per questa modifica (solo testo Markdown).
 
 ## 2026-11-11
+
+### Bump della versione in CI
+
+**Perché:** la versione restava a 0.6.0: il bump locale (hook `post-commit`) scatta solo per `feat`/`fix`/`perf`, i commit recenti sono `docs`/`chore`, le PR sono unite con squash su GitHub dove l'hook non gira, e non ci sono tag. Richiesta dell'utente di spostare il bump in CI.
+**Cosa:** a ogni push su `main` il workflow calcola la versione dal messaggio del commit (stessa regola di prima: `feat` minor, `fix`/`perf` patch, breaking major, `docs`/`chore` nessun cambio), la scrive in `VERSION` e `package.json` prima del build, così il footer dell'immagine mostra già il numero nuovo, e a build riuscito registra `chore(version): x.y.z` su `main`. Il push con `GITHUB_TOKEN` non riavvia il workflow. `bump-version.mjs` ha la nuova opzione `--no-commit`. Rimossi l'hook locale `post-commit`, `install-git-hooks.mjs` e il `postinstall`. Su `main` un run non viene più annullato da uno successivo.
+**Dove:** `.github/workflows/build-push.yml`, `scripts/bump-version.mjs`, `package.json`, `README.md`, `CHANGELOG.md`; eliminati `.githooks/post-commit` e `scripts/install-git-hooks.mjs`.
+**Verifica:** `--dry-run` su `docs`, `fix` e `feat!` (nessun cambio, 0.6.1, 1.0.0); `--no-commit` provato e file ripristinati; `npm run typecheck` e `npm run build` senza errori; nessuno script di test; Grep di `Disco_E` e `C:\Users` in `docs/` senza risultati. Il workflow non è stato eseguito su GitHub.
+**Note:** il tag `vX.Y.Z` resta possibile e ha la precedenza sul footer (vedi sotto).
+
+### Versione dal tag di rilascio
+
+**Perché:** la versione nel footer veniva solo da `VERSION`, aggiornato dal bump dopo ogni commit; richiesta dell'utente di ricavarla anche dal tag di rilascio, come per SagreEventi. Il bump esistente resta.
+**Cosa:** con il tag `vX.Y.Z` la CI passa `APP_VERSION=X.Y.Z` al build; il footer usa quel valore, altrimenti `VERSION`. Un valore non `X.Y.Z` è scartato. Il workflow parte anche sui tag `vX.Y.Z` e pubblica l'immagine con il tag `X.Y.Z` oltre a `latest` e allo SHA.
+**Dove:** `docusaurus.config.ts`, `Dockerfile`, `.github/workflows/build-push.yml`, `README.md`, `CHANGELOG.md`.
+**Verifica:** vedi sotto (typecheck e build, anche con `APP_VERSION`).
+**Note:** il tag non è stato creato: i tag richiedono l'approvazione dell'utente. Il workflow non è stato eseguito su GitHub.
+
+### Home a quattro colonne
+
+**Perché:** con quattro aree, due colonne lasciavano la home lunga e le card molto grandi; richiesta dell'utente di passare a 3 o 4 colonne.
+**Cosa:** le card passano da `col--6` a `col--3` (4 colonne sopra 996px); tra 577px e 996px restano 2 colonne, sotto 1 colonna. Le copertine si ridimensionano da sole (larghezza 100%, proporzioni 3:1), nessuna immagine modificata.
+**Dove:** `src/pages/index.tsx`, `src/css/custom.css`, `CHANGELOG.md`.
+**Verifica:** vedi sotto (typecheck e build).
+
+### Nuova wiki License Manager
+
+**Perché:** documentare il servizio di gestione delle licenze delle web app SaaS (progetto `license-manager`), come già fatto per Sagre & Eventi e per il kit.
+**Cosa:** nuova wiki con sette pagine (introduzione, architettura, sicurezza, configurazione, API di validazione, API di gestione, sviluppo) che descrivono lo stato del backend dopo il passo 6b (prodotti, piani, account e membri); registrata in `src/data/wikis.ts` con sidebar e copertina; titolo, descrizione e README aggiornati; sezione dedicata in `CLAUDE.md`.
+**Dove:** `docs/license-management/`, `sidebars/license-management.ts`, `static/img/home-license.svg`, `src/data/wikis.ts`, `docusaurus.config.ts`, `README.md`, `CLAUDE.md`, `CHANGELOG.md`.
+**Verifica:** vedi la voce di verifica sotto (typecheck e build).
 
 ### Chiusura dei punti aperti del piano
 
