@@ -4,6 +4,30 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-14
 
+### SagreEventi: GPS pubblicato e versione 1.1.0
+
+**Perché:** il frontend del GPS (indirizzo, coordinate, mappa e ricerca indirizzi) è in `develop` con la PR #67 e la release 1.1.0 è pubblicata; la pagina «Informazioni» citava ancora `1.0.0` come versione di `package.json`.
+**Cosa:** `informazioni.md`: versione di `package.json` aggiornata a `1.1.0`. Le pagine `mappa.md`, `api.md` e `configurazione.md` descrivevano già il GPS e non cambiano.
+**Dove:** `docs/sagreeventi/informazioni.md`, `CHANGELOG.md`.
+**Verifica:** solo testo Markdown; `npm run typecheck` e `npm run build` non eseguiti.
+**Note:** il GPS non è ancora in produzione: la migrazione `AddPosizioneEventi` va applicata a un SQL Server reale al deploy. Il commit di questa voce non è stato creato.
+
+### Chiusura del piano e della checklist dell'11/11
+
+**Perché:** i lavori dell'11/11 sono su `main` e il tag `0.6.0` è pubblicato (workflow sul tag concluso con esito positivo, release creata); restavano voci in `PIANO.md` e `CHECKLIST.md` (file non tracciati), da chiudere prima di cancellarli. Decisioni dell'utente.
+**Cosa:** punti chiusi come decisioni prese: (1) footer: con un tag `X.Y.Z` vince il tag, nelle build senza tag vale `VERSION` (due fonti accettate, già descritto in `README.md`); (2) tag `latest`: i tag si creano sempre da `main`, quindi `latest` coincide con l'ultimo push su `main`; (3) il tag resta sul commit di merge come da `git.md`, un commit prima del `chore(version)` (il footer non cambia perché il build del tag usa `APP_VERSION`); (4) `develop` resta indietro di un commit `chore(version)` e dei merge commit di `main`, accettato (nessun branch di sincronizzazione); (5) il bump con i merge commit è coperto dalla regola in `CLAUDE.md` (oggetto `feat(...)` o `fix(...)`).
+**Dove:** `CHANGELOG.md`; cancellati `PIANO.md` e `CHECKLIST.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori, nessuno script di test; solo testo Markdown.
+**Note:** resta da provare il ramo del bump con effetto reale: al prossimo rilascio vero, merge su `main` con oggetto `feat(...)` o `fix(...)` e controllo del commit `chore(version)`. Il commit di questa voce non è stato creato.
+
+### Primo tag di rilascio e release su GitHub
+
+**Perché:** provare in pratica il trigger del workflow sui tag `X.Y.Z` senza `v` e avere una prima versione pubblicata con la regola appena scritta in `CLAUDE.md`. Via esplicito dell'utente per ciascuno dei tre passi (creazione del tag, push del tag, release).
+**Cosa:** dopo il merge su `main` della PR #56 (merge commit `58572d7`, oggetto `merge: ...`, quindi senza bump) è stato creato il tag annotato `0.6.0` sul commit di merge, coincidente con `VERSION`; il push del tag ha avviato il workflow, concluso con esito positivo (riferito dall'utente). Poi la release `0.6.0` con `gh release`, note in inglese raggruppate in Added, Changed e Notes.
+**Dove:** tag `0.6.0` e release `0.6.0` su GitHub; `CHANGELOG.md`.
+**Verifica:** `git ls-remote --tags origin` mostra il tag sul remoto. Non verificati da me: i tag dell'immagine su Docker Hub e il footer 0.6.0 (la CI non è leggibile dalle skill).
+**Note:** nessun `chore(version)` su `main`, atteso con l'oggetto `merge: ...`. Il commit di questa voce non è stato creato.
+
 ### Regola su tag e rilasci in `CLAUDE.md`
 
 **Perché:** nessuna regola diceva quando e come creare tag e rilasci; c'era solo il divieto senza approvazione. Decisione dell'utente: il numero del tag viene da `VERSION` di `main`.
@@ -26,7 +50,7 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 **Cosa:** tre commit (`docs(sagreeventi)`, `docs(license-management)`, `feat(site)`) uniti su `develop` con squash (PR #50). `main` aveva sei commit di squash precedenti che `develop` non conteneva, quindi una PR diretta rischiava conflitti `add/add`: prima un merge commit di `main` in `develop` (PR #51, nessuna modifica ai file), poi `develop` su `main` con merge commit (PR #52). Il merge su `main` ha oggetto `merge: ...`, quindi il bump in CI non cambia la versione (resta 0.6.0). Nel `README.md` la frase «vale il titolo della PR» ora vale solo per lo squash su `develop`: su `main` conta l'oggetto del merge commit.
 **Dove:** `README.md` (sezione «Versionamento»), `CHANGELOG.md`.
 **Verifica:** `npm run typecheck` e `npm run build` senza errori prima dei commit (nessuno script di test); controllo visivo della home fatto dall'utente. Il workflow su `main` è concluso con esito positivo (riferito dall'utente); nessun commit `chore(version)`, come atteso con l'oggetto `merge: ...`. Il ramo con bump effettivo non è ancora provato.
-**Note:** voce aperta in `CHECKLIST.md`: decidere come far scattare il bump con i merge commit su `main` (oggetto scritto a mano o bump calcolato sui commit del merge).
+**Note:** da decidere come far scattare il bump con i merge commit su `main` (oggetto scritto a mano o bump calcolato sui commit del merge); poi deciso: oggetto `feat(...)` o `fix(...)` scritto a mano, regola in `CLAUDE.md`.
 
 ## 2026-11-12
 
