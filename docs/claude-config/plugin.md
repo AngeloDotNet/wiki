@@ -5,7 +5,7 @@ sidebar_label: Plugin kit
 
 # Plugin `kit`
 
-Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: tredici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Dalla versione 1.9.0 il plugin aggiunge anche diciannove comandi `/kit:...` (sezione [Comandi](#comandi)).
+Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: tredici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Dalla versione 1.9.0 il plugin aggiunge anche i comandi `/kit:...` (oggi ventuno; sezione [Comandi](#comandi)).
 
 ## Cosa contiene
 
@@ -20,7 +20,7 @@ Gli script sono sei. Quattro raggruppano più controlli dello stesso evento; `gu
 - `guard-write` esegue `guard-secrets` e `guard-patterns` prima di una scrittura;
 - `check-write` esegue `check-plan`, `check-quality` e `check-practice` dopo una scrittura;
 - `session-close` esegue `plan-reminder`, `check-close` e `site-reminder` a fine di ogni risposta;
-- `prompt-start` esegue `ask-one-question`, `rules-watch` e `site-question` a ogni messaggio.
+- `prompt-start` esegue `ask-one-question`, `rules-watch` e `site-question` a ogni messaggio; contiene anche il promemoria sulla versione del plugin (vedi [Versione del plugin](#versione-del-plugin-promemoria-di-aggiornamento), non ancora rilasciato).
 
 Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qualità e pratica) dello stesso file escono in un unico messaggio; lo stesso vale per i promemoria di `session-close`.
 
@@ -58,7 +58,7 @@ Il blocco dei comandi vietati è assoluto: chi vuole un'eccezione esegue il coma
 
 ## Comandi
 
-Il plugin aggiunge ventuno comandi, che si lanciano digitando `/kit:` seguito dal nome. Non partono mai da soli, tranne `/kit:pr-develop`, che Claude può lanciare dopo il tuo sì al termine di `/kit:commit-passo`: gli altri sono impostati perché solo l'utente li possa lanciare. I comandi di revisione e controllo non possono nemmeno modificare file (gli strumenti `Edit` e `Write` sono disattivati mentre sono attivi); gli altri scrivono file solo quando li lanci tu. Nessun comando ha opzioni con nome (`--flag`): la colonna «Argomento» indica l'unico argomento facoltativo, dove c'è.
+Il plugin aggiunge ventuno comandi (ventidue con `/kit:modelli`, non ancora rilasciato), che si lanciano digitando `/kit:` seguito dal nome. Non partono mai da soli, tranne `/kit:pr-develop`, che Claude può lanciare dopo il tuo sì al termine di `/kit:commit-passo`: gli altri sono impostati perché solo l'utente li possa lanciare. I comandi di revisione e controllo non possono nemmeno modificare file (gli strumenti `Edit` e `Write` sono disattivati mentre sono attivi); gli altri scrivono file solo quando li lanci tu. Nessun comando ha opzioni con nome (`--flag`): la colonna «Argomento» indica l'unico argomento facoltativo, dove c'è.
 
 | Comando | Cosa fa | Scrive file | Argomento |
 |---|---|---|---|
@@ -83,6 +83,7 @@ Il plugin aggiunge ventuno comandi, che si lanciano digitando `/kit:` seguito da
 | `/kit:accessibilita-ui` | Revisiona l'accessibilità dell'interfaccia rispetto a WCAG 2.2, con una gravità per ogni problema. Le correzioni si chiedono con una richiesta separata. | No | `[cartella-o-componente]`: parte dell'interfaccia da esaminare |
 | `/kit:colori-tema` | Costruisce o verifica la palette per i temi chiaro e scuro, con il contrasto misurato sui valori resi. | No | `[cartella-progetto]`: progetto da esaminare |
 | `/kit:localizzazione` | Verifica il layout per testi tradotti più lunghi, orientamento RTL, ordine di lettura e zoom. | No | `[cartella-progetto]`: progetto da esaminare |
+| `/kit:modelli` (non ancora rilasciato) | Mostra quali modelli sono stati usati nella sessione corrente e per cosa (sessione, skill, subagent), leggendo il registro della sessione e non il contesto del modello. | No | Nessuno |
 
 Due note pratiche:
 
@@ -194,7 +195,7 @@ Con la versione 1.12.0 il hook `guard-commands` blocca la creazione di un tag co
 
 Con la versione 1.13.0: il hook non blocca più `git init` né la forma dell'oggetto del commit; `attesa-test` e `nowarn` di `check-write` sono avvisi e non blocchi; le skill di commit e PR non chiedono più conferme intermedie (il lancio è il via libera); `/kit:pr-main` pulisce i branch dopo il merge; ogni skill dichiara `model` (`haiku` o `sonnet`) e le skill di sola lettura e `/kit:pr-develop` non hanno più `disable-model-invocation` (scelta rivista dopo la 1.13.0: vedi sotto).
 
-Con la versione 1.14.0: il plugin ha ventuno comandi, con le nuove `/kit:verifica-frontend` e `/kit:sicurezza`; tutte le skill, tranne `/kit:pr-develop`, hanno `disable-model-invocation: true` e partono solo se le lanci tu (`/kit:pr-develop` la può lanciare Claude, solo dopo il tuo sì al termine di `/kit:commit-passo`); le tredici skill di revisione e controllo hanno anche `disallowed-tools: Edit Write NotebookEdit`, quindi non possono modificare file; ogni skill apre la risposta con la riga «Modello in uso: …», che serve a vedere l'effetto del campo `model`; `/kit:consegna` ha il gruppo «non verificata» e un blocco «Da lanciare»; il hook `guard-commands` non scambia più le redirezioni (`2>&1`) per argomenti di git; `docker.md` diventa un modulo opzionale; `/kit:buonasera` consiglia `/clear` o `/compact` secondo il criterio di `lavoro.md`. Dopo l'aggiornamento, `/reload-plugins` o una nuova sessione; nei progetti conviene `/kit:aggiorna-regole`.
+Con la versione 1.14.0: il plugin ha ventuno comandi, con le nuove `/kit:verifica-frontend` e `/kit:sicurezza`; tutte le skill, tranne `/kit:pr-develop`, hanno `disable-model-invocation: true` e partono solo se le lanci tu (`/kit:pr-develop` la può lanciare Claude, solo dopo il tuo sì al termine di `/kit:commit-passo`); le tredici skill di revisione e controllo hanno anche `disallowed-tools: Edit Write NotebookEdit`, quindi non possono modificare file; ogni skill apre la risposta con la riga «Modello in uso: …», che serviva a vedere l'effetto del campo `model` (la riga è poi stata rimossa, non ancora rilasciato: il modello la leggeva dal contesto di inizio sessione e poteva dire un modello diverso da quello usato, mentre `model` funzionava; il modello realmente usato si legge nel registro della sessione, campo `message.model`); `/kit:consegna` ha il gruppo «non verificata» e un blocco «Da lanciare»; il hook `guard-commands` non scambia più le redirezioni (`2>&1`) per argomenti di git; `docker.md` diventa un modulo opzionale; `/kit:buonasera` consiglia `/clear` o `/compact` secondo il criterio di `lavoro.md`. Dopo l'aggiornamento, `/reload-plugins` o una nuova sessione; nei progetti conviene `/kit:aggiorna-regole`.
 
 Il procedimento per chi mantiene il template è in [Manutenzione](manutenzione.md).
 
@@ -206,6 +207,25 @@ Il controllo `rules-watch` gira nello script `prompt-start`, insieme al promemor
 - **Diff con git.** In un repository l'avviso include il `git diff` dei soli file cambiati, calcolato dall'hash di `HEAD` salvato (commit successivi e modifiche non committate). Il diff è troncato e, a inizio sessione, limitato in modo che l'output resti sotto i 10.000 caratteri. Senza git, o con un hash non valido, resta l'elenco dei file. I file nuovi non tracciati compaiono nell'elenco ma non nel diff.
 - **Regole del template più recenti.** Una volta per sessione e per progetto, `rules-watch` confronta la versione di ogni modulo di regole con intestazione di versione (per ora `core.md` e `frontend.md`) tra il progetto e il template, solo per i moduli che il progetto ha. Se un modulo del template è più avanti, Claude riceve i moduli con le versioni e i file diversi e deve proporti l'allineamento con una sola domanda: non copia nulla senza il tuo ok. Una differenza di contenuto a parità di versione non viene segnalata (potrebbe essere una deroga voluta, da annotare in `CLAUDE.md`).
 - **Cartella del template.** Si legge dalla variabile d'ambiente `KIT_CONFIG_TEMPLATE_DIR`, da impostare una volta per macchina con il percorso della cartella del template (per esempio nella sezione `env` di `~/.claude/settings.json`). Il plugin non ha un percorso di default: senza la variabile il confronto non parte e Claude riceve un avviso che chiede il percorso. Se la cartella non esiste o non contiene `.claude/rules`, Claude riceve un avviso (una volta per sessione) e ti chiede il percorso corretto. Il confronto è saltato nel template stesso e nei progetti senza file di regole.
+
+## Versione del plugin: promemoria di aggiornamento
+
+Non ancora rilasciato (nel template c'è, senza bump di versione). Il marketplace da cartella locale non si aggiorna da solo: finché non si lanciano i comandi di [Aggiornamento](#aggiornamento), ogni macchina resta sulla versione installata e le skill nuove (per esempio il campo `model`) non hanno effetto. Per non dimenticarlo, `prompt-start` confronta la versione del plugin in esecuzione con quella del template.
+
+- **Quando.** Una volta per sessione e per progetto, in ogni progetto con il plugin attivo, anche senza `.claude/rules/`.
+- **Cosa confronta.** `.claude-plugin/plugin.json` del plugin in esecuzione (`CLAUDE_PLUGIN_ROOT`) contro `plugins/kit/.claude-plugin/plugin.json` dentro `KIT_CONFIG_TEMPLATE_DIR`, con confronto numerico per segmenti (1.9.0 < 1.10.0).
+- **Cosa succede.** Se il template ha una versione più recente, Claude te lo dice con una frase e suggerisce `/plugin marketplace update claude-config`, `/plugin update kit@claude-config` e `/reload-plugins`. Non esegue nulla e non modifica file.
+- **Silenzio.** Senza `KIT_CONFIG_TEMPLATE_DIR`, con un file mancante o non valido, o a versioni uguali, non compare nulla (la domanda sul percorso la pone già il confronto delle regole).
+- **Limite.** Compare solo dal primo aggiornamento che contiene il controllo: il primo aggiornamento resta manuale.
+
+## Log dei modelli usati nella sessione
+
+Non ancora rilasciato. Una sessione può usare più modelli: una skill con `model: haiku` fa girare il suo turno su Haiku mentre la sessione resta su Sonnet, e i subagent hanno un modello proprio. Per sapere chi ha fatto cosa, il plugin legge il registro della sessione (`~/.claude/projects/<progetto>/<sessione>.jsonl`), dove ogni risposta riporta il modello che l'ha generata (`message.model`), se viene da un subagent (`isSidechain`) e da quale skill è partita (`attributionSkill`). Non si usa il contesto del modello, che dice sempre il modello di inizio sessione (per questo la riga «Modello in uso» è stata rimossa).
+
+- **Avviso automatico.** `session-close` mostra la sequenza una sola volta per sessione, appena nel registro compare più di un modello, con il rimando a `/kit:modelli`.
+- **Comando `/kit:modelli`.** Mostra la stessa sequenza più il totale delle risposte per modello, quando vuoi.
+- **Formato.** Una riga per ogni cambio di modello o di origine: ora locale, nome senza prefisso `claude-` e origine tra parentesi (`sessione`, `/plugin:skill` o `subagent`).
+- **Limiti.** Il formato del registro è interno a Claude Code e non è documentato: se cambia o il file non è leggibile, l'avviso non compare e il comando lo dice. Il registro è scritto in modo asincrono e può non contenere l'ultimo turno.
 
 ## Spostare la cartella locale del marketplace
 

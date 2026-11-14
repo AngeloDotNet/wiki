@@ -10,7 +10,7 @@ Un evento può avere un indirizzo e una posizione (latitudine e longitudine), en
 ## Cosa si vede
 
 - **Nel dettaglio:** la riga «Indirizzo» (se indicato), la mappa con il segnaposto e il testo con le coordinate, che resta leggibile anche se la mappa non si carica. Il pulsante «Apri la mappa» apre Google Maps sul punto esatto; senza posizione apre la città.
-- **Nel modulo di segnalazione e modifica:** la mappa si sposta toccandola o trascinando il segnaposto. Il pulsante «Trova sulla mappa» cerca l'indirizzo insieme alla città e sposta il punto sul primo risultato. Il modulo mostra il nome del luogo trovato, così si può controllare; il pulsante è attivo solo con la città indicata.
+- **Nel modulo di segnalazione e modifica:** il modulo è diviso in tre passi (Cosa e quando, Dove, Descrizione) e la mappa sta nel passo «Dove», che è facoltativo. Latitudine e longitudine si possono scrivere a mano in una sezione chiusa («Inserisci le coordinate a mano»), che si apre da sola se contengono errori. La mappa si sposta toccandola o trascinando il segnaposto. Il pulsante «Trova sulla mappa» cerca l'indirizzo insieme alla città e sposta il punto sul primo risultato. Il modulo mostra il nome del luogo trovato, così si può controllare; il pulsante è attivo solo con la città indicata.
 - **Senza posizione:** il salvataggio è possibile e l'evento non ha la mappa.
 
 Le coordinate si accettano con al massimo 6 decimali, latitudine tra -90 e 90 e longitudine tra -180 e 180. Latitudine e longitudine vanno indicate insieme o lasciate entrambe vuote.
