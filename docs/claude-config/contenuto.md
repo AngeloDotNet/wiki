@@ -55,4 +55,4 @@ Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non s
 
 ## Plugin `kit`
 
-I tredici controlli personali, in sei script (blocchi di comandi, segreti e pattern vietati; avvisi di qualità e di pratica; promemoria su piano, chiusura, regole aggiornate e sito di documentazione) stanno nel plugin `plugins/kit/`, distribuito dal marketplace `.claude-plugin/marketplace.json`. Cosa fanno e come si installano: [plugin.md](plugin.md). Dalla versione 1.9.0 il plugin aggiunge anche diciannove comandi `/kit:...`, uno per cartella in `plugins/kit/skills/`: vedi [Comandi](plugin.md#comandi).
+I tredici controlli personali, in sei script (blocchi di comandi, segreti e pattern vietati; avvisi di qualità e di pratica; promemoria su piano, chiusura, regole aggiornate e sito di documentazione) stanno nel plugin `plugins/kit/`, distribuito dal marketplace `.claude-plugin/marketplace.json`. Cosa fanno e come si installano: [plugin.md](plugin.md). Dalla versione 1.9.0 il plugin aggiunge anche i comandi `/kit:...` (oggi ventuno), uno per cartella in `plugins/kit/skills/`: vedi [Comandi](plugin.md#comandi).

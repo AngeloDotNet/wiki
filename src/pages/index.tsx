@@ -8,13 +8,15 @@ import {wikis} from '../data/wikis';
 // Each card has a cover image on top, the title and text in the middle and the action at the bottom.
 export default function Home(): ReactNode {
   const {withBaseUrl} = useBaseUrlUtils();
+  // Ordine alfabetico per titolo (locale italiano); l'array originale resta intatto per il config.
+  const sortedWikis = [...wikis].sort((a, b) => a.title.localeCompare(b.title, 'it', {sensitivity: 'base'}));
   return (
     <Layout title="Documentazione" description="Wiki del sito">
       <main className="container margin-vert--xl">
         <h1>Documentazione</h1>
         <p>Scegli l'area da consultare.</p>
         <div className="row">
-          {wikis.map((wiki) => (
+          {sortedWikis.map((wiki) => (
             <div key={wiki.id} className="col col--3 margin-bottom--lg home-col">
               <div className="card home-card">
                 <img

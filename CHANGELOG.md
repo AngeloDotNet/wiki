@@ -4,13 +4,29 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-14
 
+### Homepage: aree in ordine alfabetico
+
+**Perché:** richiesta dell'utente: le card delle aree in homepage seguivano l'ordine di `wikis.ts`, non quello alfabetico.
+**Cosa:** la homepage ordina le card per titolo (`localeCompare` in italiano): Claude Code Kit, License Manager, Sagre & Eventi. Le nuove wiki si ordinano da sole. `wikis.ts` resta invariato (il config ne usa l'ordine).
+**Dove:** `src/pages/index.tsx`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori.
+**Note:** commit `feat(site)` sul branch `feature/home-alphabetical-order`, insieme alle altre modifiche in sospeso di quel giorno; la versione sale in CI al merge su `main` (oggetto `feat(...)`).
+
+### SagreEventi: modulo di segnalazione a tre passi
+
+**Perché:** il modulo `/eventi/nuovo` e `/eventi/:id/modifica` è stato riorganizzato con uno stepper (Cosa e quando, Dove, Descrizione, con riepilogo prima dell'invio); la pagina sulla mappa descriveva il modulo come una pagina unica.
+**Cosa:** `mappa.md`: la riga «Nel modulo di segnalazione e modifica» spiega i tre passi, che il passo «Dove» è facoltativo e che le coordinate a mano stanno in una sezione chiusa. Le altre pagine non descrivono il modulo e non cambiano.
+**Dove:** `docs/sagreeventi/mappa.md`, `CHANGELOG.md`.
+**Verifica:** solo testo Markdown; `npm run typecheck` e `npm run build` della wiki non eseguiti.
+**Note:** il codice del modulo non è ancora committato. Questa voce è nel commit `feat(site)` del branch `feature/home-alphabetical-order`.
+
 ### SagreEventi: GPS pubblicato e versione 1.1.0
 
 **Perché:** il frontend del GPS (indirizzo, coordinate, mappa e ricerca indirizzi) è in `develop` con la PR #67 e la release 1.1.0 è pubblicata; la pagina «Informazioni» citava ancora `1.0.0` come versione di `package.json`.
 **Cosa:** `informazioni.md`: versione di `package.json` aggiornata a `1.1.0`. Le pagine `mappa.md`, `api.md` e `configurazione.md` descrivevano già il GPS e non cambiano.
 **Dove:** `docs/sagreeventi/informazioni.md`, `CHANGELOG.md`.
 **Verifica:** solo testo Markdown; `npm run typecheck` e `npm run build` non eseguiti.
-**Note:** il GPS non è ancora in produzione: la migrazione `AddPosizioneEventi` va applicata a un SQL Server reale al deploy. Il commit di questa voce non è stato creato.
+**Note:** il GPS non è ancora in produzione: la migrazione `AddPosizioneEventi` va applicata a un SQL Server reale al deploy. Questa voce è nel commit `feat(site)` del branch `feature/home-alphabetical-order`.
 
 ### Chiusura del piano e della checklist dell'11/11
 
