@@ -4,6 +4,14 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-14
 
+### Tag di rilascio `X.Y.Z`, senza `v`
+
+**Perché:** il kit (`git.md` 1.5 e il plugin `kit` 1.12.0) vuole tag `X.Y.Z` senza prefisso e blocca gli altri nomi, e le pagine di SagreEventi lo usano già; il workflow di questa wiki partiva solo su `vX.Y.Z`, quindi con un tag corretto non sarebbe mai partito. Decisione dell'utente.
+**Cosa:** il workflow parte sui tag `X.Y.Z`; il push dell'immagine vale per ogni tag che lo attiva; la versione per il footer si ricava da `refs/tags/X.Y.Z`. Le voci precedenti del CHANGELOG che parlano di `vX.Y.Z` restano come storia.
+**Dove:** `.github/workflows/build-push.yml`, `docusaurus.config.ts` (solo commento: il prefisso `v` resta tollerato), `README.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori, nessuno script di test; regex del workflow provata in bash su `1.2.3` (accettato), `v1.2.3`, `1.2` e `1.2.3-rc` (scartati). Il workflow non è stato eseguito con un tag.
+**Note:** nessun tag creato; resta da scrivere la regola su quando e come crearlo in `CLAUDE.md`.
+
 ### Lavori dell'11/11 portati su `main`
 
 **Perché:** i lavori dell'11/11 (wiki License Manager, bump della versione in CI, versione dal tag, home a quattro colonne) erano solo in locale; vanno su `main` per pubblicare il sito e avviare il bump in CI.

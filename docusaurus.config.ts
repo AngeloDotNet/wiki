@@ -9,7 +9,7 @@ import {wikis} from './src/data/wikis';
 
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
-// Versione x.y.z mostrata nel footer. Se la CI passa APP_VERSION (tag di rilascio vX.Y.Z, senza la «v»)
+// Versione x.y.z mostrata nel footer. Se la CI passa APP_VERSION (tag di rilascio X.Y.Z, senza «v»; un prefisso «v» eventuale è tollerato)
 // vince quella; un valore che non sia esattamente X.Y.Z viene scartato. Altrimenti si usa VERSION,
 // aggiornato dopo ogni commit da scripts/bump-version.mjs.
 const tagVersion = (process.env.APP_VERSION ?? '').trim().replace(/^v/, '');
