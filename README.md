@@ -1,25 +1,26 @@
 # Documentazione
 
-**Wiki unificata in un unico sito Docusaurus: regole e plugin di Claude Code, e documentazione di SagreEventi.**
+**Wiki unificata in un unico sito Docusaurus: regole e plugin di Claude Code, e documentazione di SagreEventi e di License Manager.**
 
 ![Built with Docusaurus](https://img.shields.io/badge/Built%20with-Docusaurus%203-3ECC5F)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Introduzione
 
-Questo repository contiene il sito di documentazione che raccoglie due wiki indipendenti, servite dallo stesso build:
+Questo repository contiene il sito di documentazione che raccoglie tre wiki indipendenti, servite dallo stesso build:
 
 - **Claude Code Kit** (`docs/claude-config/`): regole di sviluppo, plugin e template per progetti avviati con [Claude Code](https://claude.com/claude-code).
 - **Sagre & Eventi** (`docs/sagreeventi/`): architettura, configurazione, API, deployment e note operative dell'applicazione [SagreEventi](https://github.com/AngeloDotNet/SagreEventi).
+- **License Manager** (`docs/license-management/`): architettura, sicurezza, configurazione e API del servizio di gestione delle licenze delle web app SaaS.
 
-Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio identificativo, un proprio percorso di route (`/claude-config`, `/sagreeventi`) e una propria sidebar. La home (`src/pages/index.tsx`) porta alla prima pagina di ciascuna.
+Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio identificativo, un proprio percorso di route (`/claude-config`, `/sagreeventi`, `/license-management`) e una propria sidebar. La home (`src/pages/index.tsx`) porta alla prima pagina di ciascuna.
 
 ## Features
 
-- **Due wiki in un sito**: la navbar passa dall'una all'altra, con sidebar generate dalla cartella `docs/` e ordinate tramite `sidebar_position`.
+- **Tre wiki in un sito**: la navbar passa dall'una all'altra, con sidebar generate dalla cartella `docs/` e ordinate tramite `sidebar_position`.
 - **Solo Markdown**: i file `.md` sono interpretati come CommonMark, quindi testi con segnaposto come `<percorso del template>` non vengono letti come JSX.
 - **Lingua italiana**: il sito è configurato con una sola locale (`it`).
-- **Versione visibile nel footer**: il numero `x.y.z` è letto dal file `VERSION` e aggiornato automaticamente dopo ogni commit (vedi [Versionamento](#versionamento)).
+- **Versione visibile nel footer**: il numero `x.y.z` è letto dal file `VERSION` e aggiornato automaticamente dalla CI a ogni push su `main` (vedi [Versionamento](#versionamento)).
 - **Immagine Docker pronta per la produzione**: build statico servito da nginx, con header di sicurezza e Content-Security-Policy calcolata sugli script inline del build.
 
 ## Tech stack
@@ -36,15 +37,15 @@ Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio
 .
 ├── docs/
 │   ├── claude-config/      # Wiki Claude Code Kit (Markdown)
-│   └── sagreeventi/        # Wiki Sagre & Eventi (Markdown)
-├── sidebars/               # Configurazione delle sidebar delle due wiki
+│   ├── sagreeventi/        # Wiki Sagre & Eventi (Markdown)
+│   └── license-management/ # Wiki License Manager (Markdown)
+├── sidebars/               # Configurazione delle sidebar delle tre wiki
 ├── src/
 │   ├── css/custom.css      # Stili globali
-│   └── pages/index.tsx     # Home con le due aree
+│   └── pages/index.tsx     # Home con le tre aree
 ├── static/img/             # Immagini statiche e favicon
 ├── nginx/                  # Configurazione nginx e header di sicurezza del container
-├── scripts/                # Script Node.js: versionamento, CSP, hook Git
-├── .githooks/              # Hook Git versionati (post-commit)
+├── scripts/                # Script Node.js: versionamento, CSP, date di aggiornamento
 ├── .github/workflows/      # Workflow GitHub Actions: typecheck e build dell'immagine
 ├── docusaurus.config.ts    # Configurazione del sito
 ├── Dockerfile              # Build multi-stage: Node.js → nginx
@@ -57,12 +58,11 @@ Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio
 
 - Node.js 20 o superiore
 - npm
-- Git (per gli hook di versionamento)
 
 ### Installazione e sviluppo
 
 ```bash
-npm ci          # installa le dipendenze e imposta la cartella degli hook Git
+npm ci          # installa le dipendenze
 npm start       # avvia il server di sviluppo con ricaricamento a caldo
 ```
 
@@ -77,7 +77,7 @@ npm start       # avvia il server di sviluppo con ricaricamento a caldo
 
 ### Aggiungere una pagina
 
-Crea un file `.md` nella cartella della wiki (`docs/claude-config/` o `docs/sagreeventi/`) e imposta `sidebar_position` nel front matter per decidere l'ordine nella sidebar. Per i link tra pagine usa percorsi relativi: con `onBrokenLinks: 'throw'` un link rotto blocca il build.
+Crea un file `.md` nella cartella della wiki (`docs/claude-config/`, `docs/sagreeventi/` o `docs/license-management/`) e imposta `sidebar_position` nel front matter per decidere l'ordine nella sidebar. Per i link tra pagine usa percorsi relativi: con `onBrokenLinks: 'throw'` un link rotto blocca il build.
 
 ## Docker
 
@@ -97,7 +97,7 @@ Sul server il container si avvia con l'immagine pubblicata su Docker Hub (`image
 
 ## Versionamento
 
-Il progetto usa numeri `x.y.z` aggiornati automaticamente dallo script `scripts/bump-version.mjs`, chiamato dall'hook `.githooks/post-commit`. La regola segue i [Conventional Commits](https://www.conventionalcommits.org/) del messaggio di commit:
+Il progetto usa numeri `x.y.z` aggiornati automaticamente dal workflow GitHub Actions a ogni push su `main`, con lo script `scripts/bump-version.mjs`. Le PR sono unite con squash su GitHub, quindi vale il titolo della PR. La regola segue i [Conventional Commits](https://www.conventionalcommits.org/):
 
 | Tipo di commit | Effetto sulla versione |
 |---|---|
@@ -106,11 +106,15 @@ Il progetto usa numeri `x.y.z` aggiornati automaticamente dallo script `scripts/
 | `tipo!:` oppure `BREAKING CHANGE:` nel corpo | incrementa `x` (major) |
 | altri tipi (`docs:`, `chore:`, ecc.) | nessun cambio |
 
-Lo script aggiorna `VERSION` e `package.json` (anche `package-lock.json`) e crea un commit separato `chore(version): x.y.z`, che non genera un nuovo bump. Per calcolare il cambio senza scrivere nulla:
+Il workflow calcola la nuova versione prima del build, così il footer dell'immagine mostra già il numero nuovo; a build riuscito aggiorna `VERSION`, `package.json` e `package-lock.json` con un commit `chore(version): x.y.z` su `main`. Quel push usa `GITHUB_TOKEN`, quindi non riavvia il workflow. Su `develop` la versione si allinea con il merge di `main`. I tipi che non cambiano la versione (`docs:`, `chore:`) non producono nessun commit. Per calcolare il cambio senza scrivere nulla:
 
 ```bash
-node scripts/bump-version.mjs --dry-run
+node scripts/bump-version.mjs --dry-run --message "feat: esempio"
 ```
+
+### Versione dal tag di rilascio
+
+Il footer mostra la versione di rilascio quando c'è. Con il tag `vX.Y.Z` la CI passa `APP_VERSION=X.Y.Z` al build dell'immagine e `docusaurus.config.ts` la usa al posto di `VERSION`. Nelle build senza tag (push su `main`, sviluppo locale, pull request) vale `VERSION`. Un `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato. In locale: `APP_VERSION=1.2.3 npm run build`.
 
 ## Workflow GitHub Actions
 
@@ -118,7 +122,9 @@ Il workflow `.github/workflows/build-push.yml` si attiva su push e pull request 
 
 - installa le dipendenze, esegue `npm run typecheck` e costruisce l'immagine Docker;
 - le pull request costruiscono l'immagine ma **non** la pubblicano;
-- su `main` l'immagine viene pubblicata su Docker Hub con i tag `latest` e lo SHA del commit. Richiede i segreti `DOCKERHUB_USERNAME` e `DOCKERHUB_TOKEN`.
+- su `main` l'immagine viene pubblicata su Docker Hub con i tag `latest` e lo SHA del commit. Richiede i segreti `DOCKERHUB_USERNAME` e `DOCKERHUB_TOKEN`;
+- su `main` calcola e registra anche la nuova versione (vedi [Versionamento](#versionamento)); il job ha `contents: write` solo per questo commit;
+- il workflow parte anche sul tag `vX.Y.Z`: l'immagine riceve in più il tag `X.Y.Z` e il footer mostra quella versione (vedi sopra).
 
 ## Note di sicurezza
 

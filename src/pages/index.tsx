@@ -15,7 +15,7 @@ export default function Home(): ReactNode {
         <p>Scegli l'area da consultare.</p>
         <div className="row">
           {wikis.map((wiki) => (
-            <div key={wiki.id} className="col col--6 margin-bottom--lg home-col">
+            <div key={wiki.id} className="col col--3 margin-bottom--lg home-col">
               <div className="card home-card">
                 <img
                   className="card__image home-card__media"

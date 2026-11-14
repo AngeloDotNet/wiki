@@ -32,9 +32,16 @@ h1 {
   padding-bottom: 0.2em;
 }
 
-/* Homepage: due card della stessa altezza, icona sopra il titolo, pulsante in fondo. */
+/* Homepage: card della stessa altezza, copertina sopra il titolo, pulsante in fondo.
+   4 colonne sopra 996px, 2 colonne tra 577px e 996px, 1 colonna sotto (Infima la imposta già a 100%). */
 .home-col {
   display: flex;
+}
+
+@media (min-width: 577px) and (max-width: 996px) {
+  .home-col {
+    --ifm-col-width: 50%;
+  }
 }
 
 .home-card {

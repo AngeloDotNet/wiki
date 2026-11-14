@@ -13,6 +13,7 @@ sidebar_position: 4
 | `/api/Eventi/Revisione/*` | GET, POST | Coda di revisione, approvazione, rifiuto ed eventi conclusi; solo `Admin`/`Editor` (`Conclusi` solo `Admin`) |
 | `/api/admin/utenti` | GET, POST, PUT, DELETE | Gestione utenti, solo `Admin` |
 | `/api/admin/ruoli` | GET | Elenco dei ruoli, solo `Admin` |
+| `/api/temi/periodi` | GET, PUT | Periodi dei temi stagionali: lettura anonima, salvataggio solo `Admin` (vedi [Temi](temi.md)) |
 | `/api/auth/login`, `/api/auth/refresh`, `/api/auth/me` | POST, GET | Token bearer e di refresh, utente corrente. La registrazione è disattivata. Login e refresh hanno un limite di 10 richieste al minuto per IP |
 
 Il server imposta da solo `dataOraUltimaModifica` a ogni scrittura; il valore inviato dal client serve solo a decidere quale versione sia più recente. Il documento OpenAPI è su `/openapi/v1.json` in Development.
