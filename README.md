@@ -97,7 +97,7 @@ Sul server il container si avvia con l'immagine pubblicata su Docker Hub (`image
 
 ## Versionamento
 
-Il progetto usa numeri `x.y.z` aggiornati automaticamente dal workflow GitHub Actions a ogni push su `main`, con lo script `scripts/bump-version.mjs`. Le PR sono unite con squash su GitHub, quindi vale il titolo della PR. La regola segue i [Conventional Commits](https://www.conventionalcommits.org/):
+Il progetto usa numeri `x.y.z` aggiornati automaticamente dal workflow GitHub Actions a ogni push su `main`, con lo script `scripts/bump-version.mjs`. Il bump legge solo la prima riga del messaggio dell'ultimo commit su `main`: le PR verso `develop` sono unite con squash (vale il titolo della PR), ma quelle verso `main` con merge commit, quindi vale l'oggetto del merge, che va scritto in Conventional Commits (`feat(...): ...`); con un oggetto `merge: ...` o `Merge pull request ...` la versione non cambia. La regola segue i [Conventional Commits](https://www.conventionalcommits.org/):
 
 | Tipo di commit | Effetto sulla versione |
 |---|---|
@@ -114,7 +114,7 @@ node scripts/bump-version.mjs --dry-run --message "feat: esempio"
 
 ### Versione dal tag di rilascio
 
-Il footer mostra la versione di rilascio quando c'è. Con il tag `vX.Y.Z` la CI passa `APP_VERSION=X.Y.Z` al build dell'immagine e `docusaurus.config.ts` la usa al posto di `VERSION`. Nelle build senza tag (push su `main`, sviluppo locale, pull request) vale `VERSION`. Un `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato. In locale: `APP_VERSION=1.2.3 npm run build`.
+Il footer mostra la versione di rilascio quando c'è. Con il tag `X.Y.Z` (senza `v`, come da `git.md`) la CI passa `APP_VERSION=X.Y.Z` al build dell'immagine e `docusaurus.config.ts` la usa al posto di `VERSION`. Nelle build senza tag (push su `main`, sviluppo locale, pull request) vale `VERSION`. Un `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato. In locale: `APP_VERSION=1.2.3 npm run build`.
 
 ## Workflow GitHub Actions
 
@@ -124,7 +124,7 @@ Il workflow `.github/workflows/build-push.yml` si attiva su push e pull request 
 - le pull request costruiscono l'immagine ma **non** la pubblicano;
 - su `main` l'immagine viene pubblicata su Docker Hub con i tag `latest` e lo SHA del commit. Richiede i segreti `DOCKERHUB_USERNAME` e `DOCKERHUB_TOKEN`;
 - su `main` calcola e registra anche la nuova versione (vedi [Versionamento](#versionamento)); il job ha `contents: write` solo per questo commit;
-- il workflow parte anche sul tag `vX.Y.Z`: l'immagine riceve in più il tag `X.Y.Z` e il footer mostra quella versione (vedi sopra).
+- il workflow parte anche sul tag `X.Y.Z` (senza `v`): l'immagine riceve in più il tag `X.Y.Z` e il footer mostra quella versione (vedi sopra).
 
 ## Note di sicurezza
 

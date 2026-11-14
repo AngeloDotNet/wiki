@@ -2,6 +2,32 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-14
+
+### Regola su tag e rilasci in `CLAUDE.md`
+
+**Perché:** nessuna regola diceva quando e come creare tag e rilasci; c'era solo il divieto senza approvazione. Decisione dell'utente: il numero del tag viene da `VERSION` di `main`.
+**Cosa:** nuova voce in «Eccezioni alle regole globali»: tag annotato `X.Y.Z` senza `v`, solo da `main` dopo il merge e sul commit di merge; `X.Y.Z` uguale a `VERSION` dopo il commit `chore(version)` del workflow; per far salire la versione il merge commit ha oggetto `feat(...)` o `fix(...)`; via esplicito dell'utente prima del tag, del suo push e di `gh release`.
+**Dove:** `CLAUDE.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori, nessuno script di test; solo testo Markdown.
+**Note:** il tag sul commit di merge precede di un commit il `chore(version)` del workflow, quindi `VERSION` in quel punto è ancora il valore vecchio; il footer non ne risente perché il build del tag usa `APP_VERSION`. Nessun tag creato.
+
+### Tag di rilascio `X.Y.Z`, senza `v`
+
+**Perché:** il kit (`git.md` 1.5 e il plugin `kit` 1.12.0) vuole tag `X.Y.Z` senza prefisso e blocca gli altri nomi, e le pagine di SagreEventi lo usano già; il workflow di questa wiki partiva solo su `vX.Y.Z`, quindi con un tag corretto non sarebbe mai partito. Decisione dell'utente.
+**Cosa:** il workflow parte sui tag `X.Y.Z`; il push dell'immagine vale per ogni tag che lo attiva; la versione per il footer si ricava da `refs/tags/X.Y.Z`. Le voci precedenti del CHANGELOG che parlano di `vX.Y.Z` restano come storia.
+**Dove:** `.github/workflows/build-push.yml`, `docusaurus.config.ts` (solo commento: il prefisso `v` resta tollerato), `README.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori, nessuno script di test; regex del workflow provata in bash su `1.2.3` (accettato), `v1.2.3`, `1.2` e `1.2.3-rc` (scartati). Il workflow non è stato eseguito con un tag.
+**Note:** nessun tag creato; resta da scrivere la regola su quando e come crearlo in `CLAUDE.md`.
+
+### Lavori dell'11/11 portati su `main`
+
+**Perché:** i lavori dell'11/11 (wiki License Manager, bump della versione in CI, versione dal tag, home a quattro colonne) erano solo in locale; vanno su `main` per pubblicare il sito e avviare il bump in CI.
+**Cosa:** tre commit (`docs(sagreeventi)`, `docs(license-management)`, `feat(site)`) uniti su `develop` con squash (PR #50). `main` aveva sei commit di squash precedenti che `develop` non conteneva, quindi una PR diretta rischiava conflitti `add/add`: prima un merge commit di `main` in `develop` (PR #51, nessuna modifica ai file), poi `develop` su `main` con merge commit (PR #52). Il merge su `main` ha oggetto `merge: ...`, quindi il bump in CI non cambia la versione (resta 0.6.0). Nel `README.md` la frase «vale il titolo della PR» ora vale solo per lo squash su `develop`: su `main` conta l'oggetto del merge commit.
+**Dove:** `README.md` (sezione «Versionamento»), `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori prima dei commit (nessuno script di test); controllo visivo della home fatto dall'utente. Il workflow su `main` è concluso con esito positivo (riferito dall'utente); nessun commit `chore(version)`, come atteso con l'oggetto `merge: ...`. Il ramo con bump effettivo non è ancora provato.
+**Note:** voce aperta in `CHECKLIST.md`: decidere come far scattare il bump con i merge commit su `main` (oggetto scritto a mano o bump calcolato sui commit del merge).
+
 ## 2026-11-12
 
 ### SagreEventi: layout della scheda «Temi»
