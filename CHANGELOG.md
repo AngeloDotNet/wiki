@@ -4,6 +4,14 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-14
 
+### Regola su tag e rilasci in `CLAUDE.md`
+
+**Perché:** nessuna regola diceva quando e come creare tag e rilasci; c'era solo il divieto senza approvazione. Decisione dell'utente: il numero del tag viene da `VERSION` di `main`.
+**Cosa:** nuova voce in «Eccezioni alle regole globali»: tag annotato `X.Y.Z` senza `v`, solo da `main` dopo il merge e sul commit di merge; `X.Y.Z` uguale a `VERSION` dopo il commit `chore(version)` del workflow; per far salire la versione il merge commit ha oggetto `feat(...)` o `fix(...)`; via esplicito dell'utente prima del tag, del suo push e di `gh release`.
+**Dove:** `CLAUDE.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori, nessuno script di test; solo testo Markdown.
+**Note:** il tag sul commit di merge precede di un commit il `chore(version)` del workflow, quindi `VERSION` in quel punto è ancora il valore vecchio; il footer non ne risente perché il build del tag usa `APP_VERSION`. Nessun tag creato.
+
 ### Tag di rilascio `X.Y.Z`, senza `v`
 
 **Perché:** il kit (`git.md` 1.5 e il plugin `kit` 1.12.0) vuole tag `X.Y.Z` senza prefisso e blocca gli altri nomi, e le pagine di SagreEventi lo usano già; il workflow di questa wiki partiva solo su `vX.Y.Z`, quindi con un tag corretto non sarebbe mai partito. Decisione dell'utente.

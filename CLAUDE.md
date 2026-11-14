@@ -23,3 +23,4 @@
 
 - **Integrazione GitHub approvata:** PR sì, push sì, tag no, rilasci no (2026-11-07)
 - **GitHub CLI (gh) installata:** sì (2026-11-11)
+- **Tag e rilasci (regola dell'utente del 2026-11-14):** il tag è annotato, nel formato `X.Y.Z` senza `v` (`git.md` 1.5), creato solo da `main`, dopo il merge, sul commit di merge e solo se la PR porta un rilascio. `X.Y.Z` è il contenuto di `VERSION` su `main` dopo il commit `chore(version)` del workflow (una sola fonte). Il bump in CI legge solo la prima riga dell'ultimo commit su `main`: per un rilascio il merge commit ha oggetto `feat(...)` o `fix(...)`; con `merge: ...` la versione non cambia. Prima di creare il tag e prima del push del tag Claude chiede il via esplicito dell'utente; dopo il tag propone `gh release` e chiede di nuovo il via. Senza via nessun tag e nessun rilascio (resta il blocco dell'hook `guard-commands`).
