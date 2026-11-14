@@ -97,7 +97,7 @@ Sul server il container si avvia con l'immagine pubblicata su Docker Hub (`image
 
 ## Versionamento
 
-Il progetto usa numeri `x.y.z` aggiornati automaticamente dal workflow GitHub Actions a ogni push su `main`, con lo script `scripts/bump-version.mjs`. Le PR sono unite con squash su GitHub, quindi vale il titolo della PR. La regola segue i [Conventional Commits](https://www.conventionalcommits.org/):
+Il progetto usa numeri `x.y.z` aggiornati automaticamente dal workflow GitHub Actions a ogni push su `main`, con lo script `scripts/bump-version.mjs`. Il bump legge solo la prima riga del messaggio dell'ultimo commit su `main`: le PR verso `develop` sono unite con squash (vale il titolo della PR), ma quelle verso `main` con merge commit, quindi vale l'oggetto del merge, che va scritto in Conventional Commits (`feat(...): ...`); con un oggetto `merge: ...` o `Merge pull request ...` la versione non cambia. La regola segue i [Conventional Commits](https://www.conventionalcommits.org/):
 
 | Tipo di commit | Effetto sulla versione |
 |---|---|
