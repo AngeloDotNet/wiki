@@ -13,6 +13,12 @@
 - **Git:** commit locali solo con conferma esplicita dell'utente. Mai push, PR, tag o rilasci senza approvazione (vedi sotto).
 - **Dipendenze:** installazione con `npm ci --ignore-scripts`.
 
+## Documentazione di License Manager (`docs/license-management/`)
+
+- **Sorgente unica:** le pagine del servizio di gestione delle licenze vivono solo qui (richiesta dell'utente del 2026-11-11); il repository applicativo le linka (`http://wiki.aepserver.it/license-management/<pagina>`). Le regole di lingua, percorsi, front matter, verifica, changelog e git della sezione precedente valgono anche per questa wiki.
+- **Fonte di verità:** le pagine descrivono il comportamento del repository `license-manager`, che a ogni passo del piano che cambia comportamento, configurazione o struttura aggiorna anche queste pagine.
+- **Nessun dettaglio interno:** il sito è pubblico, quindi niente host reali dell'infrastruttura, indirizzi, credenziali o nomi di realm; solo segnaposto.
+
 ## Eccezioni alle regole globali
 
 - **Integrazione GitHub approvata:** PR sì, push sì, tag no, rilasci no (2026-11-07)

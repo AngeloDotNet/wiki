@@ -11,7 +11,7 @@ Il client Angular e l'API girano come due container e il nginx già installato s
 | [`angelo87dock/sagreeventi-api`](https://hub.docker.com/r/angelo87dock/sagreeventi-api) | API ASP.NET Core, porta 8080 (non pubblicata) |
 | [`angelo87dock/sagreeventi-web`](https://hub.docker.com/r/angelo87dock/sagreeventi-web) | Client Angular servito da nginx, porta 8080 |
 
-Le immagini sono costruite dal workflow GitHub Actions `.github/workflows/build-push.yml` (tag `latest` e SHA del commit; per un tag di rilascio `vX.Y.Z` anche `X.Y.Z`) e pubblicate solo per `linux/amd64`.
+Le immagini sono costruite dal workflow GitHub Actions `.github/workflows/build-push.yml` (tag `latest` e SHA del commit; per un tag di rilascio `X.Y.Z`, senza prefisso `v`, anche la versione `X.Y.Z`) e pubblicate solo per `linux/amd64`.
 
 ## Avvio rapido (compose unico)
 

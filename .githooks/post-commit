@@ -1,5 +1,0 @@
-#!/bin/sh
-# Aggiorna la versione x.y.z dopo ogni commit.
-# Un errore qui non deve far sembrare fallito il commit appena creato, quindi si esce sempre con 0.
-node "$(git rev-parse --show-toplevel)/scripts/bump-version.mjs" || echo "bump-version: errore, versione non aggiornata" >&2
-exit 0
