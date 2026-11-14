@@ -114,7 +114,7 @@ node scripts/bump-version.mjs --dry-run --message "feat: esempio"
 
 ### Versione dal tag di rilascio
 
-Il footer mostra la versione di rilascio quando c'è. Con il tag `vX.Y.Z` la CI passa `APP_VERSION=X.Y.Z` al build dell'immagine e `docusaurus.config.ts` la usa al posto di `VERSION`. Nelle build senza tag (push su `main`, sviluppo locale, pull request) vale `VERSION`. Un `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato. In locale: `APP_VERSION=1.2.3 npm run build`.
+Il footer mostra la versione di rilascio quando c'è. Con il tag `X.Y.Z` (senza `v`, come da `git.md`) la CI passa `APP_VERSION=X.Y.Z` al build dell'immagine e `docusaurus.config.ts` la usa al posto di `VERSION`. Nelle build senza tag (push su `main`, sviluppo locale, pull request) vale `VERSION`. Un `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato. In locale: `APP_VERSION=1.2.3 npm run build`.
 
 ## Workflow GitHub Actions
 
@@ -124,7 +124,7 @@ Il workflow `.github/workflows/build-push.yml` si attiva su push e pull request 
 - le pull request costruiscono l'immagine ma **non** la pubblicano;
 - su `main` l'immagine viene pubblicata su Docker Hub con i tag `latest` e lo SHA del commit. Richiede i segreti `DOCKERHUB_USERNAME` e `DOCKERHUB_TOKEN`;
 - su `main` calcola e registra anche la nuova versione (vedi [Versionamento](#versionamento)); il job ha `contents: write` solo per questo commit;
-- il workflow parte anche sul tag `vX.Y.Z`: l'immagine riceve in più il tag `X.Y.Z` e il footer mostra quella versione (vedi sopra).
+- il workflow parte anche sul tag `X.Y.Z` (senza `v`): l'immagine riceve in più il tag `X.Y.Z` e il footer mostra quella versione (vedi sopra).
 
 ## Note di sicurezza
 
