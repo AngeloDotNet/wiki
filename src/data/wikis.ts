@@ -45,4 +45,15 @@ export const wikis: WikiDefinition[] = [
     description: "API, backend, client e deployment dell'applicazione.",
     cover: 'img/home-sagre.svg',
   },
+  {
+    id: 'license-management',
+    sidebarId: 'licenseManagementSidebar',
+    sidebarPath: './sidebars/license-management.ts',
+    folder: 'docs/license-management',
+    routeBasePath: 'license-management',
+    startPath: '/license-management/intro',
+    title: 'License Manager',
+    description: 'API di validazione e gestione delle licenze, sicurezza e configurazione del servizio.',
+    cover: 'img/home-license.svg',
+  },
 ];
