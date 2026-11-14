@@ -9,7 +9,7 @@ La pagina **Informazioni** (voce «Informazioni» del menu) descrive in breve l'
 
 ## Versione e data della build
 
-- **Versione:** quella del tag di rilascio `X.Y.Z` (senza prefisso `v`), passata dalla CI come `APP_VERSION` al build dell'immagine Angular. Nelle build senza tag (push su `main`, sviluppo locale, test) è il campo `version` di `src/SagreEventi.Web/package.json` (oggi `1.0.0`). Un valore di `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato.
+- **Versione:** quella del tag di rilascio `X.Y.Z` (senza prefisso `v`), passata dalla CI come `APP_VERSION` al build dell'immagine Angular. Nelle build senza tag (push su `main`, sviluppo locale, test) è il campo `version` di `src/SagreEventi.Web/package.json` (oggi `1.1.0`). Un valore di `APP_VERSION` che non sia esattamente `X.Y.Z` viene scartato.
 - **Data:** la data (giorno, mese e anno, formato italiano) in cui è stata generata la build del client, calcolata nel fuso orario di Roma. Il testo della pagina la chiama «Data di rilascio», ma il valore è la data della build.
 
 Il valore è generato dallo script `src/SagreEventi.Web/scripts/build-info.mjs`, che scrive il file `src/app/core/build-info-generated/build-info.generated.ts`. Lo script gira automaticamente prima di `npm run build`, `npm start`, `npm run watch` e dei test (script `pre*` di `package.json`), quindi non serve lanciarlo a mano. Il file generato non è versionato (è nel `.gitignore`) e non va modificato.
