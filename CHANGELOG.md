@@ -2,7 +2,15 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
-## 2026-11-14
+## 2026-11-15
+
+### Pagina del plugin 1.15.0 e 1.16.0 in produzione, sincronizzazione di develop
+
+**Perché:** la pagina `docs/claude-config/plugin.md` (PR #65 su `develop`) era ancora solo su `develop`; serviva portarla in produzione. Decisione dell'utente: PR `develop` → `main` e poi allineamento di `develop`.
+**Cosa:** PR #66 (`Develop`, merge commit `f32235e`) ha portato su `main` la pagina del plugin. `VERSION` resta 0.7.0: il titolo del merge non è `feat(...)` né `fix(...)`. Il build dell'immagine su `main` è andato a buon fine e la produzione è stata aggiornata dall'utente. `develop` è stato allineato a `main` (fast-forward su `f32235e`), come dopo la #63.
+**Dove:** `docs/claude-config/plugin.md` (già su `main`), `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` da eseguire prima della chiusura dell'intervento (vedi sotto); controllo di `Disco_E` e `C:\Users` con Grep sulla wiki.
+**Note:** voce scritta dopo il merge della #66; il commit di questa voce va su un branch da `develop`, come la #64.
 
 ### Homepage: aree in ordine alfabetico
 
