@@ -5,7 +5,7 @@ sidebar_label: Plugin kit
 
 # Plugin `kit`
 
-Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: tredici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Dalla versione 1.9.0 il plugin aggiunge anche i comandi `/kit:...` (oggi ventuno; sezione [Comandi](#comandi)).
+Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: tredici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Dalla versione 1.9.0 il plugin aggiunge anche i comandi `/kit:...` (oggi ventidue; sezione [Comandi](#comandi)).
 
 ## Cosa contiene
 
@@ -19,8 +19,8 @@ Gli script sono sei. Quattro raggruppano più controlli dello stesso evento; `gu
 
 - `guard-write` esegue `guard-secrets` e `guard-patterns` prima di una scrittura;
 - `check-write` esegue `check-plan`, `check-quality` e `check-practice` dopo una scrittura;
-- `session-close` esegue `plan-reminder`, `check-close` e `site-reminder` a fine di ogni risposta; contiene anche l'avviso sul cambio di modello (vedi [Log dei modelli](#log-dei-modelli-usati-nella-sessione), non ancora rilasciato);
-- `prompt-start` esegue `ask-one-question`, `rules-watch` e `site-question` a ogni messaggio; contiene anche il promemoria sulla versione del plugin (vedi [Versione del plugin](#versione-del-plugin-promemoria-di-aggiornamento), non ancora rilasciato).
+- `session-close` esegue `plan-reminder`, `check-close` e `site-reminder` a fine di ogni risposta; contiene anche l'avviso sul cambio di modello (vedi [Log dei modelli](#log-dei-modelli-usati-nella-sessione));
+- `prompt-start` esegue `ask-one-question`, `rules-watch` e `site-question` a ogni messaggio; contiene anche il promemoria sulla versione del plugin (vedi [Versione del plugin](#versione-del-plugin-promemoria-di-aggiornamento)).
 
 Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qualità e pratica) dello stesso file escono in un unico messaggio; lo stesso vale per i promemoria di `session-close`.
 
@@ -58,7 +58,7 @@ Il blocco dei comandi vietati è assoluto: chi vuole un'eccezione esegue il coma
 
 ## Comandi
 
-Il plugin aggiunge ventuno comandi (ventidue con `/kit:modelli`, non ancora rilasciato), che si lanciano digitando `/kit:` seguito dal nome. Non partono mai da soli, tranne `/kit:pr-develop`, che Claude può lanciare dopo il tuo sì al termine di `/kit:commit-passo`: gli altri sono impostati perché solo l'utente li possa lanciare. I comandi di revisione e controllo non possono nemmeno modificare file (gli strumenti `Edit` e `Write` sono disattivati mentre sono attivi); gli altri scrivono file solo quando li lanci tu. Nessun comando ha opzioni con nome (`--flag`): la colonna «Argomento» indica l'unico argomento facoltativo, dove c'è.
+Il plugin aggiunge ventidue comandi, che si lanciano digitando `/kit:` seguito dal nome. Non partono mai da soli, tranne `/kit:pr-develop`, che Claude può lanciare dopo il tuo sì al termine di `/kit:commit-passo`: gli altri sono impostati perché solo l'utente li possa lanciare. I comandi di revisione e controllo non possono nemmeno modificare file (gli strumenti `Edit` e `Write` sono disattivati mentre sono attivi); gli altri scrivono file solo quando li lanci tu. Nessun comando ha opzioni con nome (`--flag`): la colonna «Argomento» indica l'unico argomento facoltativo, dove c'è.
 
 | Comando | Cosa fa | Scrive file | Argomento |
 |---|---|---|---|
@@ -83,7 +83,7 @@ Il plugin aggiunge ventuno comandi (ventidue con `/kit:modelli`, non ancora rila
 | `/kit:accessibilita-ui` | Revisiona l'accessibilità dell'interfaccia rispetto a WCAG 2.2, con una gravità per ogni problema. Le correzioni si chiedono con una richiesta separata. | No | `[cartella-o-componente]`: parte dell'interfaccia da esaminare |
 | `/kit:colori-tema` | Costruisce o verifica la palette per i temi chiaro e scuro, con il contrasto misurato sui valori resi. | No | `[cartella-progetto]`: progetto da esaminare |
 | `/kit:localizzazione` | Verifica il layout per testi tradotti più lunghi, orientamento RTL, ordine di lettura e zoom. | No | `[cartella-progetto]`: progetto da esaminare |
-| `/kit:modelli` (non ancora rilasciato) | Mostra quali modelli sono stati usati nella sessione corrente e per cosa (sessione, skill, subagent), leggendo il registro della sessione e non il contesto del modello. | No | Nessuno |
+| `/kit:modelli` | Mostra quali modelli sono stati usati nella sessione corrente e per cosa (sessione, skill, subagent), leggendo il registro della sessione e non il contesto del modello. | No | Nessuno |
 
 Due note pratiche:
 
@@ -210,7 +210,7 @@ Il controllo `rules-watch` gira nello script `prompt-start`, insieme al promemor
 
 ## Versione del plugin: promemoria di aggiornamento
 
-Non ancora rilasciato (nel template c'è, senza bump di versione). Il marketplace da cartella locale non si aggiorna da solo: finché non si lanciano i comandi di [Aggiornamento](#aggiornamento), ogni macchina resta sulla versione installata e le skill nuove (per esempio il campo `model`) non hanno effetto. Per non dimenticarlo, `prompt-start` confronta la versione del plugin in esecuzione con quella del template.
+Dalla versione 1.15.0. Il marketplace da cartella locale non si aggiorna da solo: finché non si lanciano i comandi di [Aggiornamento](#aggiornamento), ogni macchina resta sulla versione installata e le skill nuove (per esempio il campo `model`) non hanno effetto. Per non dimenticarlo, `prompt-start` confronta la versione del plugin in esecuzione con quella del template.
 
 - **Quando.** Una volta per sessione e per progetto, in ogni progetto con il plugin attivo, anche senza `.claude/rules/`.
 - **Cosa confronta.** `.claude-plugin/plugin.json` del plugin in esecuzione (`CLAUDE_PLUGIN_ROOT`) contro `plugins/kit/.claude-plugin/plugin.json` dentro `KIT_CONFIG_TEMPLATE_DIR`, con confronto numerico per segmenti (1.9.0 < 1.10.0).
@@ -220,7 +220,7 @@ Non ancora rilasciato (nel template c'è, senza bump di versione). Il marketplac
 
 ## Log dei modelli usati nella sessione
 
-Non ancora rilasciato. Una sessione può usare più modelli: una skill con `model: haiku` fa girare il suo turno su Haiku mentre la sessione resta su Sonnet, e i subagent hanno un modello proprio. Per sapere chi ha fatto cosa, il plugin legge il registro della sessione (`~/.claude/projects/<progetto>/<sessione>.jsonl`), dove ogni risposta riporta il modello che l'ha generata (`message.model`), se viene da un subagent (`isSidechain`) e da quale skill è partita (`attributionSkill`). Non si usa il contesto del modello, che dice sempre il modello di inizio sessione (per questo la riga «Modello in uso» è stata rimossa).
+Dalla versione 1.16.0. Una sessione può usare più modelli: una skill con `model: haiku` fa girare il suo turno su Haiku mentre la sessione resta su Sonnet, e i subagent hanno un modello proprio. Per sapere chi ha fatto cosa, il plugin legge il registro della sessione (`~/.claude/projects/<progetto>/<sessione>.jsonl`), dove ogni risposta riporta il modello che l'ha generata (`message.model`), se viene da un subagent (`isSidechain`) e da quale skill è partita (`attributionSkill`). Non si usa il contesto del modello, che dice sempre il modello di inizio sessione (per questo la riga «Modello in uso» è stata rimossa).
 
 - **Avviso automatico.** `session-close` mostra la sequenza una sola volta per sessione, appena nel registro compare più di un modello, con il rimando a `/kit:modelli`.
 - **Comando `/kit:modelli`.** Mostra la stessa sequenza più il totale delle risposte per modello, quando vuoi.
@@ -270,3 +270,5 @@ Restano fuori dai hook anche il lint automatico dopo ogni modifica e `docker com
 ## Versionamento
 
 SemVer. La versione sale solo al rilascio, insieme a una sottosezione di rilascio in `CHANGELOG.md`, sotto il titolo del giorno.
+
+Con la versione 1.15.0: promemoria automatico sulla versione del plugin (una volta per sessione e per progetto, se il template ha una versione più recente) e rimozione della riga «Modello in uso» dalle skill. Con la versione 1.16.0: il log dei modelli usati nella sessione, con il comando `/kit:modelli` e l'avviso al primo cambio di modello; il plugin ha ventidue comandi.
