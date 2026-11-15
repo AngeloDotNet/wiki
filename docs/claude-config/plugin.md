@@ -19,7 +19,7 @@ Gli script sono sei. Quattro raggruppano più controlli dello stesso evento; `gu
 
 - `guard-write` esegue `guard-secrets` e `guard-patterns` prima di una scrittura;
 - `check-write` esegue `check-plan`, `check-quality` e `check-practice` dopo una scrittura;
-- `session-close` esegue `plan-reminder`, `check-close` e `site-reminder` a fine di ogni risposta;
+- `session-close` esegue `plan-reminder`, `check-close` e `site-reminder` a fine di ogni risposta; contiene anche l'avviso sul cambio di modello (vedi [Log dei modelli](#log-dei-modelli-usati-nella-sessione), non ancora rilasciato);
 - `prompt-start` esegue `ask-one-question`, `rules-watch` e `site-question` a ogni messaggio; contiene anche il promemoria sulla versione del plugin (vedi [Versione del plugin](#versione-del-plugin-promemoria-di-aggiornamento), non ancora rilasciato).
 
 Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qualità e pratica) dello stesso file escono in un unico messaggio; lo stesso vale per i promemoria di `session-close`.
