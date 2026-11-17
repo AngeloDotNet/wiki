@@ -2,6 +2,16 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-17
+
+### Claude Config: un progetto di unit test per livello (regole 3.45)
+
+**Perché:** le regole di `claude-config` (PR #54 su `claude-config`) prevedono un progetto di unit test per livello in Clean Architecture, così che una dipendenza vietata non compili. Nessuna pagina della wiki descrive la struttura dei progetti di test, quindi le pagine non cambiano.
+**Cosa:** solo questa voce nel registro. Le pagine di `docs/claude-config/` restano invariate.
+**Dove:** `CHANGELOG.md`.
+**Verifica:** solo testo Markdown; `npm run typecheck` e `npm run build` non eseguiti in questa voce.
+**Note:** la voce è nel branch `feature/docs-claude-config-test-per-livello`, da portare su `develop` con PR.
+
 ## 2026-11-15
 
 ### Pagina del plugin 1.15.0 e 1.16.0 in produzione, sincronizzazione di develop
