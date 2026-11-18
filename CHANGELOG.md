@@ -2,6 +2,24 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-18
+
+### Home: filigrana "Work in progress" sulla card License Manager
+
+**Perché:** il progetto License Manager non è concluso e la card in home deve segnalarlo a chi visita il sito. Richiesta dell'utente del 2026-11-18.
+**Cosa:** la cover `static/img/home-license.svg` ha una scritta diagonale semitrasparente "WORK IN PROGRESS" sopra l'illustrazione. Le pagine di `docs/license-management/` restano invariate.
+**Dove:** `static/img/home-license.svg`, `CHANGELOG.md`.
+**Verifica:** `npm ci --ignore-scripts`, `npm run typecheck` e `npm run build` senza errori. Controllo visivo nel browser non eseguito.
+**Note:** modifica non committata.
+
+### Home: filigrana "Work in progress" sulla card Sagre & Eventi
+
+**Perché:** stessa segnalazione della card License Manager: il progetto non è concluso. Richiesta dell'utente del 2026-11-18.
+**Cosa:** la cover `static/img/home-sagre.svg` ha la scritta diagonale "WORK IN PROGRESS" con lo stesso stile della card License Manager (opacità 0,35).
+**Dove:** `static/img/home-sagre.svg`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori; struttura XML dell'SVG controllata (gruppi `<g>` bilanciati). Controllo visivo nel browser non eseguito.
+**Note:** modifica non committata.
+
 ## 2026-11-17
 
 ### Claude Config: un progetto di unit test per livello (regole 3.45)
