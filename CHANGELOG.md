@@ -4,6 +4,13 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-19
 
+### Checklist: voce chiusa sulle modifiche non committate
+
+**Perché:** la voce «Modifiche non committate» di `CHECKLIST.md` descriveva la wiki Identity Provider prima del commit. Il lavoro è committato e mergiato in `develop` con la PR #72, quindi la voce non serve più.
+**Cosa:** rimossa la voce «Modifiche non committate». Chiusa anche la voce sul crash di `/personal-idp/intro`: la causa ipotizzata (cartella non tracciata) non vale più, perché `docs/personal-idp/` è committata, e il crash non era stato riprodotto nel browser. La voce sulle pagine PersonalIdp è riferita solo a console e documentazione, perché il backend è già su `develop`.
+**Dove:** `CHECKLIST.md`, `CHANGELOG.md`.
+**Verifica:** controllo a vista del file; nessun'altra modifica.
+
 ### Identity Provider: aggiornamento delle pagine alle novità del repository
 
 **Perché:** richiesta dell'utente del 2026-11-19: le pagine della wiki Identity Provider devono riflettere le novità del repository locale `PersonalIdp`. Dal 2026-11-18 sono cambiati la console di amministrazione, i permessi nel database, la sessione a cookie, le origini della SPA e la migrazione dei permessi.
