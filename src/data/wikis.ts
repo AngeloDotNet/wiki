@@ -56,4 +56,15 @@ export const wikis: WikiDefinition[] = [
     description: 'API di validazione e gestione delle licenze, sicurezza e configurazione del servizio.',
     cover: 'img/home-license.svg',
   },
+  {
+    id: 'personal-idp',
+    sidebarId: 'personalIdpSidebar',
+    sidebarPath: './sidebars/personal-idp.ts',
+    folder: 'docs/personal-idp',
+    routeBasePath: 'personal-idp',
+    startPath: '/personal-idp/intro',
+    title: 'Identity Provider',
+    description: 'Personal Identity provider: login OpenID Connect, MFA, profilo, API admin e configurazione.',
+    cover: 'img/home-personalidp.svg',
+  },
 ];
