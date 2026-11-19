@@ -4,6 +4,13 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-19
 
+### Identity Provider: prima frase allineata alla card, voci di checklist chiuse
+
+**Perché:** la prima frase di `intro.md` diceva «Identity Provider è un identity provider», mentre la card dice «Personal Identity provider». Il controllo visivo delle card era rimasto aperto: l'utente ha deciso di chiuderlo.
+**Cosa:** `intro.md`: la prima frase dice «Identity Provider è un identity provider personale». Chiuse in `CHECKLIST.md` le voci sul controllo visivo e sulla prima frase.
+**Dove:** `docs/personal-idp/intro.md`, `CHECKLIST.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` (vedi sotto).
+
 ### Checklist: voce chiusa sulle modifiche non committate
 
 **Perché:** la voce «Modifiche non committate» di `CHECKLIST.md` descriveva la wiki Identity Provider prima del commit. Il lavoro è committato e mergiato in `develop` con la PR #72, quindi la voce non serve più.
