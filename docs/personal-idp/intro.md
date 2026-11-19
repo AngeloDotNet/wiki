@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Identity Provider
 
-Identity Provider è un identity provider: gestisce l'accesso degli utenti e rilascia i token alle applicazioni che lo usano. Nasce come sostituto di Keycloak ed è costruito su OpenIddict 7.9 e ASP.NET Core Identity, su .NET 10 con PostgreSQL.
+Identity Provider è un identity provider personale: gestisce l'accesso degli utenti e rilascia i token alle applicazioni che lo usano. Nasce come sostituto di Keycloak ed è costruito su OpenIddict 7.9 e ASP.NET Core Identity, su .NET 10 con PostgreSQL.
 
 Le applicazioni si collegano come client OpenID Connect: fanno login con il codice di autorizzazione e PKCE, ricevono i token e leggono i dati dell'utente da userinfo. Gli amministratori gestiscono client, scope, utenti, ruoli e permessi dalla console di amministrazione, che usa le stesse API admin.
 
