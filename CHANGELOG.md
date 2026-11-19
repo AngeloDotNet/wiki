@@ -1,8 +1,34 @@
 # Changelog
 
-Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/` e `docs/license-management/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/` e `docs/personal-idp/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+
+## 2026-11-19
+
+### Identity Provider: aggiornamento delle pagine alle novità del repository
+
+**Perché:** richiesta dell'utente del 2026-11-19: le pagine della wiki Identity Provider devono riflettere le novità del repository locale `PersonalIdp`. Dal 2026-11-18 sono cambiati la console di amministrazione, i permessi nel database, la sessione a cookie, le origini della SPA e la migrazione dei permessi.
+**Cosa:** `intro.md`: console di amministrazione, permessi, API admin estese. `avvio.md`: requisiti per la console, migrazione `AddPermissions`, sezione «Console di amministrazione». `configurazione.md`: nuove sezioni «Sessione della console», «Origini della SPA» e «Permessi». `architettura.md`: sezione sulla console e sul login. `test.md`: test unitari dell'Api, test di contratto OpenAPI e sezione sulla console.
+**Dove:** `docs/personal-idp/intro.md`, `avvio.md`, `configurazione.md`, `architettura.md`, `test.md`, `CHANGELOG.md`, `CHECKLIST.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori né link rotti; Grep di `Disco_E` e `C:\Users` sulle pagine senza risultati. Controllo visivo nel browser non eseguito.
+**Note:** le pagine descrivono anche il lavoro non committato del repository `PersonalIdp` (branch `feature/clean-architecture-validation`, commit di riferimento `c28c1d4`): alla commit va verificato che il comportamento descritto resti quello committato (vedi `CHECKLIST.md`). Modifica committata sul branch `feature/personal-idp-wiki`, PR verso `develop`.
 
 ## 2026-11-18
+
+### Wiki PersonalIdp rinominata in Identity Provider (solo titolo)
+
+**Perché:** richiesta dell'utente del 2026-11-18: il nome visibile della wiki deve essere "Identity Provider". La descrizione della card resta "Personal Identity provider", come richiesto.
+**Cosa:** cambia il titolo in home e nella navbar (`src/data/wikis.ts`), e l'intestazione e la prima frase della pagina introduzione (`docs/personal-idp/intro.md`). Indirizzo `/personal-idp`, cartella e nome del repository applicativo restano invariati.
+**Dove:** `src/data/wikis.ts`, `docs/personal-idp/intro.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori. Controllo visivo nel browser non eseguito.
+**Note:** modifica non committata.
+
+### Nuova wiki PersonalIdp
+
+**Perché:** il repository `PersonalIdp` (identity provider personale, in sostituzione di Keycloak) non aveva una wiki. La documentazione deve stare in questo sito, come per le altre wiki, e il progetto è ancora in sviluppo. Richiesta dell'utente del 2026-11-18.
+**Cosa:** nuova wiki con le pagine introduzione, avvio, configurazione, architettura e test, riassunte dal README e dalla struttura del repository applicativo, senza host, credenziali o dettagli interni. Card in home con cover `home-personalidp.svg` (scudo con chiave, filigrana "WORK IN PROGRESS").
+**Dove:** `docs/personal-idp/` (nuova cartella), `sidebars/personal-idp.ts`, `src/data/wikis.ts`, `static/img/home-personalidp.svg`, `README.md`, `CLAUDE.md`, `CHANGELOG.md`.
+**Verifica:** `npm run typecheck` e `npm run build` senza errori né link rotti; struttura dell'SVG controllata (gruppi `<g>` bilanciati); nessun percorso reale nei file nuovi. Controllo visivo nel browser non eseguito.
+**Note:** modifica non committata.
 
 ### Home: filigrana "Work in progress" sulla card License Manager
 
@@ -10,7 +36,7 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 **Cosa:** la cover `static/img/home-license.svg` ha una scritta diagonale semitrasparente "WORK IN PROGRESS" sopra l'illustrazione. Le pagine di `docs/license-management/` restano invariate.
 **Dove:** `static/img/home-license.svg`, `CHANGELOG.md`.
 **Verifica:** `npm ci --ignore-scripts`, `npm run typecheck` e `npm run build` senza errori. Controllo visivo nel browser non eseguito.
-**Note:** modifica non committata.
+**Note:** PR #71, unita su `develop` con squash (commit `29d7ea0`).
 
 ### Home: filigrana "Work in progress" sulla card Sagre & Eventi
 
@@ -18,7 +44,7 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 **Cosa:** la cover `static/img/home-sagre.svg` ha la scritta diagonale "WORK IN PROGRESS" con lo stesso stile della card License Manager (opacità 0,35).
 **Dove:** `static/img/home-sagre.svg`, `CHANGELOG.md`.
 **Verifica:** `npm run typecheck` e `npm run build` senza errori; struttura XML dell'SVG controllata (gruppi `<g>` bilanciati). Controllo visivo nel browser non eseguito.
-**Note:** modifica non committata.
+**Note:** PR #71, unita su `develop` con squash (commit `29d7ea0`).
 
 ## 2026-11-17
 

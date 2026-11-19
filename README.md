@@ -7,17 +7,18 @@
 
 ## Introduzione
 
-Questo repository contiene il sito di documentazione che raccoglie tre wiki indipendenti, servite dallo stesso build:
+Questo repository contiene il sito di documentazione che raccoglie quattro wiki indipendenti, servite dallo stesso build:
 
 - **Claude Code Kit** (`docs/claude-config/`): regole di sviluppo, plugin e template per progetti avviati con [Claude Code](https://claude.com/claude-code).
 - **Sagre & Eventi** (`docs/sagreeventi/`): architettura, configurazione, API, deployment e note operative dell'applicazione [SagreEventi](https://github.com/AngeloDotNet/SagreEventi).
 - **License Manager** (`docs/license-management/`): architettura, sicurezza, configurazione e API del servizio di gestione delle licenze delle web app SaaS.
+- **PersonalIdp** (`docs/personal-idp/`): avvio, configurazione, architettura e test dell'identity provider personale basato su OpenIddict.
 
-Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio identificativo, un proprio percorso di route (`/claude-config`, `/sagreeventi`, `/license-management`) e una propria sidebar. La home (`src/pages/index.tsx`) porta alla prima pagina di ciascuna.
+Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio identificativo, un proprio percorso di route (`/claude-config`, `/sagreeventi`, `/license-management`, `/personal-idp`) e una propria sidebar. La home (`src/pages/index.tsx`) porta alla prima pagina di ciascuna.
 
 ## Features
 
-- **Tre wiki in un sito**: la navbar passa dall'una all'altra, con sidebar generate dalla cartella `docs/` e ordinate tramite `sidebar_position`.
+- **Quattro wiki in un sito**: la navbar passa dall'una all'altra, con sidebar generate dalla cartella `docs/` e ordinate tramite `sidebar_position`.
 - **Solo Markdown**: i file `.md` sono interpretati come CommonMark, quindi testi con segnaposto come `<percorso del template>` non vengono letti come JSX.
 - **Lingua italiana**: il sito è configurato con una sola locale (`it`).
 - **Versione visibile nel footer**: il numero `x.y.z` è letto dal file `VERSION` e aggiornato automaticamente dalla CI a ogni push su `main` (vedi [Versionamento](#versionamento)).
@@ -38,8 +39,9 @@ Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio
 ├── docs/
 │   ├── claude-config/      # Wiki Claude Code Kit (Markdown)
 │   ├── sagreeventi/        # Wiki Sagre & Eventi (Markdown)
-│   └── license-management/ # Wiki License Manager (Markdown)
-├── sidebars/               # Configurazione delle sidebar delle tre wiki
+│   ├── license-management/ # Wiki License Manager (Markdown)
+│   └── personal-idp/       # Wiki PersonalIdp (Markdown)
+├── sidebars/               # Configurazione delle sidebar delle quattro wiki
 ├── src/
 │   ├── css/custom.css      # Stili globali
 │   └── pages/index.tsx     # Home con le tre aree
