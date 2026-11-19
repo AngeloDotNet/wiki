@@ -19,6 +19,12 @@
 - **Fonte di verità:** le pagine descrivono il comportamento del repository `license-manager`, che a ogni passo del piano che cambia comportamento, configurazione o struttura aggiorna anche queste pagine.
 - **Nessun dettaglio interno:** il sito è pubblico, quindi niente host reali dell'infrastruttura, indirizzi, credenziali o nomi di realm; solo segnaposto.
 
+## Documentazione di PersonalIdp (`docs/personal-idp/`)
+
+- **Sorgente unica:** le pagine dell'identity provider personale vivono solo qui (richiesta dell'utente del 2026-11-18); il repository applicativo le linka (`http://wiki.aepserver.it/personal-idp/<pagina>`). Le regole di lingua, percorsi, front matter, verifica, changelog e git delle sezioni precedenti valgono anche per questa wiki.
+- **Fonte di verità:** le pagine descrivono il comportamento del repository `PersonalIdp`. Quando il codice cambia, la pagina cambia nello stesso intervento.
+- **Nessun dettaglio interno:** il sito è pubblico, quindi niente host reali, indirizzi, credenziali, client secret, nomi di realm o dettagli di infrastruttura; solo segnaposto. Il runbook di sicurezza e gli ADR restano nel repository applicativo: qui si riassumono senza copiarli.
+
 ## Eccezioni alle regole globali
 
 - **Integrazione GitHub approvata:** PR sì, push sì, tag no, rilasci no (2026-11-07)
