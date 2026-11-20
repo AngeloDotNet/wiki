@@ -47,6 +47,30 @@ npm run build
 
 I test usano Vitest. `npm run build` lancia prima la generazione del client API, quindi richiede `dotnet tool restore` dalla radice del repository.
 
+### Test end-to-end della console
+
+Con Playwright e `@axe-core/playwright` (accessibilità, WCAG 2 A e AA), in `admin-ui/e2e`. I test creano un account di prova con MFA attivo, entrano con la password e il codice TOTP, e lo cancellano a fine esecuzione.
+
+Servono l'API avviata su `https://localhost:7139`, le migrazioni applicate e un amministratore con password. Le credenziali passano da variabili d'ambiente, mai dal repository:
+
+```powershell
+cd admin-ui
+npx playwright install chromium
+$env:E2E_ADMIN_EMAIL = "<email dell'amministratore>"
+$env:E2E_ADMIN_PASSWORD = "<password dell'amministratore>"
+npm run build
+npx playwright test
+```
+
+| File | Cosa verifica |
+|---|---|
+| `permissions.spec.ts` | Pagina Permessi: crea, legge, modifica ed elimina con conferma; axe in tema chiaro e scuro |
+| `console-pages.spec.ts` | Pagine Utenti, Ruoli, Client e Scope: nome dei pulsanti e axe in tema chiaro |
+| `security-headers.spec.ts` | CSP e header di sicurezza sulla risposta HTTP della build di produzione, tipi MIME, path traversal rifiutato, avvio senza violazioni CSP |
+| `test-user.spec.ts`, `totp.spec.ts` | Account di prova con MFA; codici TOTP contro i vettori RFC 6238 |
+
+`npm run build` serve ai test degli header, che leggono la build. Il tema scuro di Utenti, Ruoli, Client e Scope non è ancora coperto da axe.
+
 ## Test end-to-end
 
 Gli script PowerShell in `tools/e2e` richiedono l'applicazione avviata e leggono le credenziali dai user-secrets. Gli script non contengono segreti.

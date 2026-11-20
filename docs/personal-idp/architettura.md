@@ -33,6 +33,7 @@ Le decisioni sono registrate come ADR nel repository applicativo, in `docs/adr/`
 - **0005**: endpoint in Minimal API e controller per il protocollo OIDC.
 - **0006**: pagine Razor nell'host.
 - **0007**: test di integrazione su un database PostgreSQL dedicato.
+- **0008**: CSP con `style-src 'unsafe-inline'` e server di test degli header della SPA.
 
 ## Sicurezza
 

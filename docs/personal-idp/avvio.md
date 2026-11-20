@@ -42,7 +42,7 @@ L'applicazione risponde su `https://localhost:7139`.
 
 ## Console di amministrazione
 
-La console è un'applicazione Angular separata, nella cartella `admin-ui/`. Richiede l'API avviata e la sua configurazione si legge da `config.json` prima di ogni richiesta.
+La console è un'applicazione Angular separata, nella cartella `admin-ui/`. Richiede l'API avviata su `https://localhost:7139`: l'indirizzo dell'API si legge da `public/config.json` (`apiBaseUrl`) all'avvio.
 
 Dalla radice del repository, una volta sola:
 
@@ -54,10 +54,12 @@ Poi dalla cartella `admin-ui/`:
 
 ```powershell
 npm ci
-npm start
+npm run start:https
 ```
 
-`npm start` avvia il server di sviluppo su `http://localhost:4200`. Il client API è generato dallo schema `admin-ui/openapi/openapi.json`: `npm run build` lancia prima la generazione, quindi richiede lo strumento `dotnet tool restore`.
+`npm run start:https` avvia il server di sviluppo su `https://localhost:4200`. Non usare `npm start`: la console in HTTP non riceve il cookie di sessione (`SameSite=Lax`), quindi dopo il login si torna alla pagina di accesso.
+
+Il client API è generato dallo schema `admin-ui/openapi/openapi.json`: `npm run build` lancia prima la generazione, quindi richiede `dotnet tool restore`.
 
 ## Primi percorsi
 
