@@ -4,6 +4,18 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-19
 
+### Identity Provider: pagine allineate al repository (console, test, ADR 0008)
+
+**Perché:** le pagine di `docs/personal-idp/` descrivevano la console con `npm start` su HTTP, che non riceve il cookie di sessione (`SameSite=Lax`), e non elencavano l'ADR 0008 né il test end-to-end della console. Il repository applicativo ha `start:https` come comando di sviluppo (README e `admin-ui/package.json`).
+
+**Cosa:** `avvio.md`: la sezione «Console di amministrazione» usa `npm run start:https` su `https://localhost:4200`, spiega perché non usare `npm start`, indica che l'API è letta da `public/config.json` all'avvio. `configurazione.md`: le origini di sviluppo sono quelle per `npm run start:https`. `architettura.md`: aggiunto l'ADR 0008 alla lista. `test.md`: nuova sezione «Test end-to-end della console» con requisiti, variabili d'ambiente, comandi e la tabella dei file di `admin-ui/e2e`.
+
+**Dove:** `docs/personal-idp/avvio.md`, `docs/personal-idp/configurazione.md`, `docs/personal-idp/architettura.md`, `docs/personal-idp/test.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo («Generated static files in "build"», nessun link rotto).
+
+**Note:** la sezione `Test` del repository applicativo, nell'elenco dei test, era già corretta (progetti Domain, Application, Infrastructure, Api, Architecture). Il dettaglio dei limiti di sicurezza (MFA non imposto al login, header dell'API) resta nel repository applicativo, non nella wiki.
+
 ### Identity Provider: prima frase allineata alla card, voci di checklist chiuse
 
 **Perché:** la prima frase di `intro.md` diceva «Identity Provider è un identity provider», mentre la card dice «Personal Identity provider». Il controllo visivo delle card era rimasto aperto: l'utente ha deciso di chiuderlo.

@@ -31,7 +31,7 @@ Le richieste `/api` senza sessione valida ricevono `401` o `403`, non un redirec
 
 ## Origini della SPA
 
-La sezione `Spa:AllowedOrigins` elenca le origini della console. Solo queste origini ricevono il CORS con credenziali, e solo verso di loro il login Razor può tornare con `returnUrl`. In `appsettings.json` la lista è vuota; in `appsettings.Development.json` contiene `http://localhost:4200` e `https://localhost:4200` per `npm start`. In produzione va impostata con un'origine esatta, per esempio `https://<host-console>`.
+La sezione `Spa:AllowedOrigins` elenca le origini della console. Solo queste origini ricevono il CORS con credenziali, e solo verso di loro il login Razor può tornare con `returnUrl`. In `appsettings.json` la lista è vuota; in `appsettings.Development.json` contiene `http://localhost:4200` e `https://localhost:4200`, per `npm run start:https` (la console è su HTTPS). In produzione va impostata con un'origine esatta, per esempio `https://<host-console>`.
 
 ## Permessi
 
