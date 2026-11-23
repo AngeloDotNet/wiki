@@ -34,6 +34,7 @@ Le decisioni sono registrate come ADR nel repository applicativo, in `docs/adr/`
 - **0006**: pagine Razor nell'host.
 - **0007**: test di integrazione su un database PostgreSQL dedicato.
 - **0008**: CSP con `style-src 'unsafe-inline'` e server di test degli header della SPA.
+- **0009**: MFA obbligatorio al login, con cookie di setup per il primo accesso.
 
 ## Sicurezza
 

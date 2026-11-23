@@ -2,6 +2,18 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/` e `docs/personal-idp/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-23
+
+### Identity Provider: MFA obbligatorio nelle pagine (ADR 0009)
+
+**Perché:** le pagine di `docs/personal-idp/` dicevano che l'attivazione del secondo fattore è volontaria da `/Account/Manage/TwoFactor`. Il repository applicativo rende il TOTP obbligatorio per tutti gli utenti (ADR 0009): il primo accesso senza MFA passa da `/Account/MfaSetup`.
+
+**Cosa:** `configurazione.md`: la sezione «Autenticazione a due fattori» descrive l'MFA obbligatorio, il primo accesso con `/Account/MfaSetup` e il cookie di setup a vita breve, la generazione dei codici di recupero dopo l'attivazione, il reset dall'amministratore che riporta alla configurazione. `avvio.md`: aggiunto il passaggio `/Account/MfaSetup` al primo accesso. `architettura.md`: aggiunto l'ADR 0009 alla lista.
+
+**Dove:** `docs/personal-idp/configurazione.md`, `docs/personal-idp/avvio.md`, `docs/personal-idp/architettura.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo; grep di `Disco_E` e `C:\Users` in `docs/` senza risultati.
+
 ## 2026-11-19
 
 ### Identity Provider: pagine allineate al repository (console, test, ADR 0008)

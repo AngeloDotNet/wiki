@@ -16,7 +16,7 @@ Le regole sono in italiano; codice, identificatori e messaggi di commit che ne d
 | Documento | Contenuto |
 |---|---|
 | [Come si usa, nei dettagli](uso.md) | Quale caso è il tuo (progetto nuovo, esistente senza regole, esistente con regole), il template come cartella a parte, `/kit:copia-regole` e `/kit:aggiorna-regole`, moduli da tenere per tipo di progetto |
-| [Plugin `kit`](plugin.md) | Tredici controlli personali, in sei script (blocchi, avvisi e promemoria su comandi, segreti, pattern vietati, piano, regole aggiornate, sito di documentazione) e ventuno comandi `/kit:...`: installazione, aggiornamento, migrazione |
+| [Plugin `kit`](plugin.md) | Tredici controlli personali, in sei script (blocchi, avvisi e promemoria su comandi, segreti, pattern vietati, piano, regole aggiornate, sito di documentazione) e dodici comandi `/kit:...`: installazione, aggiornamento, migrazione |
 | [Cosa contiene](contenuto.md) | Struttura del repository, moduli delle regole, cartella `_template/` e plugin |
 | [Come funziona](funzionamento.md) | Caricamento delle regole, deroghe, cosa chiede Claude e cosa fa da solo |
 | [Manutenzione](manutenzione.md) | Verifiche periodiche, risoluzione dei problemi, punti aperti, aggiornamento del template |
@@ -32,7 +32,7 @@ Servono sempre due cose, che Claude prepara per te se glielo chiedi:
 
 Non devi fare altro che aprire Claude Code nella cartella del progetto e scrivere una frase (qui sotto indicata).
 
-Claude ti fa le domande **una alla volta**, scrive il piano in `PIANO.md` (per i lavori sostanziosi, non per le modifiche piccole) e va avanti **un passo per volta**, con il tuo ok a ogni passo. I problemi che trova lavorando li annota in `CHECKLIST.md`, senza interrompere il lavoro.
+Claude ti fa le domande **una alla volta**, apre il piano come issue su GitHub (per i lavori sostanziosi, non per le modifiche piccole) e va avanti **un passo per volta**, con il tuo ok a ogni passo. I problemi che trova lavorando li apre come issue, senza interrompere il lavoro.
 
 | Situazione | Cosa scrivere a Claude |
 |---|---|
