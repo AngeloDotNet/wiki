@@ -65,7 +65,7 @@ Il client API è generato dallo schema `admin-ui/openapi/openapi.json`: `npm run
 
 | Percorso | A cosa serve |
 |---|---|
-| `/Account/Login` | Login con l'account amministratore dei secrets |
+| `/Account/Login` | Login con l'account amministratore dei secrets; al primo accesso l'MFA va configurato (`/Account/MfaSetup`) |
 | `/.well-known/openid-configuration` | Discovery OpenID Connect |
 | `/Account/Manage/Profile` | Profilo: nome, cognome, lingua |
 | `/Account/Manage/ChangePassword` | Cambio password |
