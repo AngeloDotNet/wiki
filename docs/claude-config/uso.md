@@ -12,8 +12,8 @@ La premessa e la tabella delle frasi da scrivere a Claude sono nella [pagina ini
 | Situazione | Cosa fai | Comando |
 |---|---|---|
 | [Progetto nuovo](#progetto-nuovo) | Crei il repository dal template, apri Claude Code nella cartella e scrivi *"Avvia un nuovo progetto"* | `/kit:avvia-progetto` (oppure la frase, senza comando) |
-| [Progetto esistente senza regole](#progetto-esistente-senza-regole) | `/kit:copia-regole` in Claude Code, dentro il progetto; poi *"Applica le regole di questo progetto"* | `/kit:copia-regole` |
-| [Progetto esistente con regole già presenti](#progetto-esistente-con-regole-già-presenti) | `git pull` nel template, `/kit:aggiorna-regole` in Claude Code, dentro il progetto (allinea anche il `CLAUDE.md`) | `/kit:aggiorna-regole` |
+| [Progetto esistente senza regole](#progetto-esistente-senza-regole) | `/kit:regole` in Claude Code, dentro il progetto; poi *"Applica le regole di questo progetto"* | `/kit:regole` |
+| [Progetto esistente con regole già presenti](#progetto-esistente-con-regole-già-presenti) | `git pull` nel template, `/kit:regole` in Claude Code, dentro il progetto (allinea anche il `CLAUDE.md`) | `/kit:regole` |
 
 I comandi copiano i file in modo meccanico; le domande, le ispezioni e il `CLAUDE.md` sono di Claude. Il percorso del template non si scrive: lo legge dalla variabile d'ambiente `KIT_CONFIG_TEMPLATE_DIR`, impostata una volta per macchina (vedi [Plugin `kit`](plugin.md#regole-aggiornate-cosa-controlla-rules-watch)). I comandi richiedono il plugin `kit` installato ([Installazione](plugin.md#installazione)). Dettagli in [Comandi di copia e aggiornamento](#comandi-di-copia-e-aggiornamento).
 
@@ -44,10 +44,10 @@ In tutti i casi `security` si tiene solo se la scegli, e `docker`, `backend-emai
 
 Il repository del progetto non cambia e non riceve il template: le regole si copiano da una **copia del template tenuta a parte** (vedi [Il template come cartella a parte](#il-template-come-cartella-a-parte)). Vale anche se il repository è già su GitHub: "Use this template" funziona solo per repository nuovi.
 
-**Strada A, con il comando `/kit:copia-regole`:**
+**Strada A, con il comando `/kit:regole`:**
 
 1. Aggiorna la copia del template (`git pull`).
-2. Apri Claude Code nella cartella del progetto e scrivi `/kit:copia-regole` (se la cartella corrente è un repository valido la usa, altrimenti ti chiede il percorso). Per un progetto solo Git (senza backend, frontend o sicurezza) rispondi «sì» alla domanda «solo regole Git?»: si copiano solo `core.md` e `git.md`, e il comando chiede solo `CLAUDE.md`, `.gitignore` e `.gitattributes`. Altrimenti il comando chiede, una domanda alla volta, quali moduli facoltativi includere e, a richiesta, i file di root (`CLAUDE.md`, `NuGet.config`, `.editorconfig`, `.gitignore`, `.gitattributes`); copia anche la procedura di avvio in `_template/avvio-progetto.md` del progetto. Se il progetto ha già `.claude/rules/`, si ferma e ti indica `/kit:aggiorna-regole`.
+2. Apri Claude Code nella cartella del progetto e scrivi `/kit:regole` (se la cartella corrente è un repository valido la usa, altrimenti ti chiede il percorso). Per un progetto solo Git (senza backend, frontend o sicurezza) rispondi «sì» alla domanda «solo regole Git?»: si copiano solo `core.md` e `git.md`, e il comando chiede solo `CLAUDE.md`, `.gitignore` e `.gitattributes`. Altrimenti il comando chiede, una domanda alla volta, quali moduli facoltativi includere e, a richiesta, i file di root (`CLAUDE.md`, `NuGet.config`, `.editorconfig`, `.gitignore`, `.gitattributes`); copia anche la procedura di avvio in `_template/avvio-progetto.md` del progetto. Se il progetto ha già `.claude/rules/`, si ferma e ti indica `/kit:regole`.
 3. Nella stessa sessione scrivi: *"Applica le regole di questo progetto"* (senza percorso). Il `CLAUDE.md` e le deroghe richiedono comunque Claude (punti 4-7 sotto).
 
 **Strada B, senza comandi:** apri Claude Code nella cartella del progetto e scrivi, con il percorso del template:
@@ -58,7 +58,7 @@ Da qui il lavoro è di Claude, sia con la strada A sia con la B:
 
 4. **Guarda, senza modificare nulla:** legge git e codice e ti mostra dove il progetto si discosta dalle regole.
 
-5. **Per ogni differenza ti chiede una scelta, una alla volta:** annotarla come **deroga** nel `CLAUDE.md` (il progetto resta com'è) oppure **adeguare il progetto** con un refactoring pianificato in `PIANO.md`. Non riscrive la cronologia git né ristruttura il codice da solo.
+5. **Per ogni differenza ti chiede una scelta, una alla volta:** annotarla come **deroga** nel `CLAUDE.md` (il progetto resta com'è) oppure **adeguare il progetto** con un refactoring pianificato nella issue padre. Non riscrive la cronologia git né ristruttura il codice da solo.
 
 6. **Poi copia** in `.claude/rules/` del progetto solo i moduli scelti (se non lo ha già fatto il comando), crea il `CLAUDE.md` con ciò che ha rilevato e propone un commit locale `chore(rules)`, che crea solo dopo il tuo ok. Il `push` e la PR restano a tua scelta: Claude li esegue solo se lo chiedi (vedi [Plugin](plugin.md#integrazione-github)).
 
@@ -73,12 +73,12 @@ Se il progetto ha un frontend Blazor da sostituire con Angular, esiste una proce
 Il progetto contiene già `.claude/rules/` e un `CLAUDE.md`: sono copie delle regole del template e non serve rifare l'avvio. Per aggiornarle:
 
 1. Aggiorna la copia del template (`git pull`).
-2. Apri Claude Code nella cartella del progetto e scrivi `/kit:aggiorna-regole`. Il comando confronta i moduli già presenti nel progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con quelli del template, ti mostra quelli diversi e per ciascuno chiede conferma, salvando il vecchio come `.bak`. Se il progetto ha `backend.md`, propone di aggiungere i moduli backend mancanti (`backend-architecture.md`, `backend-app.md`), accanto a `backend.md`, chiedendo conferma. I moduli che nel template non ci sono più si elencano e, con un solo ok, si cancellano (ognuno salvato prima come `.bak`).
+2. Apri Claude Code nella cartella del progetto e scrivi `/kit:regole`. Il comando confronta i moduli già presenti nel progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con quelli del template, ti mostra quelli diversi e per ciascuno chiede conferma, salvando il vecchio come `.bak`. Se il progetto ha `backend.md`, propone di aggiungere i moduli backend mancanti (`backend-architecture.md`, `backend-app.md`), accanto a `backend.md`, chiedendo conferma. I moduli che nel template non ci sono più si elencano e, con un solo ok, si cancellano (ognuno salvato prima come `.bak`).
 3. Alla fine il comando allinea da sé le righe del `CLAUDE.md` legate alle regole (sezione «Regole», «Versione delle regole copiate», «Moduli rimossi o non attivati»): mostra le differenze, chiede un solo ok e salva il vecchio come `CLAUDE.md.bak`. Le sezioni specifiche del progetto non si toccano. Nel dubbio fa una domanda alla volta e non decide da solo.
 
 In alternativa al comando, scrivi direttamente a Claude *"Riallinea le regole"* indicando il percorso del template.
 
-Per aggiungere un modulo che il progetto non ha: `/kit:copia-regole`, oppure *"Aggiungi il modulo `<nome>`"*. `/kit:aggiorna-regole` aggiorna soltanto ciò che c'è già e, per i moduli assenti, stampa «[nuovo]».
+Per aggiungere un modulo che il progetto non ha: `/kit:regole`, oppure *"Aggiungi il modulo `<nome>`"*. `/kit:regole` aggiorna soltanto ciò che c'è già e, per i moduli assenti, stampa «[nuovo]».
 
 ## Il template come cartella a parte
 
@@ -91,17 +91,17 @@ Per i progetti esistenti il template vive **fuori da ogni progetto**, per esempi
 
 ### Dove Claude trova la procedura
 
-Quando scrivi una di queste frasi, Claude legge `_template/avvio-progetto.md` e la segue (domande, ispezioni, scelta dei moduli, `CLAUDE.md`, piano). Tu non devi aprirla né citarla. In un progetto nuovo è nella copia del template; in un progetto esistente è nel progetto stesso se hai usato `/kit:copia-regole`, altrimenti la legge dalla cartella del template che gli indichi. I comandi di copia non sostituiscono la procedura: copiano soltanto i file, senza domande né ispezioni.
+Quando scrivi una di queste frasi, Claude legge `_template/avvio-progetto.md` e la segue (domande, ispezioni, scelta dei moduli, `CLAUDE.md`, piano). Tu non devi aprirla né citarla. In un progetto nuovo è nella copia del template; in un progetto esistente è nel progetto stesso se hai usato `/kit:regole`, altrimenti la legge dalla cartella del template che gli indichi. I comandi di copia non sostituiscono la procedura: copiano soltanto i file, senza domande né ispezioni.
 
 ## Comandi di copia e aggiornamento
 
 | Comando | Tipo di progetto | Cosa fa |
 |---|---|---|
-| `/kit:copia-regole` | Progetto esistente senza regole | Copia `core.md` e `git.md` in `.claude/rules/`; con «sì» alla domanda «solo regole Git?» si ferma qui, chiedendo solo `CLAUDE.md` (se manca), `.gitignore` e `.gitattributes`. Altrimenti chiede, una per volta, i moduli facoltativi (sicurezza, backend come tre moduli insieme, frontend, e i moduli di `rules-optional/`; `docker.md` non si chiede e si copia sempre in `rules-optional/`). Chiede poi, uno per file, i file di root `CLAUDE.md` (copiato solo se manca), `NuGet.config`, `.editorconfig`, `.gitignore` e `.gitattributes`. Copia anche `_template/avvio-progetto.md` nel progetto. Non crea commit |
-| `/kit:aggiorna-regole` | Progetto con regole già presenti | Confronta i moduli del progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con il template e mostra quelli diversi. Ogni file si sovrascrive solo con la tua conferma, e il vecchio resta come `.md.bak`. Se il progetto ha `backend.md`, propone i due moduli backend mancanti. I moduli assenti non si aggiungono da soli. I moduli rimossi dal template si cancellano con un solo ok, lasciando il `.bak`. Allinea le righe del `CLAUDE.md` legate alle regole (un solo ok e `CLAUDE.md.bak`), senza toccare le sezioni specifiche del progetto. Nel dubbio una domanda alla volta. Non crea commit |
+| `/kit:regole` | Progetto esistente senza regole | Copia `core.md` e `git.md` in `.claude/rules/`; con «sì» alla domanda «solo regole Git?» si ferma qui, chiedendo solo `CLAUDE.md` (se manca), `.gitignore` e `.gitattributes`. Altrimenti chiede, una per volta, i moduli facoltativi (sicurezza, backend come tre moduli insieme, frontend, e i moduli di `rules-optional/`; `docker.md` non si chiede e si copia sempre in `rules-optional/`). Chiede poi, uno per file, i file di root `CLAUDE.md` (copiato solo se manca), `NuGet.config`, `.editorconfig`, `.gitignore` e `.gitattributes`. Copia anche `_template/avvio-progetto.md` nel progetto. Non crea commit |
+| `/kit:regole` | Progetto con regole già presenti | Confronta i moduli del progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con il template e mostra quelli diversi. Ogni file si sovrascrive solo con la tua conferma, e il vecchio resta come `.md.bak`. Se il progetto ha `backend.md`, propone i due moduli backend mancanti. I moduli assenti non si aggiungono da soli. I moduli rimossi dal template si cancellano con un solo ok, lasciando il `.bak`. Allinea le righe del `CLAUDE.md` legate alle regole (un solo ok e `CLAUDE.md.bak`), senza toccare le sezioni specifiche del progetto. Nel dubbio una domanda alla volta. Non crea commit |
 
-- Non tocca mai `PIANO.md` né altri file del progetto, e non committa nulla (il commit `chore(rules)` lo propone Claude, dopo il tuo ok).
+- Non tocca il piano (le issue) né altri file del progetto, e non committa nulla (il commit `chore(rules)` lo propone Claude, dopo il tuo ok).
 - Il `CLAUDE.md` si copia **solo se manca**: è il modello con i campi `[..]`, che Claude compila poi con le domande di avvio. Se il progetto ne ha già uno, il comando non lo tocca e Claude lo allinea alle regole senza sostituirlo.
-- `/kit:copia-regole` si ferma se il progetto ha già `.claude/rules/`: in quel caso va usato `/kit:aggiorna-regole`.
+- `/kit:regole` sceglie il caso da sé: copia se il progetto non ha `.claude/rules/`, aggiorna se lo ha già.
 - `NuGet.config` e `.editorconfig` servono solo ai progetti con backend .NET.
 - Entrambi i comandi sono sempre su richiesta: non partono da soli. Il template in `KIT_CONFIG_TEMPLATE_DIR` deve essere completo (vedi sopra).

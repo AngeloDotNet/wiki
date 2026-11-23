@@ -41,7 +41,14 @@ Un endpoint protetto dal nome di un permesso funziona anche per permessi creati 
 
 ## Autenticazione a due fattori
 
-L'attivazione è volontaria per ogni utente da `/Account/Manage/TwoFactor`. Dopo l'attivazione il login chiede il codice TOTP, e si ottengono codici di recupero da usare se il dispositivo non è disponibile. Un amministratore può reimpostare il secondo fattore di un utente dalle API admin.
+Il secondo fattore (TOTP) è obbligatorio per tutti gli utenti, anche per l'amministratore di bootstrap e per gli utenti creati dalle API (ADR 0009).
+
+- **Primo accesso senza MFA:** dopo una password corretta non si ottiene una sessione. La pagina `/Account/MfaSetup` mostra la chiave da inserire nell'app di autenticazione e chiede il codice. Il passaggio è protetto da un cookie di setup a vita breve, che vale solo per la configurazione dell'MFA.
+- **Attivazione completata:** con un codice valido l'accesso è completato e vengono generati i codici di recupero, da conservare per il caso in cui il dispositivo non sia disponibile.
+- **Login successivi:** dopo la password il login chiede il codice TOTP o un codice di recupero.
+- **Reimpostazione da amministratore:** un amministratore può reimpostare il secondo fattore di un utente dalle API admin; al login successivo l'utente torna alla configurazione.
+
+Gli account esistenti senza MFA vedono la configurazione al prossimo login con password corretta.
 
 ## Localizzazione dei messaggi
 
