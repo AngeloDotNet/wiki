@@ -2,6 +2,18 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/` e `docs/personal-idp/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-25
+
+### Identity Provider: temi della console e test end-to-end con doppio fattore
+
+**Perché:** le pagine di `docs/personal-idp/` non descrivevano i temi della console e non indicavano che i test end-to-end richiedono un amministratore con il doppio fattore attivo (ADR 0009). Il codice descritto non è ancora pubblicato nel repository `PersonalIdp`: la pagina può arrivare su `develop`, mentre il passaggio su `main` aspetta che il codice sia sul `main` di quel repository.
+
+**Cosa:** `architettura.md`: tema chiaro e scuro, palette MidnightOps e scala di spaziature della console. `test.md`: requisito del doppio fattore, variabile `E2E_ADMIN_TOTP_SECRET`, copertura di `console-pages.spec.ts` nei due temi (spec non ancora eseguito su quelle pagine).
+
+**Dove:** `docs/personal-idp/architettura.md`, `docs/personal-idp/test.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo; grep di `Disco_E` e `C:\Users` in `docs/` senza risultati.
+
 ## 2026-11-23
 
 ### Identity Provider: MFA obbligatorio nelle pagine (ADR 0009)
