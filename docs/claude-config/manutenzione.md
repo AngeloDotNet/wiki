@@ -28,8 +28,8 @@ sidebar_label: Manutenzione
 
 # Punti aperti
 
-- **Automazioni non configurate:** i divieti di `git push --force` e `--no-verify`, e il blocco di PR e rilasci senza la GitHub CLI dichiarata nel progetto, sono tecnici solo con il [plugin `kit`](plugin.md) installato; senza, valgono come regole scritte (`git.md`). Push e tag non sono bloccati. Restano fuori dal plugin: lint automatico dopo ogni modifica e `docker compose config` quando cambiano i file Docker. I segreti nei commit sono bloccati dal plugin (`guard-commands` e `guard-write`), ma non da uno scanner come `gitleaks`.
-- **Moduli mancanti:** non esistono regole per un frontend Blazor né per il mobile (MAUI, Ionic + Capacitor, Flutter, React Native; la PWA è solo un'opzione nel `CLAUDE.md`; per il mobile c'è solo la sezione minima «Mobile» di `security.md`, con rimando a OWASP MASVS), né una sezione dedicata a Dapper (solo la regola di scelta in `backend.md` §1). Si creano come moduli ad hoc solo quando un progetto li richiede.
+- **Automazioni non configurate:** i divieti di `git push --force` e `--no-verify`, e il blocco di PR e rilasci senza la GitHub CLI dichiarata nel progetto, sono tecnici solo con il [plugin `kit`](plugin.md) installato; senza, valgono come regole scritte (`git-flusso.md`). Push e tag non sono bloccati dal hook, ma restano con il tuo via. Restano fuori dal plugin: lint automatico dopo ogni modifica e `docker compose config` quando cambiano i file Docker. I segreti nei commit sono bloccati dal plugin (`guard-commands` e `guard-write`), ma non da uno scanner come `gitleaks`.
+- **Moduli mancanti:** non esistono regole per un frontend Blazor. Per il mobile c'è il modulo opzionale `mobile.md` con regole di base generiche, non specifiche di MAUI, Ionic + Capacitor, Flutter o React Native (la PWA è solo un'opzione nel `CLAUDE.md`); la sezione minima «Mobile» di `security.md` rimanda a OWASP MASVS. Non c'è una sezione dedicata a Dapper una sezione dedicata a Dapper (solo la regola di scelta in `backend.md` §1). Si creano come moduli ad hoc solo quando un progetto li richiede.
 
 # Aggiornare il template
 

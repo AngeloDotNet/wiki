@@ -1,24 +1,27 @@
+![Documentazione: wiki unificata in un unico sito Docusaurus](static/img/readme-banner.svg)
+
 # Documentazione
 
-**Wiki unificata in un unico sito Docusaurus: regole e plugin di Claude Code, e documentazione di SagreEventi e di License Manager.**
+**Wiki unificata in un unico sito Docusaurus: regole e plugin di Claude Code, e documentazione di SagreEventi, License Manager, PersonalIdp e Blazor UI.**
 
 ![Built with Docusaurus](https://img.shields.io/badge/Built%20with-Docusaurus%203-3ECC5F)
 ![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)
 
 ## Introduzione
 
-Questo repository contiene il sito di documentazione che raccoglie quattro wiki indipendenti, servite dallo stesso build:
+Questo repository contiene il sito di documentazione che raccoglie cinque wiki indipendenti, servite dallo stesso build:
 
 - **Claude Code Kit** (`docs/claude-config/`): regole di sviluppo, plugin e template per progetti avviati con [Claude Code](https://claude.com/claude-code).
 - **Sagre & Eventi** (`docs/sagreeventi/`): architettura, configurazione, API, deployment e note operative dell'applicazione [SagreEventi](https://github.com/AngeloDotNet/SagreEventi).
 - **License Manager** (`docs/license-management/`): architettura, sicurezza, configurazione e API del servizio di gestione delle licenze delle web app SaaS.
 - **PersonalIdp** (`docs/personal-idp/`): avvio, configurazione, architettura e test dell'identity provider personale basato su OpenIddict.
+- **Blazor UI** (`docs/blazor-ui/`): installazione, componenti, tema, lingue e sviluppo della libreria di componenti Blazor [fe-blazor-components](https://github.com/AngeloDotNet/fe-blazor-components).
 
-Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio identificativo, un proprio percorso di route (`/claude-config`, `/sagreeventi`, `/license-management`, `/personal-idp`) e una propria sidebar. La home (`src/pages/index.tsx`) porta alla prima pagina di ciascuna.
+Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio identificativo, un proprio percorso di route (`/claude-config`, `/sagreeventi`, `/license-management`, `/personal-idp`, `/blazor-ui`) e una propria sidebar. La home (`src/pages/index.tsx`) porta alla prima pagina di ciascuna.
 
 ## Features
 
-- **Quattro wiki in un sito**: la navbar passa dall'una all'altra, con sidebar generate dalla cartella `docs/` e ordinate tramite `sidebar_position`.
+- **Cinque wiki in un sito**: la navbar passa dall'una all'altra, con sidebar generate dalla cartella `docs/` e ordinate tramite `sidebar_position`.
 - **Solo Markdown**: i file `.md` sono interpretati come CommonMark, quindi testi con segnaposto come `<percorso del template>` non vengono letti come JSX.
 - **Lingua italiana**: il sito è configurato con una sola locale (`it`).
 - **Versione visibile nel footer**: il numero `x.y.z` è letto dal file `VERSION` e aggiornato automaticamente dalla CI a ogni push su `main` (vedi [Versionamento](#versionamento)).
@@ -40,11 +43,12 @@ Ogni wiki è un'istanza separata del plugin `docs` di Docusaurus, con un proprio
 │   ├── claude-config/      # Wiki Claude Code Kit (Markdown)
 │   ├── sagreeventi/        # Wiki Sagre & Eventi (Markdown)
 │   ├── license-management/ # Wiki License Manager (Markdown)
-│   └── personal-idp/       # Wiki PersonalIdp (Markdown)
-├── sidebars/               # Configurazione delle sidebar delle quattro wiki
+│   ├── personal-idp/       # Wiki PersonalIdp (Markdown)
+│   └── blazor-ui/          # Wiki Blazor UI (Markdown)
+├── sidebars/               # Configurazione delle sidebar delle cinque wiki
 ├── src/
 │   ├── css/custom.css      # Stili globali
-│   └── pages/index.tsx     # Home con le tre aree
+│   └── pages/index.tsx     # Home con una card per wiki
 ├── static/img/             # Immagini statiche e favicon
 ├── nginx/                  # Configurazione nginx e header di sicurezza del container
 ├── scripts/                # Script Node.js: versionamento, CSP, date di aggiornamento
@@ -79,7 +83,7 @@ npm start       # avvia il server di sviluppo con ricaricamento a caldo
 
 ### Aggiungere una pagina
 
-Crea un file `.md` nella cartella della wiki (`docs/claude-config/`, `docs/sagreeventi/` o `docs/license-management/`) e imposta `sidebar_position` nel front matter per decidere l'ordine nella sidebar. Per i link tra pagine usa percorsi relativi: con `onBrokenLinks: 'throw'` un link rotto blocca il build.
+Crea un file `.md` nella cartella della wiki (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/`, `docs/personal-idp/` o `docs/blazor-ui/`) e imposta `sidebar_position` nel front matter per decidere l'ordine nella sidebar. Per i link tra pagine usa percorsi relativi: con `onBrokenLinks: 'throw'` un link rotto blocca il build.
 
 ## Docker
 

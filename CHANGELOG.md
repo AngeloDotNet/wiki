@@ -1,6 +1,68 @@
 # Changelog
 
-Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/` e `docs/personal-idp/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/`, `docs/personal-idp/` e `docs/blazor-ui/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+
+## 2026-11-26
+
+### Problemi aperti nelle issue al posto di CHECKLIST.md
+
+**Perché:** richiesta di migrare il contenuto di `CHECKLIST.md` in una issue.
+
+**Cosa:** l'unico punto aperto (file `index.lock` residui) è ora la issue #87; `CHECKLIST.md` è eliminato; in `CLAUDE.md` le pagine da aggiornare si annotano in una issue.
+
+**Dove:** `CHECKLIST.md`, `CLAUDE.md`, `CHANGELOG.md`.
+
+**Verifica:** ricerca dei riferimenti a `CHECKLIST.md`: restano solo nelle voci precedenti di questo file. Nessuna modifica al sito, quindi build non rieseguita.
+
+### Sottotitolo e descrizione del sito
+
+**Perché:** citavano solo tre delle wiki del sito.
+
+**Cosa:** aggiunti Identity Provider e Blazor UI al sottotitolo (`tagline`) e alla descrizione per i motori di ricerca; nella descrizione aggiunta anche la voce «componenti».
+
+**Dove:** `docusaurus.config.ts`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori.
+
+### Copertina di Blazor UI: scritta «WORK IN PROGRESS»
+
+**Perché:** la libreria è in fase di avvio; richiesta di segnalarlo in homepage come per le altre sezioni in lavorazione.
+
+**Cosa:** aggiunta la scritta «WORK IN PROGRESS» con posizione e stile identici a quelli delle altre copertine che la hanno.
+
+**Dove:** `static/img/home-blazor-ui.svg`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori. Resa grafica da controllare a vista.
+
+### Nuova wiki Blazor UI
+
+**Perché:** documentare nel sito la libreria di componenti Blazor `fe-blazor-components`. La wiki diventa l'unica sorgente di quella documentazione.
+
+**Cosa:** quinta wiki su `/blazor-ui`, con le pagine portate dal repository della libreria (front matter aggiunto, link adattati) e una nuova introduzione ricavata dal suo `README.md`; i componenti sono nella categoria «Componenti». Aggiunte copertina e immagine della galleria; regole della sezione in `CLAUDE.md`.
+
+**Dove:** `docs/blazor-ui/`, `sidebars/blazor-ui.ts`, `src/data/wikis.ts`, `static/img/home-blazor-ui.svg`, `static/img/blazor-ui-galleria.png`, `CLAUDE.md`, `README.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori; ricerca di `Disco_E` e `C:\Users` in `docs/` senza risultati. Resa grafica da controllare a vista.
+
+### Banner in cima al README
+
+**Perché:** richiesta di un banner professionale in testa al `README.md`.
+
+**Cosa:** illustrazione SVG 1200×300 con titolo, sottotitolo, una pagina di documentazione e un terminale, nei colori del sito. Non elenca i nomi delle wiki, quindi resta valida se se ne aggiungono altre.
+
+**Dove:** `static/img/readme-banner.svg`, `README.md`, `CHANGELOG.md`.
+
+**Verifica:** SVG ben formato (lettura come XML); `npm run typecheck` senza errori; `npm run build` completato con successo; ricerca di `Disco_E` e `C:\Users` in `docs/` senza risultati. Resa grafica da controllare a vista.
+
+### Template Claude Code: skill del plugin e avvio di un progetto
+
+**Perché:** le pagine di `docs/claude-config/` descrivevano il comportamento precedente di alcune skill, del promemoria sul piano e dell'avvio di un progetto. Le modifiche descritte non sono ancora pubblicate nel repository `claude-config`: il passaggio su `main` aspetta che lo siano.
+
+**Cosa:** `plugin.md`: comandi `buongiorno`, `avvia-progetto`, `regole`, `commit-passo`, `pr-main` (argomento `pulizia`) e `verifica`; richiamo a piano e issue del promemoria `ask-one-question`. `uso.md`: avvio con `/kit:avvia-progetto`, `security.md` in ogni profilo, script `regole.mjs`. `intro.md`: conferma unica all'avvio e piano in chat con il profilo `mini`.
+
+**Dove:** `docs/claude-config/plugin.md`, `docs/claude-config/uso.md`, `docs/claude-config/intro.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo; ricerca di `Disco_E` e `C:\Users` in `docs/` senza risultati.
 
 ## 2026-11-25
 

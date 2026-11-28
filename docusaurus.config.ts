@@ -26,7 +26,7 @@ const lastUpdateAvailable =
 
 const config: Config = {
   title: 'Documentazione',
-  tagline: 'Claude Code Kit, Sagre & Eventi e License Manager',
+  tagline: 'Claude Code Kit, Sagre & Eventi, License Manager, Identity Provider e Blazor UI',
   favicon: 'img/favicon.svg',
 
   // Metadati di default per motori di ricerca e condivisioni. Ogni pagina può sovrascriverli
@@ -36,7 +36,7 @@ const config: Config = {
       tagName: 'meta',
       attributes: {
         name: 'description',
-        content: 'Wiki di Claude Code Kit, Sagre & Eventi e License Manager: regole, plugin, API e deployment.',
+        content: 'Wiki di Claude Code Kit, Sagre & Eventi, License Manager, Identity Provider e Blazor UI: regole, plugin, API, componenti e deployment.',
       },
     },
   ],
