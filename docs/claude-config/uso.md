@@ -31,16 +31,16 @@ Le operazioni sui file di regole le fa in modo meccanico lo script `regole.mjs` 
 
 4. Alla fine Claude ha: spostato i moduli non scelti da `.claude/rules/` a `rules-optional/`, spostato gli opzionali confermati da `rules-optional/` a `rules/`, compilato `CLAUDE.md` ed eliminato il materiale del template che non serve al progetto (`_template/`, `.claude-plugin/`, `plugins/`; restano `.claude/rules/` e `.claude/rules-optional/` per le modifiche successive alle regole; `README.md` e `CHANGELOG.md` del template si sostituiscono con quelli del progetto). Controlla con `/context` che i moduli all'avvio risultino caricati.
 
-I tre moduli backend (`backend.md`, `backend-architecture.md`, `backend-app.md`) si spostano sempre insieme.
+I moduli backend (`backend.md`, `backend-regole.md`, `backend-architecture.md`, `backend-app.md` e `osservabilita.md`) si spostano sempre insieme.
 
 ### Che cosa resta in base al tipo di progetto
 
 | Tipo | Moduli in `.claude/rules/` | File di root da tenere |
 |---|---|---|
-| Fullstack (API + Angular) | `core`, `git`, i tre `backend`, `frontend` (+ `feature-workflow` se lo confermi) | `.editorconfig`, `NuGet.config` |
-| Solo API | `core`, `git`, i tre `backend` | `.editorconfig`, `NuGet.config` |
-| Solo frontend | `core`, `git`, `frontend` | nessuno dei due file .NET: eliminarli |
-| Solo Git | `core`, `git` | nessuno dei due file .NET: eliminarli |
+| Fullstack (API + Angular) | `core`, `lavoro`, `git-flusso`, `workflow`, i moduli `backend`, `frontend`, `frontend-angular` e `frontend-sicurezza-test` (+ `feature-workflow` se lo confermi) | `.editorconfig`, `NuGet.config` |
+| Solo API | `core`, `lavoro`, `git-flusso`, `workflow`, i moduli `backend` | `.editorconfig`, `NuGet.config` |
+| Solo frontend | `core`, `lavoro`, `git-flusso`, `workflow`, i moduli `frontend` | nessuno dei due file .NET: eliminarli |
+| Solo Git | `core`, `lavoro`, `git-flusso`, `workflow` | nessuno dei due file .NET: eliminarli |
 
 `security.md` si tiene in ogni profilo (non in modalità solo Git): si sceglie solo se tenere le regole di sicurezza estese. `docker`, `backend-email` e `backend-infra` si attivano più avanti, quando servono. `.gitattributes` e `.gitignore` restano sempre. Nei progetti senza backend .NET non c'è un file di configurazione per il frontend nel template: lint e formattazione si decidono nel progetto Angular.
 
@@ -77,7 +77,7 @@ Se il progetto ha un frontend Blazor da sostituire con Angular, esiste una proce
 Il progetto contiene già `.claude/rules/` e un `CLAUDE.md`: sono copie delle regole del template e non serve rifare l'avvio. Per aggiornarle:
 
 1. Aggiorna la copia del template (`git pull`).
-2. Apri Claude Code nella cartella del progetto e scrivi `/kit:regole`. Il comando confronta i moduli già presenti nel progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con quelli del template, ti mostra quelli diversi e per ciascuno chiede conferma, salvando il vecchio come `.bak`. Se il progetto ha `backend.md`, propone di aggiungere i moduli backend mancanti (`backend-architecture.md`, `backend-app.md`), accanto a `backend.md`, chiedendo conferma. I moduli che nel template non ci sono più si elencano e, con un solo ok, si cancellano (ognuno salvato prima come `.bak`).
+2. Apri Claude Code nella cartella del progetto e scrivi `/kit:regole`. Il comando confronta i moduli già presenti nel progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con quelli del template, ti mostra quelli diversi e per ciascuno chiede conferma, salvando il vecchio come `.bak`. Se il progetto ha `backend.md`, propone di aggiungere i moduli backend mancanti (`backend-regole.md`, `backend-architecture.md`, `backend-app.md` e `osservabilita.md`), accanto a `backend.md`, chiedendo conferma. I moduli che nel template non ci sono più si elencano e, con un solo ok, si cancellano (ognuno salvato prima come `.bak`).
 3. Alla fine il comando allinea da sé le righe del `CLAUDE.md` legate alle regole (sezione «Regole», «Versione delle regole copiate», «Moduli rimossi o non attivati»): mostra le differenze, chiede un solo ok e salva il vecchio come `CLAUDE.md.bak`. Le sezioni specifiche del progetto non si toccano. Nel dubbio fa una domanda alla volta e non decide da solo.
 
 In alternativa al comando, scrivi direttamente a Claude *"Riallinea le regole"* indicando il percorso del template.
@@ -102,7 +102,7 @@ Quando scrivi una di queste frasi, Claude legge `_template/avvio-progetto.md` e 
 | Comando | Tipo di progetto | Cosa fa |
 |---|---|---|
 | `/kit:regole` | Progetto esistente senza regole | Copia `core.md`, `lavoro.md`, `git-flusso.md` e `workflow.md` in `.claude/rules/`; con «sì» alla domanda «solo regole Git?» si ferma qui, chiedendo solo `.gitignore` e `.gitattributes`. Altrimenti chiede, una per volta, i moduli facoltativi (regole di sicurezza estese, backend come tre moduli insieme, frontend, e i moduli di `rules-optional/`; `docker.md` non si chiede e si copia sempre in `rules-optional/`). `security.md` si copia sempre e il `CLAUDE.md` si copia, senza chiedere, solo se manca. Chiede poi, uno per file, i file di root `NuGet.config`, `.editorconfig`, `.gitignore` e `.gitattributes`. Copia anche `_template/avvio-progetto.md` nel progetto. Non crea commit |
-| `/kit:regole` | Progetto con regole già presenti | Confronta i moduli del progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con il template e mostra quelli diversi. Ogni file si sovrascrive solo con la tua conferma, e il vecchio resta come `.md.bak`. Se il progetto ha `backend.md`, propone i due moduli backend mancanti. I moduli assenti non si aggiungono da soli. I moduli rimossi dal template si cancellano con un solo ok, lasciando il `.bak`. Allinea le righe del `CLAUDE.md` legate alle regole (un solo ok e `CLAUDE.md.bak`), senza toccare le sezioni specifiche del progetto. Nel dubbio una domanda alla volta. Non crea commit |
+| `/kit:regole` | Progetto con regole già presenti | Confronta i moduli del progetto (in `.claude/rules/` e in `.claude/rules-optional/`) con il template e mostra quelli diversi. Ogni file si sovrascrive solo con la tua conferma, e il vecchio resta come `.md.bak`. Se il progetto ha `backend.md`, propone i moduli backend mancanti. I moduli assenti non si aggiungono da soli. I moduli rimossi dal template si cancellano con un solo ok, lasciando il `.bak`. Allinea le righe del `CLAUDE.md` legate alle regole (un solo ok e `CLAUDE.md.bak`), senza toccare le sezioni specifiche del progetto. Nel dubbio una domanda alla volta. Non crea commit |
 
 - Non tocca il piano (le issue) né altri file del progetto, e non committa nulla (il commit `chore(rules)` lo propone Claude, dopo il tuo ok).
 - Il `CLAUDE.md` si copia **solo se manca**: è il modello con i campi `[..]`, che Claude compila poi con le domande di avvio. Se il progetto ne ha già uno, il comando non lo tocca e Claude lo allinea alle regole senza sostituirlo.
