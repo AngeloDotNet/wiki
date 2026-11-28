@@ -2,6 +2,20 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/`, `docs/personal-idp/` e `docs/blazor-ui/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-28
+
+### Rilascio 0.8.0
+
+**Aggiunto:** wiki Blazor UI su `/blazor-ui` (quinta wiki del sito), con copertina, galleria e banner in testa al README.
+
+**Modificato:** sottotitolo e descrizione del sito con tutte le wiki; pagine di `claude-config` allineate alle skill e al promemoria attuali; `CHECKLIST.md` eliminato (il punto aperto è nella issue #87).
+
+**Perché:** nuova wiki (funzionalità, quindi minor SemVer: 0.7.0 → 0.8.0).
+
+**Dove:** `VERSION`, `package.json`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori sul branch `release/0.8.0`.
+
 ## 2026-11-26
 
 ### Problemi aperti nelle issue al posto di CHECKLIST.md
