@@ -11,7 +11,7 @@ sidebar_label: Come funziona
 
 - Una deroga a un controllo automatico del plugin si scrive nel codice, sulla stessa riga o su quella sopra: `kit-allow: <id> — <motivo>` (`core.md` §6, punto 23).
 
-- Nei moduli, "sempre", "mai", "vietato", "obbligatorio" sono regole non negoziabili (si derogano solo con la tua approvazione); "preferisci", "preferita", "valuta" sono default modificabili con un motivo dichiarato. Nelle sezioni di `backend.md` e `frontend.md` ogni regola ha l'etichetta **Regola** (MUST, oppure PREFER solo se il testo dice «preferisci» o «valuta») e, dove il testo lo diceva già, le righe **Motivo** ed **Eccezione**.
+- Nei moduli, "sempre", "mai", "vietato", "obbligatorio" sono regole non negoziabili (si derogano solo con la tua approvazione); "preferisci", "preferita", "valuta" sono default modificabili con un motivo dichiarato. Nei moduli `backend*.md` e `frontend*.md` ogni regola ha l'etichetta **Regola** (MUST, oppure PREFER solo se il testo dice «preferisci» o «valuta») e, dove il testo lo diceva già, le righe **Motivo** ed **Eccezione**.
 
 - Nei file del template non vanno mai scritti percorsi assoluti né nomi di altri progetti.
 

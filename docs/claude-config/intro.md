@@ -16,7 +16,7 @@ Le regole sono in italiano; i commenti di codice sono in italiano per default, m
 | Documento | Contenuto |
 |---|---|
 | [Come si usa, nei dettagli](uso.md) | Quale caso è il tuo (progetto nuovo, esistente senza regole, esistente con regole), il template come cartella a parte, il comando `/kit:regole`, moduli da tenere per tipo di progetto |
-| [Plugin `kit`](plugin.md) | Tredici controlli personali, in sei script (blocchi, avvisi e promemoria su comandi, segreti, pattern vietati, piano, regole aggiornate, sito di documentazione) e dieci comandi `/kit:...`: installazione, aggiornamento, migrazione |
+| [Plugin `kit`](plugin.md) | Tredici controlli personali, in sei script (blocchi, avvisi e promemoria su comandi, segreti, pattern vietati, piano, regole aggiornate, sito di documentazione) e undici comandi `/kit:...`: installazione, aggiornamento, migrazione |
 | [Cosa contiene](contenuto.md) | Struttura del repository, moduli delle regole, cartella `_template/` e plugin |
 | [Come funziona](funzionamento.md) | Caricamento delle regole, deroghe, cosa chiede Claude e cosa fa da solo |
 | [Manutenzione](manutenzione.md) | Verifiche periodiche, risoluzione dei problemi, punti aperti, aggiornamento del template |

@@ -4,6 +4,16 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-28
 
+### Claude config: moduli divisi, skill `/kit:rilascio` e comandi aggiornati (da develop)
+
+**Perché:** `develop` del repository `claude-config` ha cambiato moduli, comandi e skill rispetto al `main` pubblicato (3.5.0). Su richiesta dell'utente la wiki descrive `develop`, e segnala le parti non ancora rilasciate.
+
+**Cosa:** `backend.md` e `frontend.md` divisi in `backend-regole.md`, `frontend-angular.md` e `frontend-sicurezza-test.md` (tabella dei moduli in `contenuto.md`, moduli per tipo di progetto in `uso.md`); `osservabilita.md` nel gruppo backend; manifest `_template/moduli.json` descritto in `contenuto.md`; nuova skill `/kit:rilascio` in `plugin.md` (undici comandi); `uso.md` usa i nomi attuali dei moduli (`lavoro`, `git-flusso`, `workflow` al posto di `git`); `funzionamento.md` e `manutenzione.md` riferiscono i nuovi moduli.
+
+**Dove:** `docs/claude-config/contenuto.md`, `docs/claude-config/uso.md`, `docs/claude-config/plugin.md`, `docs/claude-config/intro.md`, `docs/claude-config/funzionamento.md`, `docs/claude-config/manutenzione.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori; ricerca di `Disco_E` e `C:Users` in `docs/` senza risultati. Da notare: su `develop` del repository `claude-config` la skill `rilascio` e lo split dei moduli non sono ancora rilasciati, e il `plugin.json` è alla 3.4.1 mentre `main` è alla 3.5.0.
+
 ### Rilascio 0.9.0
 
 **Aggiunto:** wiki Blazor UI su `/blazor-ui` (quinta wiki del sito), con copertina, galleria e banner in testa al README.
