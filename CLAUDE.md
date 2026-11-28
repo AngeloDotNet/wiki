@@ -5,7 +5,7 @@
 - **Sorgente unica:** le pagine di documentazione di SagreEventi vivono solo qui (decisione dell'utente del 2026-11-08). Il repository applicativo `AngeloDotNet/SagreEventi` non conserva copie di `docs/*.md` né degli screenshot: il README e il DEPLOY linkano le pagine di questa wiki (`http://wiki.aepserver.it/sagreeventi/<pagina>`).
 - **Lingua:** italiano per il testo delle pagine; nomi di file, identificatori ed endpoint restano nella forma originale.
 - **Percorsi:** in tutta la wiki (`docs/sagreeventi/` e `docs/claude-config/`) niente percorsi reali del PC in uso (unità, cartelle utente, cartelle dei progetti): solo segnaposto generici, per esempio `/percorso/del/progetto`. Prima di chiudere un intervento si cerca `Disco_E` e `C:\Users` con Grep (decisione dell'utente del 2026-11-10).
-- **Fonte di verità:** le pagine descrivono il comportamento del repository applicativo. Quando il codice cambia, la pagina cambia nello stesso intervento (o si annota in `CHECKLIST.md`).
+- **Fonte di verità:** le pagine descrivono il comportamento del repository applicativo. Quando il codice cambia, la pagina cambia nello stesso intervento (o si annota in una issue GitHub di questo repository).
 - **Front matter:** ogni pagina ha `title` e `sidebar_position`. Link tra pagine con percorsi relativi (`api.md`); link al repository con URL assoluto.
 - **Screenshot:** in `static/img/`, riferiti con percorso assoluto dal sito (`/img/<file>.png`).
 - **Verifica:** prima di chiudere un intervento, `npm run typecheck` e `npm run build` senza errori. Il build è configurato con `onBrokenLinks: 'throw'`: un link rotto blocca il build.
@@ -24,6 +24,12 @@
 - **Sorgente unica:** le pagine dell'identity provider personale vivono solo qui (richiesta dell'utente del 2026-11-18); il repository applicativo le linka (`http://wiki.aepserver.it/personal-idp/<pagina>`). Le regole di lingua, percorsi, front matter, verifica, changelog e git delle sezioni precedenti valgono anche per questa wiki.
 - **Fonte di verità:** le pagine descrivono il comportamento del repository `PersonalIdp`. Quando il codice cambia, la pagina cambia nello stesso intervento.
 - **Nessun dettaglio interno:** il sito è pubblico, quindi niente host reali, indirizzi, credenziali, client secret, nomi di realm o dettagli di infrastruttura; solo segnaposto. Il runbook di sicurezza e gli ADR restano nel repository applicativo: qui si riassumono senza copiarli.
+
+## Documentazione di Blazor UI (`docs/blazor-ui/`)
+
+- **Sorgente unica:** le pagine della libreria di componenti Blazor vivono solo qui (decisione dell'utente del 2026-11-26); il repository applicativo le linka (`http://wiki.aepserver.it/blazor-ui/<pagina>`) e in `docs/` tiene solo le immagini del `README.md`. Le regole di lingua, percorsi, front matter, verifica, changelog e git delle sezioni precedenti valgono anche per questa wiki.
+- **Fonte di verità:** le pagine descrivono il comportamento del repository `fe-blazor-components`, che a ogni passo del piano che cambia comportamento, configurazione o struttura aggiorna anche queste pagine. La documentazione di un nuovo componente va in `docs/blazor-ui/componenti/<area>.md`.
+- **Nessun dettaglio interno:** il sito è pubblico, quindi niente host reali (compreso il feed NuGet), indirizzi o credenziali; solo segnaposto.
 
 ## Eccezioni alle regole globali
 

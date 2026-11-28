@@ -67,4 +67,15 @@ export const wikis: WikiDefinition[] = [
     description: 'Personal Identity provider: login OpenID Connect, MFA, profilo, API admin e configurazione.',
     cover: 'img/home-personalidp.svg',
   },
+  {
+    id: 'blazor-ui',
+    sidebarId: 'blazorUiSidebar',
+    sidebarPath: './sidebars/blazor-ui.ts',
+    folder: 'docs/blazor-ui',
+    routeBasePath: 'blazor-ui',
+    startPath: '/blazor-ui/intro',
+    title: 'Blazor UI',
+    description: 'Libreria di componenti Blazor astratti: installazione, componenti, tema, lingue e sviluppo.',
+    cover: 'img/home-blazor-ui.svg',
+  },
 ];

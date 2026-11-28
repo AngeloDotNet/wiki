@@ -1,6 +1,106 @@
 # Changelog
 
-Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/` e `docs/personal-idp/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/`, `docs/personal-idp/` e `docs/blazor-ui/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
+
+## 2026-11-28
+
+### Rilascio 0.8.0
+
+**Aggiunto:** wiki Blazor UI su `/blazor-ui` (quinta wiki del sito), con copertina, galleria e banner in testa al README.
+
+**Modificato:** sottotitolo e descrizione del sito con tutte le wiki; pagine di `claude-config` allineate alle skill e al promemoria attuali; `CHECKLIST.md` eliminato (il punto aperto è nella issue #87).
+
+**Perché:** nuova wiki (funzionalità, quindi minor SemVer: 0.7.0 → 0.8.0).
+
+**Dove:** `VERSION`, `package.json`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori sul branch `release/0.8.0`.
+
+## 2026-11-26
+
+### Problemi aperti nelle issue al posto di CHECKLIST.md
+
+**Perché:** richiesta di migrare il contenuto di `CHECKLIST.md` in una issue.
+
+**Cosa:** l'unico punto aperto (file `index.lock` residui) è ora la issue #87; `CHECKLIST.md` è eliminato; in `CLAUDE.md` le pagine da aggiornare si annotano in una issue.
+
+**Dove:** `CHECKLIST.md`, `CLAUDE.md`, `CHANGELOG.md`.
+
+**Verifica:** ricerca dei riferimenti a `CHECKLIST.md`: restano solo nelle voci precedenti di questo file. Nessuna modifica al sito, quindi build non rieseguita.
+
+### Sottotitolo e descrizione del sito
+
+**Perché:** citavano solo tre delle wiki del sito.
+
+**Cosa:** aggiunti Identity Provider e Blazor UI al sottotitolo (`tagline`) e alla descrizione per i motori di ricerca; nella descrizione aggiunta anche la voce «componenti».
+
+**Dove:** `docusaurus.config.ts`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori.
+
+### Copertina di Blazor UI: scritta «WORK IN PROGRESS»
+
+**Perché:** la libreria è in fase di avvio; richiesta di segnalarlo in homepage come per le altre sezioni in lavorazione.
+
+**Cosa:** aggiunta la scritta «WORK IN PROGRESS» con posizione e stile identici a quelli delle altre copertine che la hanno.
+
+**Dove:** `static/img/home-blazor-ui.svg`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori. Resa grafica da controllare a vista.
+
+### Nuova wiki Blazor UI
+
+**Perché:** documentare nel sito la libreria di componenti Blazor `fe-blazor-components`. La wiki diventa l'unica sorgente di quella documentazione.
+
+**Cosa:** quinta wiki su `/blazor-ui`, con le pagine portate dal repository della libreria (front matter aggiunto, link adattati) e una nuova introduzione ricavata dal suo `README.md`; i componenti sono nella categoria «Componenti». Aggiunte copertina e immagine della galleria; regole della sezione in `CLAUDE.md`.
+
+**Dove:** `docs/blazor-ui/`, `sidebars/blazor-ui.ts`, `src/data/wikis.ts`, `static/img/home-blazor-ui.svg`, `static/img/blazor-ui-galleria.png`, `CLAUDE.md`, `README.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori; ricerca di `Disco_E` e `C:\Users` in `docs/` senza risultati. Resa grafica da controllare a vista.
+
+### Banner in cima al README
+
+**Perché:** richiesta di un banner professionale in testa al `README.md`.
+
+**Cosa:** illustrazione SVG 1200×300 con titolo, sottotitolo, una pagina di documentazione e un terminale, nei colori del sito. Non elenca i nomi delle wiki, quindi resta valida se se ne aggiungono altre.
+
+**Dove:** `static/img/readme-banner.svg`, `README.md`, `CHANGELOG.md`.
+
+**Verifica:** SVG ben formato (lettura come XML); `npm run typecheck` senza errori; `npm run build` completato con successo; ricerca di `Disco_E` e `C:\Users` in `docs/` senza risultati. Resa grafica da controllare a vista.
+
+### Template Claude Code: skill del plugin e avvio di un progetto
+
+**Perché:** le pagine di `docs/claude-config/` descrivevano il comportamento precedente di alcune skill, del promemoria sul piano e dell'avvio di un progetto. Le modifiche descritte non sono ancora pubblicate nel repository `claude-config`: il passaggio su `main` aspetta che lo siano.
+
+**Cosa:** `plugin.md`: comandi `buongiorno`, `avvia-progetto`, `regole`, `commit-passo`, `pr-main` (argomento `pulizia`) e `verifica`; richiamo a piano e issue del promemoria `ask-one-question`. `uso.md`: avvio con `/kit:avvia-progetto`, `security.md` in ogni profilo, script `regole.mjs`. `intro.md`: conferma unica all'avvio e piano in chat con il profilo `mini`.
+
+**Dove:** `docs/claude-config/plugin.md`, `docs/claude-config/uso.md`, `docs/claude-config/intro.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo; ricerca di `Disco_E` e `C:\Users` in `docs/` senza risultati.
+
+## 2026-11-28
+
+### Claude config: comandi, moduli e controlli allineati al template
+
+**Perché:** le pagine di `docs/claude-config/` citavano `/kit:copia-regole` e `/kit:aggiorna-regole`, sostituiti da `/kit:regole` nella 3.0.0; elencavano moduli che non esistono più (`git.md`, `security-frontend.md`) e conteggi non più corretti. Issue #127 del repository `claude-config`.
+
+**Cosa:** `intro.md`, `manutenzione.md` e `uso.md`: `/kit:regole` al posto dei due comandi rimossi, `git-flusso.md` al posto di `git.md`, moduli del caso «solo Git» (`core`, `lavoro`, `git-flusso`, `workflow`) e file di root chiesti da `/kit:regole`. `contenuto.md`: tabella dei moduli ricavata da `_template/moduli.json`. `plugin.md`: dieci comandi; dodici controlli, con `session-start` (sincronizzazione all'avvio, spenta per default) al posto dei controlli inesistenti `check-plan` e `plan-reminder`; sezione «Attivazione» allineata agli script. Le voci storiche di versione restano invariate.
+
+**Dove:** `docs/claude-config/intro.md`, `docs/claude-config/manutenzione.md`, `docs/claude-config/uso.md`, `docs/claude-config/contenuto.md`, `docs/claude-config/plugin.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo («Generated static files in "build"», nessun link rotto); grep di `Disco_E` e `C:\Users` in `docs/claude-config/` senza risultati.
+
+## 2026-11-25
+
+### Identity Provider: temi della console e test end-to-end con doppio fattore
+
+**Perché:** le pagine di `docs/personal-idp/` non descrivevano i temi della console e non indicavano che i test end-to-end richiedono un amministratore con il doppio fattore attivo (ADR 0009). Il codice descritto non è ancora pubblicato nel repository `PersonalIdp`: la pagina può arrivare su `develop`, mentre il passaggio su `main` aspetta che il codice sia sul `main` di quel repository.
+
+**Cosa:** `architettura.md`: tema chiaro e scuro, palette MidnightOps e scala di spaziature della console. `test.md`: requisito del doppio fattore, variabile `E2E_ADMIN_TOTP_SECRET`, copertura di `console-pages.spec.ts` nei due temi (spec non ancora eseguito su quelle pagine).
+
+**Dove:** `docs/personal-idp/architettura.md`, `docs/personal-idp/test.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo; grep di `Disco_E` e `C:\Users` in `docs/` senza risultati.
 
 ## 2026-11-23
 

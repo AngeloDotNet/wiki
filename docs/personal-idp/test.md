@@ -51,13 +51,14 @@ I test usano Vitest. `npm run build` lancia prima la generazione del client API,
 
 Con Playwright e `@axe-core/playwright` (accessibilità, WCAG 2 A e AA), in `admin-ui/e2e`. I test creano un account di prova con MFA attivo, entrano con la password e il codice TOTP, e lo cancellano a fine esecuzione.
 
-Servono l'API avviata su `https://localhost:7139`, le migrazioni applicate e un amministratore con password. Le credenziali passano da variabili d'ambiente, mai dal repository:
+Servono l'API avviata su `https://localhost:7139`, le migrazioni applicate e un amministratore con il doppio fattore attivo (ADR 0009). Le credenziali e il segreto TOTP dell'amministratore passano da variabili d'ambiente, mai dal repository. Il segreto compare una sola volta, durante la configurazione dell'autenticatore: va salvato in quel momento, perché dopo non si può più leggere.
 
 ```powershell
 cd admin-ui
 npx playwright install chromium
 $env:E2E_ADMIN_EMAIL = "<email dell'amministratore>"
 $env:E2E_ADMIN_PASSWORD = "<password dell'amministratore>"
+$env:E2E_ADMIN_TOTP_SECRET = "<segreto TOTP dell'amministratore, in base32>"
 npm run build
 npx playwright test
 ```
@@ -65,11 +66,11 @@ npx playwright test
 | File | Cosa verifica |
 |---|---|
 | `permissions.spec.ts` | Pagina Permessi: crea, legge, modifica ed elimina con conferma; axe in tema chiaro e scuro |
-| `console-pages.spec.ts` | Pagine Utenti, Ruoli, Client e Scope: nome dei pulsanti e axe in tema chiaro |
+| `console-pages.spec.ts` | Pagine Utenti, Ruoli, Permessi, Client e Scope: nome dei pulsanti e axe in tema chiaro e scuro (da eseguire con il segreto TOTP dell'amministratore) |
 | `security-headers.spec.ts` | CSP e header di sicurezza sulla risposta HTTP della build di produzione, tipi MIME, path traversal rifiutato, avvio senza violazioni CSP |
 | `test-user.spec.ts`, `totp.spec.ts` | Account di prova con MFA; codici TOTP contro i vettori RFC 6238 |
 
-`npm run build` serve ai test degli header, che leggono la build. Il tema scuro di Utenti, Ruoli, Client e Scope non è ancora coperto da axe.
+`npm run build` serve ai test degli header, che leggono la build. Lo spec `console-pages.spec.ts` copre ora il tema scuro, ma non è ancora stato eseguito su queste pagine.
 
 ## Test end-to-end
 

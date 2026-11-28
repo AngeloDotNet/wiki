@@ -20,6 +20,8 @@ PersonalIdp segue la Clean Architecture: le dipendenze vanno dall'esterno verso 
 
 La console è un'applicazione Angular in `admin-ui/`, fuori dalla soluzione .NET. Il client TypeScript si genera dallo schema OpenAPI versionato in `admin-ui/openapi/`, quindi le chiamate HTTP non si scrivono a mano. Lo schema è esposto solo in ambiente di sviluppo.
 
+La console ha un tema chiaro e uno scuro, che si cambia dal pulsante in intestazione e resta memorizzato nel browser. Il tema scuro usa la palette MidnightOps (licenza MIT, sfondi da `#000000` a `#282828`, primario blu `#1D4ED8` con testo bianco); i valori sono nel preset PrimeNG in `admin-ui/src/app/app.config.ts`. Spaziature e larghezza del contenuto seguono una scala unica, con il contenuto largo al massimo `max-w-7xl`.
+
 La console non gestisce il login: lo fanno le pagine Razor dell'host `Api`, e la console usa il cookie che ne deriva. La scelta è di servire la console su un host separato, sotto lo stesso dominio delle API, così il cookie resta valido; il dominio pubblico non è ancora definito.
 
 ## Decisioni di architettura
