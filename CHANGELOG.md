@@ -2,6 +2,18 @@
 
 Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagreeventi/`, `docs/license-management/` e `docs/personal-idp/`). Giorni più recenti in alto; dentro lo stesso giorno, gli interventi più recenti in alto.
 
+## 2026-11-28
+
+### Claude config: comandi, moduli e controlli allineati al template
+
+**Perché:** le pagine di `docs/claude-config/` citavano `/kit:copia-regole` e `/kit:aggiorna-regole`, sostituiti da `/kit:regole` nella 3.0.0; elencavano moduli che non esistono più (`git.md`, `security-frontend.md`) e conteggi non più corretti. Issue #127 del repository `claude-config`.
+
+**Cosa:** `intro.md`, `manutenzione.md` e `uso.md`: `/kit:regole` al posto dei due comandi rimossi, `git-flusso.md` al posto di `git.md`, moduli del caso «solo Git» (`core`, `lavoro`, `git-flusso`, `workflow`) e file di root chiesti da `/kit:regole`. `contenuto.md`: tabella dei moduli ricavata da `_template/moduli.json`. `plugin.md`: dieci comandi; dodici controlli, con `session-start` (sincronizzazione all'avvio, spenta per default) al posto dei controlli inesistenti `check-plan` e `plan-reminder`; sezione «Attivazione» allineata agli script. Le voci storiche di versione restano invariate.
+
+**Dove:** `docs/claude-config/intro.md`, `docs/claude-config/manutenzione.md`, `docs/claude-config/uso.md`, `docs/claude-config/contenuto.md`, `docs/claude-config/plugin.md`, `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` senza errori; `npm run build` completato con successo («Generated static files in "build"», nessun link rotto); grep di `Disco_E` e `C:\Users` in `docs/claude-config/` senza risultati.
+
 ## 2026-11-25
 
 ### Identity Provider: temi della console e test end-to-end con doppio fattore
