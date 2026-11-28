@@ -245,7 +245,7 @@ claude plugin uninstall kit@claude-config
 
 Se alcuni hook erano stati copiati in `~/.claude/` e registrati in `~/.claude/settings.json`, vanno **tolti prima di installare il plugin**, altrimenti ogni hook gira due volte. Gli script da cercare sono di due tipi:
 
-- **Script attuali del plugin:** `guard-write.mjs`, `check-write.mjs`, `session-close.mjs`, `prompt-start.mjs`, `guard-commands.mjs`, `limit-one-question.mjs`. Quelli copiati vanno rimossi dalle voci `hooks` anche se il loro nome è lo stesso.
+- **Script attuali del plugin:** `guard-write.mjs`, `check-write.mjs`, `session-close.mjs`, `prompt-start.mjs`, `guard-commands.mjs`, `limit-one-question.mjs`, `session-start.mjs`. Quelli copiati vanno rimossi dalle voci `hooks` anche se il loro nome è lo stesso.
 - **Script non più presenti nel plugin:** quelli della versione 1.9.0, sostituiti dalla 1.10.0 (`ask-one-question.mjs`, `rules-watch.mjs`, `guard-secrets.mjs`, `guard-patterns.mjs`, `check-plan.mjs`, `check-quality.mjs`, `check-practice.mjs`, `plan-reminder.mjs`, `check-close.mjs`), e `session-plan.mjs` della 1.10.0, eliminato perché il piano a inizio sessione è la regola di `core.md` §6.16. Se erano copiati, le loro voci vanno tolte allo stesso modo.
 
 1. rimuovere da `~/.claude/settings.json` le voci `hooks` degli script copiati, dei due tipi sopra;

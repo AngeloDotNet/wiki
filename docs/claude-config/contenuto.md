@@ -36,7 +36,7 @@ In un progetto nuovo Claude elimina il materiale che appartiene al template e no
 | `contratto.md` | `rules/` | quando si legge o modifica un file backend o frontend (contratto API, OpenAPI) |
 | `osservabilita.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props`, Dockerfile o file compose |
 | `lavoro.md` | `rules/` | all'avvio (sempre; breve: contesto e token, criterio `/clear` o `/compact`, indagine dei difetti, review, contenuti non fidati, imprevisti e rollback) |
-| `security.md` | `rules/` | all'avvio (principi sempre attivi: mappa ASVS 5.0, progettazione fail closed, crittografia, dati e segreti, supply chain, log e allerta, test di sicurezza; una sezione minima sul mobile) |
+| `security.md` | `rules/` | all'avvio (principi sempre attivi: mappa ASVS 5.0, progettazione fail closed, crittografia, dati e segreti, supply chain, log e allerta, test di sicurezza) |
 | `security-backend.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (autenticazione, chiavi e password .NET, protezione dell'API, abuso di risorse, vulnerabilità applicative, upload) |
 | `security-avanzata.md` | `rules/` | profili standard e strutturato (nel mini sta in `rules-optional/`): progettazione fail closed, crittografia, supply chain, database e dati personali, GDPR operativo |
 | `security-strutturato.md` | `rules/` | solo profilo strutturato (negli altri sta in `rules-optional/`): threat model, ASVS, scansione dinamica, test di sicurezza automatici |
