@@ -49,6 +49,7 @@ Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qua
 | `check-close` | `Stop` | A fine di ogni risposta, sulle modifiche non ancora committate, ricorda: codice modificato senza `CHANGELOG.md` aggiornato, modello EF cambiato senza una nuova migrazione, chiavi `it.json` ed `en.json` diverse. Usa `git status`. |
 | `site-question` | `UserPromptSubmit` | A ogni messaggio, finché la voce `sito` di `~/.claude/kit-progetti.json` manca o dice `esiste: false` senza `chiesto`, chiede a Claude di domandarti se il progetto ha una wiki o un sito di documentazione dedicato (sì/no; se sì, il percorso assoluto). Un «no» salva `chiesto: true` e la domanda non torna. Solo nei progetti con `core.md`. |
 | `site-reminder` | `Stop` | Se la voce `sito` ha `esiste: true`, `CHANGELOG.md` o `README.md` del progetto sono modificati e la cartella del sito non ha modifiche non committate, ricorda di aggiornare il sito (`core.md` §5b). Non dice nulla se la cartella del sito non è un repository git. Solo nei progetti con `core.md`. |
+| `session-start` | `SessionStart` | Solo nei progetti attivati con `"sincronizzazione": true` nella loro voce di `~/.claude/kit-progetti.json` (spenta per default): all'avvio o alla ripresa allinea le regole del progetto al tag più recente del template (`_template/moduli.json`, file `.claude/rules/`), crea il backup e lascia una domanda alla volta per i conflitti. Non tocca i progetti non attivati. |
 
 Il blocco dei comandi vietati è assoluto: chi vuole un'eccezione esegue il comando a mano (prefisso `!` nel prompt) oppure disattiva il plugin. Il push non è bloccato dal hook, ma si fa solo con il tuo via; la creazione di un tag solo con nome `X.Y.Z` (senza `v`) e dal branch `main`; PR e rilasci passano con `gh` se la GitHub CLI è dichiarata installata (vedi sotto).
 
@@ -267,3 +268,17 @@ Con la versione 2.0.0 il plugin ha dodici comandi (da ventidue): i comandi di re
 
 Con la versione 2.0.1 `/kit:copia-regole` scrive nel `CLAUDE.md` il profilo scelto, nel campo «Profilo» (issue #73). Nessuna azione richiesta nei progetti già avviati; per un progetto copiato con la 2.0.0 il campo va impostato a mano o con `/kit:aggiorna-regole`.
 Con la versione 3.0.0 le skill passano da dodici a dieci. Cambi incompatibili: `/kit:consegna` diventa `/kit:verifica` (checklist di consegna come sezione 0), e `/kit:copia-regole` e `/kit:aggiorna-regole` diventano `/kit:regole`, che copia le regole se il progetto non le ha e le aggiorna se le ha già. La domanda sul profilo è la prima dell'avvio; per il profilo `standard` le versioni brevi di cinque moduli stanno in `_template/rules-standard/`, con il testo completo in `rules-optional/dettaglio/`.
+
+Con la versione 3.1.0 la lingua dei commenti di codice diventa l'italiano per default, con identificatori e messaggi di commit in inglese (ADR 0002, `core.md` §9).
+
+Con la versione 3.2.0 arrivano lo script `regole.mjs` per copia, confronto, aggiornamento e rimozione dei file di regole (con `.bak` prima di ogni sostituzione), la skill `/kit:regole` che segue il profilo del `CLAUDE.md`, `checklist-mini.md` per il profilo `mini` e i test di copia per profilo. Il profilo `standard` non richiede più il threat model.
+
+Con la versione 3.3.0 Git è in due moduli: `git-flusso.md` (anche PR e rilascio) e `core.md` §5c (regole minime). `git.md` e `git-avanzato.md` non esistono più: `/kit:regole` li rimuove nei progetti che li hanno, con `.bak` e un solo ok. Si aggiungono il modulo opzionale `mobile.md`, la sezione «GDPR operativo lato server» in `security-avanzata.md` e l'ADR 0003 (migrazioni come passo unico prima delle repliche). `operativita.md` si carica solo sui file `.github/**`.
+
+Con la versione 3.4.0 le regole di sicurezza frontend (`frontend.md` §9) si caricano sempre sui file frontend, in ogni profilo: per un progetto frontend è un cambio di comportamento.
+
+Con la versione 3.4.1 la descrizione del plugin è corretta: diceva «push e tag sempre consentiti», mentre push e tag richiedono il via dell'utente. Nessun cambio di comportamento.
+
+Con la versione 3.5.0 arriva la sincronizzazione automatica delle regole all'avvio della sessione, spenta per default e attivabile per progetto (ADR 0004, controllo `session-start`); il manifesto dei moduli è `_template/moduli.json`.
+
+Con la versione 3.6.0 arrivano la skill `/kit:rilascio` (undici comandi) e la divisione per area delle regole backend e frontend (`backend-regole.md`, `frontend-angular.md`, `frontend-sicurezza-test.md`), senza cambi alle regole.

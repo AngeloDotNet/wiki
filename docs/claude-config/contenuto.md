@@ -20,6 +20,7 @@ NuGet.config        solo backend .NET (package source mapping)
 .gitattributes      fine riga (text=auto)
 .gitignore          Visual Studio / .NET / Angular, file locali di Claude Code
 _template/          materiale del template
+docs/               ADR (`adr/`), archivio del CHANGELOG (`changelog/`), date di verifica delle fonti (`fonti.md`) e `skill.md`
 ```
 
 In un progetto nuovo Claude elimina il materiale che appartiene al template e non al progetto: `_template/`, `.claude-plugin/` e `plugins/`; restano `.claude/rules/` e `.claude/rules-optional/`, così le regole si possono aggiornare, aggiungere o rimuovere anche a progetto avviato; `README.md` e `CHANGELOG.md` si sostituiscono con quelli del progetto (`_template/avvio-progetto.md`, §3).
@@ -57,6 +58,7 @@ Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non s
 |---|---|
 | `avvio-progetto.md` | Procedura che Claude segue per avviare un progetto (nuovo o esistente): domande, ispezioni, scelta dei moduli, compilazione del `CLAUDE.md`, tabella delle decisioni «chiesto, non presunto» con il campo del `CLAUDE.md` e la regola di ciascuna. Non va aperta né citata a Claude: la legge da solo (vedi "Come si usa, in breve" nella [pagina iniziale](intro.md)). |
 | `moduli.json` | Manifest dei moduli di regole: per ogni modulo cartella, applicabilità (sempre, profilo, backend, frontend, sicurezza estesa, opzionale), profilo minimo e versione breve. Lo legge `plugins/kit/scripts/regole.mjs` per copiare e confrontare le regole; un test controlla che ogni modulo abbia la sua voce. |
+| `rules-standard/` | Versioni brevi di quattro moduli (`git-flusso.md`, `workflow.md`, `qualita.md`, `documentazione.md`) per il profilo `standard`: il manifest le indica con `versioneBreve`. |
 | `ci/` | Esempi di workflow da adattare al progetto: `ci.yml` (job backend e frontend con build, test, lint e audit a ogni pull request, action fissate allo SHA; non eseguito su GitHub, da verificare al primo uso) e il controllo CI delle deroghe `kit-allow` (`kit-allow.yml`) con lo script che genera il report (`kit-allow-report.mjs`, con i suoi test). |
 | `eslint.config.example.js` | Esempio di configurazione ESLint (flat config con `angular-eslint`) che applica le regole di `frontend.md` controllabili da un linter. I nomi delle regole non sono provati su un progetto reale: si verificano con `npm run lint`. |
 | `settings.example.json` | Esempio di permessi per `.claude/settings.json` (`deny` per `.env`, chiavi e `secrets/`, `allow` per i comandi di sola verifica). Non si copia da solo: la sintassi va verificata sulla versione di Claude Code installata. |

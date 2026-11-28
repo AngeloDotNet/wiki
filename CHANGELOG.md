@@ -4,6 +4,16 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-28
 
+### Claude config: storia delle versioni fino alla 3.6.0, controllo `session-start` e struttura del template
+
+**Perché:** il template è alla 3.6.0 (tag su `main`). La storia delle versioni della wiki si fermava alla 3.0.0, manca il controllo `session-start` (3.5.0) e la voce precedente di questo giorno parla di novità non ancora rilasciate: con la 3.6.0 sono rilasciate.
+
+**Cosa:** `plugin.md`: righe delle versioni 3.1.0–3.6.0 nella sezione «Versionamento» e riga del controllo `session-start` nella tabella dei controlli. `contenuto.md`: `docs/` (ADR, archivio del CHANGELOG, `fonti.md`, `skill.md`) e `_template/rules-standard/` nella struttura del template.
+
+**Dove:** `docs/claude-config/plugin.md`, `docs/claude-config/contenuto.md`, `CHANGELOG.md`.
+
+**Verifica:** confronto con il `CHANGELOG.md` e la struttura del template sul `main` alla 3.6.0; `npm run typecheck` e `npm run build` (vedi sotto).
+
 ### Claude config: moduli divisi, skill `/kit:rilascio` e comandi aggiornati (da develop)
 
 **Perché:** `develop` del repository `claude-config` ha cambiato moduli, comandi e skill rispetto al `main` pubblicato (3.5.0). Su richiesta dell'utente la wiki descrive `develop`, e segnala le parti non ancora rilasciate.
