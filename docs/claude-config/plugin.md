@@ -5,17 +5,17 @@ sidebar_label: Plugin kit
 
 # Plugin `kit`
 
-Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: tredici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Il plugin aggiunge anche i comandi `/kit:...` (oggi dodici; sezione [Comandi](#comandi)).
+Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: controlli personali, distribuiti in script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Il plugin aggiunge anche i comandi `/kit:...` (oggi undici; sezione [Comandi](#comandi)).
 
 ## Cosa contiene
 
-I tredici controlli si dividono in tre famiglie:
+I controlli si dividono in famiglie:
 
 - **blocchi**: fermano l'operazione; Claude riceve il motivo e deve correggere;
 - **avvisi**: l'operazione passa; Claude e l'utente ricevono un avviso da correggere nel passo successivo;
 - **promemoria**: ricordano una regola a inizio o fine sessione, senza bloccare.
 
-Gli script sono sei. Quattro raggruppano più controlli dello stesso evento; `guard-commands` e `limit-one-question` ne fanno uno ciascuno:
+Gli script sono i seguenti. Alcuni raggruppano più controlli dello stesso evento; `guard-commands` e `limit-one-question` ne fanno uno ciascuno:
 
 - `guard-write` esegue `guard-secrets` e `guard-patterns` prima di una scrittura;
 - `check-write` esegue `check-quality` e `check-practice` dopo una scrittura;
