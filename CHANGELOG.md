@@ -4,6 +4,16 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-28
 
+### Claude config: registro della sincronizzazione e nomi dei controlli
+
+**Perché:** la verifica di allineamento col template sul `main` (3.6.0) ha trovato che la wiki non nominava il registro `.claude/kit-regole.json` del controllo `session-start`, e che i conteggi dei controlli e degli script non erano verificabili dai file.
+
+**Cosa:** `plugin.md`: nella riga di `session-start` il registro `.claude/kit-regole.json` (con `.claude/kit-regole.lock`) e il ramo `bugfix/kit-regole-AAAA-MM-GG`. Rimossi i conteggi di controlli e script; restano i nomi dei controlli.
+
+**Dove:** `docs/claude-config/plugin.md`, `docs/claude-config/contenuto.md`, `docs/claude-config/intro.md`, `CHANGELOG.md`.
+
+**Verifica:** confronto dei nomi di skill, script, test, workflow, file di `_template/` e meccanismi di sincronizzazione con il `main` alla 3.6.0; `npm run typecheck` e `npm run build` senza errori.
+
 ### Claude config: storia delle versioni fino alla 3.6.0, controllo `session-start` e struttura del template
 
 **Perché:** il template è alla 3.6.0 (tag su `main`). La storia delle versioni della wiki si fermava alla 3.0.0, manca il controllo `session-start` (3.5.0) e la voce precedente di questo giorno parla di novità non ancora rilasciate: con la 3.6.0 sono rilasciate.
