@@ -4,6 +4,19 @@ Registro delle modifiche alla wiki unificata (`docs/claude-config/`, `docs/sagre
 
 ## 2026-11-28
 
+### Rilascio 0.9.0
+
+**Aggiunto:** wiki Blazor UI su `/blazor-ui` (quinta wiki del sito), con copertina, galleria e banner in testa al README.
+
+**Modificato:** sottotitolo e descrizione del sito con tutte le wiki; pagine di `claude-config` allineate alle skill e al promemoria attuali; `CHECKLIST.md` eliminato (il punto aperto è nella issue #87).
+
+**Perché:** nuova wiki (funzionalità, quindi minor SemVer: 0.7.0 → 0.9.0). Il bump manuale a 0.8.0 (`0fedfa0`) è stato alzato a 0.9.0 dalla CI con il merge #90, il cui oggetto è `feat(...)`: la versione del rilascio è quella di `VERSION` su `main`.
+
+**Dove:** `VERSION`, `package.json` e `CHANGELOG.md` (già su `main`); questa PR aggiorna solo il `CHANGELOG.md`.
+
+**Verifica:** `npm run typecheck` e `npm run build` senza errori.
+
+
 ### Claude config: comandi, moduli e controlli allineati al template
 
 **Perché:** le pagine di `docs/claude-config/` citavano `/kit:copia-regole` e `/kit:aggiorna-regole`, sostituiti da `/kit:regole` nella 3.0.0; elencavano moduli che non esistono più (`git.md`, `security-frontend.md`) e conteggi non più corretti. Issue #127 del repository `claude-config`.
