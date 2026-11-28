@@ -10,7 +10,7 @@ sidebar_label: Cosa contiene
   rules/            moduli caricati da Claude Code in automatico
   rules-optional/   moduli opzionali, NON caricati: si attivano su richiesta
 .claude-plugin/     marketplace `claude-config` (marketplace.json)
-plugins/kit/ plugin con i tredici controlli personali (in sei script) e i comandi (vedi plugin.md)
+plugins/kit/ plugin con i dodici controlli personali (in sei script) e i comandi (vedi plugin.md)
 plugins/kit/skills/ un comando per cartella, richiamato come `/kit:<nome>` (un `SKILL.md` per comando)
 CLAUDE.md           modello del CLAUDE.md di progetto (campi [..] da compilare)
 CHANGELOG.md        modifiche alle regole del template (in un progetto nuovo va sostituito)
@@ -25,20 +25,20 @@ In un progetto nuovo Claude elimina il materiale che appartiene al template e no
 
 ## Moduli delle regole
 
+I moduli sono elencati in `_template/moduli.json`, che il plugin legge per copiare e confrontare le regole.
+
 | Modulo | Dove | Quando si carica |
 |---|---|---|
-| `core.md` | `rules/` | all'avvio (sempre) |
-| `git.md` | `rules/` | all'avvio (sempre) |
-| `lavoro.md` | `rules/` | all'avvio (sempre; breve: contesto e token, criterio `/clear` o `/compact`, indagine dei difetti, review, contenuti non fidati, imprevisti e rollback) |
-| `security.md` | `rules/` | all'avvio (principi sempre attivi: mappa ASVS 5.0, progettazione fail closed, crittografia, dati e segreti, supply chain, log e allerta, test di sicurezza; una sezione minima sul mobile) |
-| `security-backend.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (autenticazione, chiavi e password .NET, protezione dell'API, abuso di risorse, vulnerabilità applicative, upload) |
-| `security-frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss` (innerHTML, storage, CSP, Trusted Types, postMessage) |
-| `frontend.md` | `rules/` | quando si legge o modifica un `*.ts`, `*.html`, `*.css`, `*.scss`, `angular.json` o `tsconfig*.json` |
-| `backend.md`, `backend-architecture.md`, `backend-app.md` | `rules/` | quando si legge o modifica un `*.cs`, `*.csproj`, `*.props` (i tre moduli backend si caricano insieme: stack e regole comuni; architettura e accesso ai dati; logica applicativa, errori e test) |
-| `feature-workflow.md` | `rules-optional/` | solo fullstack e su conferma: flusso per entità, backend → frontend |
-| `backend-email.md` | `rules-optional/` | quando serve l'invio di email |
-| `backend-infra.md` | `rules-optional/` | quando servono messaggistica, cache applicativa o eventi |
-| `docker.md` | `rules-optional/` | solo su richiesta esplicita (per esempio «crea un Dockerfile»); attivato, si carica quando si legge o modifica un Dockerfile, un file compose o `docker/**` |
+| `core.md`, `lavoro.md`, `security.md`, `contratto.md` | `rules/` | sempre (`contratto.md` e alcune sezioni di frontend e backend si caricano solo sui file corrispondenti) |
+| `git-flusso.md`, `workflow.md`, `qualita.md`, `documentazione.md`, `operativita.md` | `rules/` | profili `standard` e `strutturato` (nel profilo `mini` stanno in `rules-optional/`) |
+| `security-avanzata.md` | `rules/` | profili `standard` e `strutturato` |
+| `security-strutturato.md` | `rules/` | solo profilo `strutturato` |
+| `security-backend.md` | `rules/` | con la sicurezza estesa e il backend; si carica sui file `*.cs`, `*.csproj`, `*.props` |
+| `backend.md`, `backend-architecture.md`, `backend-app.md`, `osservabilita.md` | `rules/` | con il backend; si caricano sui file `*.cs`, `*.csproj`, `*.props` (`osservabilita.md` anche su Dockerfile, compose e `observability/`) |
+| `frontend.md` | `rules/` | con il frontend Angular; si carica su `*.ts`, `*.html`, `*.css`, `*.scss`, `angular.json`, `tsconfig*.json` |
+| `feature-workflow.md`, `backend-email.md`, `backend-infra.md`, `mobile.md`, `docker.md` | `rules-optional/` | opzionali: non si caricano finché non vengono attivati su richiesta |
+
+Il manifest lista anche le versioni brevi di alcuni moduli per il profilo `standard` (in `_template/rules-standard/`).
 
 I moduli per area (`frontend`, `backend` e, se attivato, `docker`) usano l'intestazione `paths:` con glob per estensione, quindi sono identici in ogni progetto e non occupano contesto finché non si tocca un file corrispondente.
 
@@ -55,4 +55,4 @@ Ogni `.md` in `.claude/rules/` viene caricato: non vanno aggiunti file che non s
 
 ## Plugin `kit`
 
-I tredici controlli personali, in sei script (blocchi di comandi, segreti e pattern vietati; avvisi di qualità e di pratica; promemoria su piano, chiusura, regole aggiornate e sito di documentazione) stanno nel plugin `plugins/kit/`, distribuito dal marketplace `.claude-plugin/marketplace.json`. Cosa fanno e come si installano: [plugin.md](plugin.md). Dalla versione 1.9.0 il plugin aggiunge anche i comandi `/kit:...` (oggi dodici), uno per cartella in `plugins/kit/skills/`: vedi [Comandi](plugin.md#comandi).
+I dodici controlli personali, in sei script (blocchi di comandi, segreti e pattern vietati; avvisi di qualità e di pratica; promemoria su piano, chiusura, regole aggiornate e sito di documentazione) stanno nel plugin `plugins/kit/`, distribuito dal marketplace `.claude-plugin/marketplace.json`. Cosa fanno e come si installano: [plugin.md](plugin.md). Dalla versione 1.9.0 il plugin aggiunge anche i comandi `/kit:...` (oggi dieci), uno per cartella in `plugins/kit/skills/`: vedi [Comandi](plugin.md#comandi).

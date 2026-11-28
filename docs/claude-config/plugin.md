@@ -5,11 +5,11 @@ sidebar_label: Plugin kit
 
 # Plugin `kit`
 
-Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: tredici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Il plugin aggiunge anche i comandi `/kit:...` (oggi dodici; sezione [Comandi](#comandi)).
+Il repository è anche un **marketplace** di Claude Code (`claude-config`) che contiene il plugin `kit`: dodici controlli personali, distribuiti in sei script, che fanno rispettare in modo tecnico alcune regole del template e tengono Claude allineato alle regole aggiornate. Il plugin si installa una volta per macchina e vale per tutti i progetti; alcuni controlli valgono solo nei progetti che hanno `.claude/rules/core.md` (vedi [Attivazione](#attivazione)). Le regole (`.claude/rules/`) non fanno parte del plugin e si copiano nei progetti come descritto in [Come si usa](uso.md). Il plugin aggiunge anche i comandi `/kit:...` (oggi dieci; sezione [Comandi](#comandi)).
 
 ## Cosa contiene
 
-I tredici controlli si dividono in tre famiglie:
+I dodici controlli si dividono in tre famiglie:
 
 - **blocchi**: fermano l'operazione; Claude riceve il motivo e deve correggere;
 - **avvisi**: l'operazione passa; Claude e l'utente ricevono un avviso da correggere nel passo successivo;
@@ -48,6 +48,7 @@ Le tabelle seguenti usano i nomi dei controlli. Gli avvisi di `check-write` (qua
 | `rules-watch` | `UserPromptSubmit` | A ogni messaggio controlla se le regole del progetto sono cambiate durante la sessione (per esempio dopo un `git pull`) e, se sì, ordina di rileggere i file cambiati allegando il `git diff`. Una volta per sessione confronta anche le regole con quelle del template. |
 | `check-close` | `Stop` | A fine di ogni risposta, sulle modifiche non ancora committate, ricorda: codice modificato senza `CHANGELOG.md` aggiornato, modello EF cambiato senza una nuova migrazione, chiavi `it.json` ed `en.json` diverse. Usa `git status`. |
 | `site-question` | `UserPromptSubmit` | A ogni messaggio, finché la voce `sito` di `~/.claude/kit-progetti.json` manca o dice `esiste: false` senza `chiesto`, chiede a Claude di domandarti se il progetto ha una wiki o un sito di documentazione dedicato (sì/no; se sì, il percorso assoluto). Un «no» salva `chiesto: true` e la domanda non torna. Solo nei progetti con `core.md`. |
+| `session-start` | `SessionStart` | Solo nei progetti attivati con `"sincronizzazione": true` nella loro voce di `~/.claude/kit-progetti.json` (spenta per default): all'avvio o alla ripresa allinea le regole del progetto al tag più recente del template (`_template/moduli.json`, file `.claude/rules/`), crea il backup e lascia una domanda alla volta per i conflitti. Non tocca i progetti non attivati. |
 | `site-reminder` | `Stop` | Se la voce `sito` ha `esiste: true`, `CHANGELOG.md` o `README.md` del progetto sono modificati e la cartella del sito non ha modifiche non committate, ricorda di aggiornare il sito (`core.md` §5b). Non dice nulla se la cartella del sito non è un repository git. Solo nei progetti con `core.md`. |
 
 Il blocco dei comandi vietati è assoluto: chi vuole un'eccezione esegue il comando a mano (prefisso `!` nel prompt) oppure disattiva il plugin. Il push è sempre consentito; la creazione di un tag solo con nome `X.Y.Z` (senza `v`) e dal branch `main`; PR e rilasci passano con `gh` se la GitHub CLI è dichiarata installata (vedi sotto).
@@ -63,8 +64,8 @@ Il plugin aggiunge dieci comandi, che si lanciano digitando `/kit:` seguito dal 
 | `/kit:buongiorno` | Riprende il lavoro: legge dalle issue del progetto (padre e sub-issue aperte, con `gh`) il piano e i problemi, riassume dove si è arrivati e propone il primo passo. Non modifica nulla. | No | Nessuno |
 | `/kit:buonasera` | A fine giornata registra lo stato nelle issue: chiude le sub-issue verificate, lascia la ripartenza sulla issue padre e apre le issue dei problemi nuovi. Aggiorna senza domande `README.md`, `CHANGELOG.md` e la wiki del progetto, se presente. Cerca i file non più utili (cancella solo quelli che confermi) e ricorda `/clear` o `/compact`. Non salva la conversazione. | Sì (file di documentazione, issue) | Nessuno |
 | `/kit:avvia-progetto` | Avvia un progetto nuovo: fa in sequenza le domande di avvio, una per messaggio, e compila il `CLAUDE.md`. Si lancia in una cartella vuota o appena creata. | Sì (`CLAUDE.md`) | `[nome-progetto]`: nome del progetto |
-| `/kit:regole` | Gestisce le regole di un progetto. Se non le ha, le copia dal template con i moduli scelti in conversazione e il profilo (caso A); con la modalità solo Git copia `core.md`, `lavoro.md`, `git.md`, `git-avanzato.md`, `git-flusso.md` e `workflow.md`. Scrive il profilo scelto nel campo «Profilo» del `CLAUDE.md`. Se le ha già, le confronta con il template e sovrascrive i file diversi solo con la tua conferma, elimina quelli rimossi dal template e allinea le righe del `CLAUDE.md` legate alle regole (caso B). | Sì (regole e file di root) | `[cartella-progetto]`: cartella di destinazione o progetto da aggiornare; se manca usa la cartella corrente quando è valida, altrimenti la chiede |
-| `/kit:commit-passo` | Crea i commit locali del lavoro in corso, come da `git.md`, in sequenza e senza conferme intermedie. Mai su `main` o `develop`: crea il branch di lavoro da solo. Il piano della serie è una issue con sub-issue, se la GitHub CLI è installata. Si ferma con una domanda solo nei casi anomali. A fine lavoro propone la PR con `/kit:pr-develop` e la esegue solo dopo il tuo sì. Non fa push. | Sì (commit, issue) | Nessuno |
+| `/kit:regole` | Gestisce le regole di un progetto. Se non le ha, le copia dal template con i moduli scelti in conversazione e il profilo (caso A); con la modalità solo Git copia `core.md`, `lavoro.md`, `git-flusso.md` e `workflow.md`. Scrive il profilo scelto nel campo «Profilo» del `CLAUDE.md`. Se le ha già, le confronta con il template e sovrascrive i file diversi solo con la tua conferma, elimina quelli rimossi dal template e allinea le righe del `CLAUDE.md` legate alle regole (caso B). | Sì (regole e file di root) | `[cartella-progetto]`: cartella di destinazione o progetto da aggiornare; se manca usa la cartella corrente quando è valida, altrimenti la chiede |
+| `/kit:commit-passo` | Crea i commit locali del lavoro in corso, come da `git-flusso.md`, in sequenza e senza conferme intermedie. Mai su `main` o `develop`: crea il branch di lavoro da solo. Il piano della serie è una issue con sub-issue, se la GitHub CLI è installata. Si ferma con una domanda solo nei casi anomali. A fine lavoro propone la PR con `/kit:pr-develop` e la esegue solo dopo il tuo sì. Non fa push. | Sì (commit, issue) | Nessuno |
 | `/kit:pr-develop` | Apre con `gh` la PR dal branch di lavoro (`feature/*`, `bugfix/*`) verso `develop`, con titolo Conventional Commits (diventa il commit di squash); push e creazione senza altra conferma, perché il lancio è il via libera. Non fa il merge. Richiede la GitHub CLI installata e autenticata. | Sì (push, PR) | Nessuno |
 | `/kit:pr-main` | Apre con `gh` la PR da `develop` (o da `release/*`, `hotfix/*`) verso il branch principale, con merge commit e senza conferma intermedia. Dopo che hai confermato il merge, controlla con `gh` che la PR sia `MERGED`, pulisce i branch di lavoro e allinea `main` e `develop` con `git pull --ff-only`. Richiede la GitHub CLI installata e autenticata. | Sì (push, PR, branch) | `[branch-sorgente]`: branch di partenza; se manca, il branch corrente se è `release/*` o `hotfix/*`, altrimenti `develop` |
 | `/kit:verifica` | Controlla il lavoro corrente contro la checklist di consegna (`core.md` §0b), senza eseguire nulla, poi esegue il controllo di una soluzione .NET (ripristino, formattazione, build in Release senza avvisi, `using` inutilizzati, test, pacchetti vulnerabili, modifiche al modello EF senza migrazione, compose valido, spazi bianchi) e riporta l'esito reale senza modificare file. Per un frontend Angular segue la procedura di `frontend.md`. | No (solo cartelle di build) | `[cartella-soluzione]`: cartella con il `.sln`; se manca cerca nella radice del repository |
@@ -101,8 +102,9 @@ Le skill creano il file se manca e aggiornano solo la chiave che gestiscono, las
 
 ## Attivazione
 
-- **In ogni progetto:** `guard-commands`, `guard-secrets`, `check-quality`, `check-plan`, `plan-reminder`, `rules-watch`, `ask-one-question`, `limit-one-question`.
-- **Solo nei progetti con `.claude/rules/core.md`:** `guard-patterns`, `check-practice`, `check-close`, `site-question`, `site-reminder`. Il file è il segno che il progetto usa le regole del template; senza di esso questi cinque controlli non fanno nulla.
+- **In ogni progetto:** `guard-commands`, `guard-secrets` (in `guard-write`), `check-quality` (in `check-write`), `rules-watch`, `ask-one-question` e `limit-one-question`.
+- **Solo nei progetti con `.claude/rules/core.md`:** `guard-patterns` (in `guard-write`), `check-practice` (in `check-write`), `check-close` (in `session-close`), `site-question` (in `prompt-start`) e `site-reminder` (in `session-close`). Il file è il segno che il progetto usa le regole del template; senza di esso questi controlli non fanno nulla.
+- **Sincronizzazione all'avvio (`session-start`):** spenta per default; si attiva per progetto come descritto nella tabella dei controlli.
 
 ## Deroghe `kit-allow`
 
@@ -131,8 +133,8 @@ Il push è **sempre consentito**. Il tag si crea solo con nome `X.Y.Z` (senza `v
 - La data in fondo è facoltativa.
 - La riga si legge dal `CLAUDE.md` della radice del repository, anche se il comando parte da una sottocartella. Fuori da un repository si legge quello della cartella del comando.
 - Anche con la CLI installata restano sempre bloccati `git push --force` (e varianti), la cancellazione di branch remoti diversi da `feature/`, `bugfix/`, `release/`, `hotfix/`, `reset --hard`, `clean -f` e `--no-verify`.
-- `gh workflow run` non è bloccato dal hook. La regola (`git.md`) impone una domanda esplicita di conferma prima di ogni esecuzione.
-- Le indicazioni a Claude su quando e come usare queste operazioni sono nella regola `git.md`, non nel hook.
+- `gh workflow run` non è bloccato dal hook. La regola (`git-flusso.md`) impone una domanda esplicita di conferma prima di ogni esecuzione.
+- Le indicazioni a Claude su quando e come usare queste operazioni sono nella regola `git-flusso.md`, non nel hook.
 
 ## Limiti dei controlli
 
